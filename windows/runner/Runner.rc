@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "mod_doan_pl" "\0"
+            VALUE "FileDescription", "mod_do_an" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mod_doan_pl" "\0"
+            VALUE "InternalName", "mod_do_an" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mod_doan_pl.exe" "\0"
-            VALUE "ProductName", "mod_doan_pl" "\0"
+            VALUE "OriginalFilename", "mod_do_an.exe" "\0"
+            VALUE "ProductName", "mod_do_an" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

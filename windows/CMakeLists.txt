@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(mod_doan_pl LANGUAGES CXX)
+project(mod_do_an LANGUAGES CXX)
 
-set(BINARY_NAME "mod_doan_pl")
+set(BINARY_NAME "mod_do_an")
 
 cmake_policy(SET CMP0063 NEW)
 

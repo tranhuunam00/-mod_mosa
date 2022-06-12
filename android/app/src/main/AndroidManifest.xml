@@ -1,10 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mod_doan_pl">
-    <uses-permission android:name="android.permission.BLUETOOTH" />  
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+    package="com.example.mod_do_an">
    <application
-        android:label="mod_doan_pl"
+        android:label="mod_do_an"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -33,6 +30,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        
     </application>
 </manifest>
