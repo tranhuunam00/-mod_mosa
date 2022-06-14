@@ -27,7 +27,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Expanded(
               child: NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (overscroll) {
-                  print("dang roll");
                   overscroll.disallowIndicator();
                   return true;
                 },
@@ -96,7 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   InkWell(
                     onTap: () {
                       print("hihi");
-                      Navigator.pushNamed(context, Constants.login);
+                      Navigator.pushNamed(context, Constants.register);
                     },
                     child: TextNormal(
                       textAlign: TextAlign.left,

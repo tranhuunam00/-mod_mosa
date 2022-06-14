@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
+import 'package:mod_do_an/blocs/register/register_bloc.dart';
 import 'package:mod_do_an/repository/authentication_repository.dart';
+import 'package:mod_do_an/repository/register_repository.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -39,6 +41,11 @@ void main() {
         BlocProvider(
             create: (context) =>
                 LoginBloc(authenticationRepository: authenticationRepository)),
+        BlocProvider(
+          create: (context) => RegisterBloc(
+            registerRepository: RegisterRepository(),
+          ),
+        ),
       ], child: const DoAnApp()),
     );
   }, (error, stackTrace) {});

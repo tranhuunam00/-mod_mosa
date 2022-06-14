@@ -11,6 +11,7 @@ class Constants {
   static const String onboardingScreen = '/onboarding';
   static const String baseUrl =
       "https://tranhuunam18020938-do-an.herokuapp.com/api/";
+  static const String signUpScreen = 'sign_up';
   static const String userRoute = "users/";
   static const Map<String, String> requestHeaders = {
     'Content-type': 'application/json',

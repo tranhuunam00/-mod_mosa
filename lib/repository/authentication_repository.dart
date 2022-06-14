@@ -1,4 +1,4 @@
-import 'package:mod_do_an/service/authentication_service.dart';
+import 'package:mod_do_an/services/authentication_service.dart';
 
 class AuthenticationRepository {
   Future<dynamic> loginWithEmail(

@@ -40,6 +40,7 @@ class DoAnApp extends StatelessWidget {
                       Constants.onboardingScreen: (context) =>
                           const OnboardingScreen(),
                       Constants.login: (context) => const LoginScreen(),
+                      Constants.register: (context) => const RegisterScreen(),
                     },
                   ),
                 )));

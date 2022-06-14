@@ -12,6 +12,7 @@ import 'package:mod_do_an/component/text/text_normal.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/translations/locale_keys.g.dart';
 import 'package:mod_do_an/utils/loading_helper.dart';
 import 'package:mod_do_an/utils/validator.dart';
 
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 title: TextBold(
-                  title: "Đăng nhập",
+                  title: LocaleKeys.log_in,
                   size: 18.sp,
                   colors: AppColors.jPrimaryColor.withOpacity(0.7),
                 ),
@@ -72,8 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextInputLabel(
                           label: true,
                           controller: _emailController,
-                          labelText: "Email",
-                          hintText: "Email của bạn ",
+                          labelText: LocaleKeys.email,
+                          hintText: LocaleKeys.email,
                           validator: (str) => Validator.validateEmail(str),
                           onChanged: (a) {
                             print("qua ghê");
@@ -86,7 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextInputPasswordLabel(
                           label: true,
                           controller: _passwordController,
-                          labelText: "Mật khẩu",
+                          labelText: LocaleKeys.password,
+                          hintText: LocaleKeys.password,
                           obscureText: _obscureText,
                           onChanged: (a) {
                             setState(() {});
