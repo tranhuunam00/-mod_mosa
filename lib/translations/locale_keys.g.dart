@@ -34,6 +34,7 @@ abstract class LocaleKeys {
   static const surname = "surname";
   static const name = "name";
   static const password = "password";
+  static const re_password = "re_password";
   static const phone_number = "phone_number";
   static const date_of_birth = "date_of_birth";
   static const gender = "gender";
@@ -99,7 +100,8 @@ abstract class LocaleKeys {
   static const enter_price = "enter_price";
 
   //login screen
-  static const successful_account_registration = "successful_account_registration";
+  static const successful_account_registration =
+      "successful_account_registration";
   static const nationality = "nationality";
   static const log_in = "log_in";
   static const selected_package = "selected_package";

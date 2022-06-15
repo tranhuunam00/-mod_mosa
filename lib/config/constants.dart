@@ -9,8 +9,7 @@ class Constants {
   static const String login = '/login';
   static const String register = '/register';
   static const String onboardingScreen = '/onboarding';
-  static const String baseUrl =
-      "https://tranhuunam18020938-do-an.herokuapp.com/api/";
+  static const String baseUrl = "https://mosa-be.herokuapp.com/api/";
   static const String signUpScreen = 'sign_up';
   static const String userRoute = "users/";
   static const Map<String, String> requestHeaders = {

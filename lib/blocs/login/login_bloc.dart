@@ -19,9 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is LoginWithEmailEvent) {
       yield* _mapLoginWithEmailToState(event);
     }
-    if (event is LoginTestEvent) {
-      yield* _testEvent();
-    }
   }
 
   Stream<LoginState> _mapLoginWithEmailToState(
@@ -34,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print(jsonDecode(response.body));
       BaseResponse baseResponse =
           BaseResponse.fromJson(jsonDecode(response.body));
-      print(baseResponse);
+
       if (baseResponse.success) {
         SecureStorage().saveToken(token: baseResponse.data!['token']);
         yield LoginSuccessState(role: baseResponse.data!['user']['role']);
@@ -42,20 +39,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginFailState(message: baseResponse.message);
         //TODO
       }
-    } catch (error) {
-      debugPrint("LoginErrorState -> " + error.toString());
-      yield LoginErrorState(error: error.toString());
-    }
-  }
-
-  Stream<LoginState> _testEvent() async* {
-    yield LoginLoadingState();
-
-    try {
-      print("vào test ");
-      LoginSuccessState a = new LoginSuccessState(role: "admin");
-      LoginSuccessState a1 = new LoginSuccessState(role: "hi");
-      print(a == a1);
     } catch (error) {
       debugPrint("LoginErrorState -> " + error.toString());
       yield LoginErrorState(error: error.toString());

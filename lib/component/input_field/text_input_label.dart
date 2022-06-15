@@ -25,37 +25,49 @@ class TextInputLabel extends StatefulWidget {
   final double? subSize;
   int? maxLines;
   String? prefixText;
+  Icon? prefixIcon;
+  Color? suffixIconColor;
+
   bool label;
 
-  TextInputLabel({
-    Key? key,
-    this.maxLines,
-    this.prefixText,
-    this.onChanged,
-    this.paddingLeft,
-    this.size,
-    this.subSize,
-    this.fontWeight,
-    this.colorBorderSide,
-    this.inputFormatter,
-    this.keyboardType,
-    this.colorTextField,
-    this.textColor,
-    this.hintText = '',
-    required this.controller,
-    this.validator,
-    this.onSaved,
-    required this.labelText,
-    this.readOnly = false,
-    this.subLabelText = '',
-    this.label = false,
-  }) : super(key: key);
+  TextInputLabel(
+      {Key? key,
+      this.maxLines,
+      this.suffixIconColor,
+      this.prefixText,
+      this.onChanged,
+      this.paddingLeft,
+      this.size,
+      this.subSize,
+      this.fontWeight,
+      this.colorBorderSide,
+      this.inputFormatter,
+      this.keyboardType,
+      this.colorTextField,
+      this.textColor,
+      this.hintText = '',
+      required this.controller,
+      this.validator,
+      this.onSaved,
+      required this.labelText,
+      this.readOnly = false,
+      this.subLabelText = '',
+      this.label = false,
+      this.prefixIcon})
+      : super(key: key);
 
   @override
   _TextInputLabelState createState() => _TextInputLabelState();
 }
 
 class _TextInputLabelState extends State<TextInputLabel> {
+  String? getTextError() {
+    print(widget.controller.text);
+
+    print(widget.validator!(""));
+    return "loi";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -108,6 +120,11 @@ class _TextInputLabelState extends State<TextInputLabel> {
             fontStyle: FontStyle.normal,
           ),
           decoration: InputDecoration(
+            errorText: widget.validator != null
+                ? widget.validator!(widget.controller.text)
+                : null,
+            prefixIcon: widget.prefixIcon ?? null,
+            suffixIconColor: widget.suffixIconColor ?? Colors.blue,
             prefixText:
                 widget.controller.text.isNotEmpty ? widget.prefixText : null,
             prefixStyle: TextStyle(

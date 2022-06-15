@@ -113,6 +113,9 @@ class _TextInputPasswordLabelState extends State<TextInputPasswordLabel> {
             fontStyle: FontStyle.normal,
           ),
           decoration: InputDecoration(
+            errorText: widget.validator != null
+                ? widget.validator!(widget.controller.text)
+                : null,
             filled: true,
             contentPadding: EdgeInsets.only(
                 left: 24.w, top: 12.h, bottom: 12.h, right: 12.w),

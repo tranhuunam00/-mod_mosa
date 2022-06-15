@@ -29,6 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
@@ -92,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           maintainBottomViewPadding: false,
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
+              print(overscroll.paintOffset);
               overscroll.disallowIndicator();
               return true;
             },
@@ -131,6 +133,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _lastNameController,
                       labelText: LocaleKeys.surname.tr(),
                       hintText: LocaleKeys.surname.tr(),
+                      prefixIcon: Icon(
+                        Icons.person,
+                      ),
                       onChanged: (a) {
                         setState(() {});
                       },
@@ -143,6 +148,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _firstNameController,
                         labelText: LocaleKeys.name.tr(),
                         hintText: LocaleKeys.name.tr(),
+                        prefixIcon: Icon(
+                          Icons.person,
+                        ),
                         onChanged: (a) {
                           setState(() {});
                         },
@@ -222,74 +230,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 15.h,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 90.w,
-                          child: TextNormal(
-                            title: LocaleKeys.nationality.tr(),
-                            textAlign: TextAlign.start,
-                            size: 15.sp,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 30.w,
-                        ),
-                        SizedBox(
-                          width: 100.w,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                height: 24.h,
-                                width: 24.w,
-                                child: Radio(
-                                  value: 1,
-                                  groupValue: selectedNationality,
-                                  onChanged: (value) {
-                                    _selectedNationality(value);
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                              TextNormal(
-                                textAlign: TextAlign.left,
-                                title: "VN",
-                                size: 15.sp,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.h,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              height: 24.h,
-                              width: 24.w,
-                              child: Radio(
-                                value: 2,
-                                groupValue: selectedNationality,
-                                onChanged: (value) {
-                                  _selectedNationality(value);
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15.w,
-                            ),
-                            TextNormal(
-                              textAlign: TextAlign.left,
-                              title: "JP",
-                              size: 15.sp,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                     SizedBox(
                       height: 15.h,
                     ),
@@ -362,10 +302,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _passwordController,
                         labelText: LocaleKeys.password.tr(),
                         hintText: LocaleKeys.password.tr(),
+                        validator: (str) => Validator.validatePassWord(str),
                         obscureText: _obscureText,
                         onChanged: (a) {
                           setState(() {});
                         },
+                        suffix: Padding(
+                          padding: EdgeInsets.only(right: 15.w),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              Icons.remove_red_eye,
+                              color: !_obscureText ? Colors.indigoAccent : null,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      child: TextInputPasswordLabel(
+                        label: true,
+                        controller: _rePasswordController,
+                        labelText: LocaleKeys.re_password.tr(),
+                        hintText: LocaleKeys.re_password.tr(),
+                        obscureText: _obscureText,
+                        onChanged: (a) {
+                          setState(() {});
+                        },
+                        validator: (str) => Validator.validateRePassWord(
+                            str, _passwordController.text),
                         suffix: Padding(
                           padding: EdgeInsets.only(right: 15.w),
                           child: InkWell(
@@ -399,7 +371,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ? AppColors.kPrimaryColor
                               : AppColors.kPrimaryColor.withOpacity(0.7),
                         ),
-                        onPressed: () {}),
+                        onPressed: _validate()
+                            ? () {
+                                print(_passwordController.text);
+                              }
+                            : null),
                   ],
                 ),
               ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
@@ -34,6 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is LoginLoadingState) {
             LoadingHelper.showLoading(context);
           }
+          if (state is LoginSuccessState ||
+              state is LoginErrorState ||
+              state is LoginFailState) {
+            LoadingHelper.hideLoading(context);
+          }
+          if (state is LoginSuccessState) {}
         },
         child: GestureDetector(
             onTap: () {
@@ -77,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: LocaleKeys.email,
                           validator: (str) => Validator.validateEmail(str),
                           onChanged: (a) {
-                            print("qua ghê");
                             setState(() {});
                           },
                         ),
@@ -90,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: LocaleKeys.password,
                           hintText: LocaleKeys.password,
                           obscureText: _obscureText,
+                          validator: (str) => Validator.validatePassWord(str),
                           onChanged: (a) {
                             setState(() {});
                           },
@@ -133,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         enable: true,
                         color: _validate()
                             ? AppColors.jPrimaryColor
-                            : AppColors.jPrimaryColor.withOpacity(0.7),
+                            : AppColors.jPrimaryColor.withOpacity(0.5),
                         child: TextNormal(
                           size: 15.sp,
                           title: "Đăng nhập",
@@ -146,9 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 BlocProvider.of<LoginBloc>(context).add(
                                     LoginWithEmailEvent(
                                         email: _emailController.text,
-                                        password: _passwordController.text)
-                                    // LoginTestEvent()
-                                    );
+                                        password: _passwordController.text));
                               }
                             : null,
                       ),
