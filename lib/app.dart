@@ -6,6 +6,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_state.dart';
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screem.dart';
@@ -41,6 +42,8 @@ class DoAnApp extends StatelessWidget {
                           const OnboardingScreen(),
                       Constants.login: (context) => const LoginScreen(),
                       Constants.register: (context) => const RegisterScreen(),
+                      Constants.forgotPassword: (context) =>
+                          const ForgotScreen(),
                     },
                   ),
                 )));

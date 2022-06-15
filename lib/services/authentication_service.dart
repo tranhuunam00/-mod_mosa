@@ -14,4 +14,12 @@ class AuthenticationService {
         body: jsonEncode({"email": email, "password": password}));
     return response;
   }
+
+  Future<dynamic> forgotWithEmail({required String email}) async {
+    String uri = "${Constants.baseUrl}${Constants.userRoute}forgot-password";
+
+    var response = await http.post(Uri.parse(uri),
+        headers: Constants.requestHeaders, body: jsonEncode({"email": email}));
+    return response;
+  }
 }

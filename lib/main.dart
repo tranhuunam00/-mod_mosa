@@ -8,6 +8,7 @@ import 'package:mod_do_an/app.dart';
 import 'package:flutter/material.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
+import 'package:mod_do_an/blocs/forgot/forgot_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
 import 'package:mod_do_an/repository/authentication_repository.dart';
@@ -44,6 +45,11 @@ void main() {
         BlocProvider(
           create: (context) => RegisterBloc(
             registerRepository: RegisterRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ForgotBloc(
+            authenticationRepository: authenticationRepository,
           ),
         ),
       ], child: const DoAnApp()),

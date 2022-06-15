@@ -5,18 +5,22 @@ import 'package:mod_do_an/storage/secure_storge.dart';
 
 @immutable
 class Constants {
-  /* Routing Names */
-  static const String login = '/login';
-  static const String register = '/register';
-  static const String onboardingScreen = '/onboarding';
   static const String baseUrl = "https://mosa-be.herokuapp.com/api/";
-  static const String signUpScreen = 'sign_up';
+
   static const String userRoute = "users/";
+
   static const Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
   };
 
+  /* Routing Names */
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String onboardingScreen = '/onboarding';
+  static const String signUpScreen = 'sign_up';
+  static const String forgotPassword = 'forgot_password';
+  //
   static Future<Map<String, String>> requestHeadersToken() async {
     var token = await SecureStorage().getToken();
     Map<String, String> _requestHeaders = {

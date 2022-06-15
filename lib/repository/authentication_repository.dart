@@ -6,4 +6,8 @@ class AuthenticationRepository {
     return await AuthenticationService()
         .loginWithEmail(email: email, password: password);
   }
+
+  Future<dynamic> forgotWithEmail({required String email}) async {
+    return await AuthenticationService().forgotWithEmail(email: email);
+  }
 }

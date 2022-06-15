@@ -117,20 +117,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      // Align(
-                      //   alignment: Alignment.centerRight,
-                      //   child: InkWell(
-                      //     highlightColor: Colors.transparent,
-                      //     splashColor: Colors.transparent,
-                      //     onTap: () {},
-                      //     child: TextNormal(
-                      //       textAlign: TextAlign.center,
-                      //       color: AppColors.jPrimaryColor,
-                      //       size: 15.sp,
-                      //       title: 'Quên mật khẩu?',
-                      //     ),
-                      //   ),
-                      // ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () => Navigator.pushNamed(
+                              context, Constants.forgotPassword),
+                          child: TextNormal(
+                            textAlign: TextAlign.center,
+                            color: AppColors.jPrimaryColor,
+                            size: 15.sp,
+                            title: 'Quên mật khẩu?',
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 25.h,
                       ),

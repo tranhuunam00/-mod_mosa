@@ -109,4 +109,6 @@ abstract class LocaleKeys {
 
   //passwork screen
   static const new_password_does_not_match = "new_password_does_not_match";
+
+  static const forgot_password = "forgot_password";
 }
