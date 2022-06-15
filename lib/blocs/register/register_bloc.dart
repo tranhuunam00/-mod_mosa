@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_event.dart';
 import 'package:mod_do_an/blocs/register/register_state.dart';
 import 'package:mod_do_an/models/response/base_response.dart';
-import 'package:mod_do_an/repository/register_repository.dart';
+import 'package:mod_do_an/repositories/register_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({required this.registerRepository})

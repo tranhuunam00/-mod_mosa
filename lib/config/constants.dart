@@ -20,6 +20,9 @@ class Constants {
   static const String onboardingScreen = '/onboarding';
   static const String signUpScreen = 'sign_up';
   static const String forgotPassword = 'forgot_password';
+  static const String dashBoardCustomer = 'dashboard_customer';
+  static const String myProfileSreen = 'my_profile';
+
   //
   static Future<Map<String, String>> requestHeadersToken() async {
     var token = await SecureStorage().getToken();

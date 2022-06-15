@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/forgot/forgot.state.dart';
 import 'package:mod_do_an/blocs/forgot/forgot_event.dart';
 
-import 'package:mod_do_an/repository/authentication_repository.dart';
 import 'package:mod_do_an/models/response/base_response.dart';
+import 'package:mod_do_an/repositories/authentication_repository.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 
 class ForgotBloc extends Bloc<ForgotEvent, ForgotState> {

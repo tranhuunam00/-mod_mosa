@@ -10,9 +10,11 @@ import 'package:mod_do_an/blocs/authentication/authentication_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
 import 'package:mod_do_an/blocs/forgot/forgot_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
+import 'package:mod_do_an/blocs/profile/profile_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
-import 'package:mod_do_an/repository/authentication_repository.dart';
-import 'package:mod_do_an/repository/register_repository.dart';
+import 'package:mod_do_an/repositories/authentication_repository.dart';
+import 'package:mod_do_an/repositories/profile_repository.dart';
+import 'package:mod_do_an/repositories/register_repository.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -50,6 +52,11 @@ void main() {
         BlocProvider(
           create: (context) => ForgotBloc(
             authenticationRepository: authenticationRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(
+            profileRepository: ProfileRepository(),
           ),
         ),
       ], child: const DoAnApp()),

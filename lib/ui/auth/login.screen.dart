@@ -38,7 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
               state is LoginFailState) {
             LoadingHelper.hideLoading(context);
           }
-          if (state is LoginSuccessState) {}
+          if (state is LoginSuccessState) {
+            if (state.role == "CUSTOMER") {
+              Navigator.pushNamed(context, Constants.dashBoardCustomer);
+            }
+          }
         },
         child: GestureDetector(
             onTap: () {

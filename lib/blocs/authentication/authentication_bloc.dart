@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_state.dart';
-import 'package:mod_do_an/repository/authentication_repository.dart';
+import 'package:mod_do_an/repositories/authentication_repository.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 
 class AuthenticationBloc
@@ -25,6 +25,8 @@ class AuthenticationBloc
       AppLoadedEvent event) async* {
     yield AuthenticationLoadingState();
     var token = await SecureStorage().getToken();
+    print("token: ");
+    print(token);
     if (token != null) {
       yield AuthenticationAuthenticatedState();
     } else {

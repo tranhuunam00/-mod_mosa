@@ -10,6 +10,8 @@ import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screem.dart';
+import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
+import 'package:mod_do_an/ui/dashboard_student_screen.dart';
 
 class DoAnApp extends StatelessWidget {
   const DoAnApp({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class DoAnApp extends StatelessWidget {
                       builder: (context, state) {
                         if (state is AuthenticationAuthenticatedState) {
                           print(state);
-                          return const OnboardingScreen();
+                          return const DashboardCustomerScreen();
                         } else {
                           return const OnboardingScreen();
                         }
@@ -42,8 +44,12 @@ class DoAnApp extends StatelessWidget {
                           const OnboardingScreen(),
                       Constants.login: (context) => const LoginScreen(),
                       Constants.register: (context) => const RegisterScreen(),
+                      Constants.dashBoardCustomer: (context) =>
+                          const DashboardCustomerScreen(),
                       Constants.forgotPassword: (context) =>
                           const ForgotScreen(),
+                      Constants.myProfileSreen: (context) =>
+                          const MyProfileScreen(),
                     },
                   ),
                 )));
