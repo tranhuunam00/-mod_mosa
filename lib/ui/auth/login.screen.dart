@@ -11,7 +11,10 @@ import 'package:mod_do_an/component/text/text_normal.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/config/http_responses.dart';
+import 'package:mod_do_an/services/toast.service.dart';
 import 'package:mod_do_an/translations/locale_keys.g.dart';
+import 'package:mod_do_an/utils/dialog_helper.dart';
 import 'package:mod_do_an/utils/loading_helper.dart';
 import 'package:mod_do_an/utils/validator.dart';
 
@@ -39,9 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
             LoadingHelper.hideLoading(context);
           }
           if (state is LoginSuccessState) {
+            ToastService.showToast(
+              msg: HttpResponse.SUCCESS,
+            );
             if (state.role == "CUSTOMER") {
               Navigator.pushNamed(context, Constants.dashBoardCustomer);
             }
+          }
+          if (state is LoginFailState) {
+            ToastService.showToast(
+                msg: state.message, backgroundColor: AppColors.pPrimaryColor);
+            // DialogHelper.showGenericErrorDialog(
+            //     context: context, message: state.message);
           }
         },
         child: GestureDetector(
