@@ -33,6 +33,13 @@ class Validator {
     }
     return null;
   }
+
+  static String? validateRequired(String? value, String lable) {
+    if (value!.isEmpty) {
+      return 'Please Enter ' + lable;
+    }
+    return null;
+  }
 }
 
 class PhoneInputFormatter extends TextInputFormatter {
@@ -40,7 +47,7 @@ class PhoneInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     var newText = newValue.text;
-
+    print(newText);
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }

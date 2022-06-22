@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
+import 'package:mod_do_an/blocs/register/register_event.dart';
 import 'package:mod_do_an/blocs/register/register_state.dart';
 import 'package:mod_do_an/component/button/button_material.dart';
 import 'package:mod_do_an/component/input_field/text_input_label.dart';
@@ -13,7 +15,10 @@ import 'package:mod_do_an/component/text/text_bold.dart';
 import 'package:mod_do_an/component/text/text_normal.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/models/register/register.dart';
+import 'package:mod_do_an/services/toast.service.dart';
 import 'package:mod_do_an/translations/locale_keys.g.dart';
+import 'package:mod_do_an/utils/dialog_helper.dart';
 import 'package:mod_do_an/utils/loading_helper.dart';
 import 'package:mod_do_an/utils/picker_helper.dart';
 import 'package:mod_do_an/utils/validator.dart';
@@ -37,24 +42,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   DateTime selectedDate = DateTime.now();
   bool _obscureText = true;
   int? selectedGender;
-  int? selectedNationality;
 
   @override
   void initState() {
     super.initState();
     selectedGender = 1;
-    selectedNationality = 1;
   }
 
   void _selectedGender(val) {
     setState(() {
       selectedGender = val;
-    });
-  }
-
-  void _selectedNationality(val) {
-    setState(() {
-      selectedNationality = val;
     });
   }
 
@@ -93,32 +90,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
           maintainBottomViewPadding: false,
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
-              print(overscroll.paintOffset);
               overscroll.disallowIndicator();
               return true;
             },
             child: SingleChildScrollView(
               child: BlocListener<RegisterBloc, RegisterState>(
                 listener: (context, state) {
-                  if (state is CreateStudentLoadingState) {
+                  if (state is CreateUserLoadingState) {
                     LoadingHelper.showLoading(context);
-                  } else if (state is CreateStudentSuccess) {
+                  }
+                  if (state is CreateUserSuccess) {
                     LoadingHelper.hideLoading(context);
                     debugPrint("Create Register Success");
-                    Navigator.pushReplacementNamed(
-                        context, Constants.signUpScreen);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.jPrimaryColor,
-                        content: TextNormal(
-                          title:
-                              LocaleKeys.successful_account_registration.tr(),
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  } else if (state is CreateStudentFail) {
+                    DialogHelper.showNotify(
+                            context: context,
+                            message: "Please confirm check mail")
+                        .then((value) => {
+                              if (value is OkCancelResult)
+                                {
+                                  Navigator.pushReplacementNamed(
+                                      context, Constants.login)
+                                }
+                            });
+                  }
+                  if (state is CreateUserFail) {
                     LoadingHelper.hideLoading(context);
+                    ToastService.showToast(
+                        msg: state.message,
+                        backgroundColor: AppColors.errorBackgroundColor);
                     // DialogHelper.showGenericErrorDialog(
                     //     context: context, message: state.message);
                     // debugPrint("Create Register Fail");
@@ -133,6 +132,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _lastNameController,
                       labelText: LocaleKeys.surname.tr(),
                       hintText: LocaleKeys.surname.tr(),
+                      validator: (str) => Validator.validateRequired(
+                          str, LocaleKeys.surname.tr()),
                       prefixIcon: Icon(
                         Icons.person,
                       ),
@@ -148,6 +149,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _firstNameController,
                         labelText: LocaleKeys.name.tr(),
                         hintText: LocaleKeys.name.tr(),
+                        validator: (str) => Validator.validateRequired(
+                            str, LocaleKeys.name.tr()),
                         prefixIcon: Icon(
                           Icons.person,
                         ),
@@ -242,7 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (result != null) {
                             setState(() {
                               _dobController.text =
-                                  DateFormat('dd/MM/yyyy').format(result);
+                                  DateFormat('yyyy-MM-dd').format(result);
                             });
                           }
                         },
@@ -287,7 +290,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         inputFormatter: [
                           FilteringTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(10),
-                          PhoneInputFormatter(),
+                          // PhoneInputFormatter(),
                         ],
                         keyboardType: TextInputType.phone,
                         onChanged: (a) {
@@ -373,7 +376,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         onPressed: _validate()
                             ? () {
-                                print(_passwordController.text);
+                                BlocProvider.of<RegisterBloc>(context).add(
+                                    CreateUserEvent(
+                                        register: new Register(
+                                            gender: selectedGender == 1
+                                                ? "MALE"
+                                                : "FEMALE",
+                                            dob: _dobController.text,
+                                            phone: _phoneController.text,
+                                            email: _emailController.text,
+                                            password: _passwordController.text,
+                                            firstName:
+                                                _firstNameController.text,
+                                            lastName:
+                                                _lastNameController.text)));
                               }
                             : null),
                   ],
@@ -392,7 +408,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _lastNameController.text.trim().isNotEmpty &&
         _dobController.text.trim().isNotEmpty &&
         _emailController.text.trim().isNotEmpty &&
-        _phoneController.text.trim().length == 12 &&
+        _phoneController.text.trim().isNotEmpty &&
         _passwordController.text.trim().isNotEmpty) {
       return true;
     } else {

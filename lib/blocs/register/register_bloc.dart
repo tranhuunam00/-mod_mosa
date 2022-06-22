@@ -5,35 +5,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_event.dart';
 import 'package:mod_do_an/blocs/register/register_state.dart';
 import 'package:mod_do_an/models/response/base_response.dart';
-import 'package:mod_do_an/repositories/register_repository.dart';
+import 'package:mod_do_an/repositories/authentication_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  RegisterBloc({required this.registerRepository})
-      : super(CreateStudentInitialState());
-  final RegisterRepository registerRepository;
+  RegisterBloc({required this.authenticationRepository})
+      : super(CreateUserInitialState());
+  final AuthenticationRepository authenticationRepository;
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    if (event is CreateStudentEvent) {
+    if (event is CreateUserEvent) {
       yield* _mapCreateRegisterToState(event);
     }
   }
 
   Stream<RegisterState> _mapCreateRegisterToState(
-      CreateStudentEvent event) async* {
-    yield CreateStudentLoadingState();
-
+      CreateUserEvent event) async* {
+    yield CreateUserLoadingState();
+    print(event.register.phone);
     try {
-      final res = await registerRepository.createStudent(event.register);
+      final res = await authenticationRepository.creatUser(event.register);
       if (res.statusCode == HttpStatus.created) {
-        yield CreateStudentSuccess();
+        yield CreateUserSuccess();
       } else {
-        yield CreateStudentFail(
+        yield CreateUserFail(
             message: BaseResponse.fromJson(jsonDecode(res.body)).message);
       }
     } catch (e) {
       debugPrint("CreateRegister: error -> ${e.toString()}");
-      yield CreateStudentFail(message: e.toString());
+      yield CreateUserFail(message: e.toString());
     }
   }
 }

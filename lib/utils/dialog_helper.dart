@@ -5,7 +5,7 @@ import 'package:mod_do_an/component/dialog/dialog_select_option.dart';
 import 'package:mod_do_an/models/stateModel.dart';
 
 class DialogHelper {
-  static Future<dynamic> showGenericErrorDialog(
+  static Future<dynamic> showNotify(
       {required BuildContext context,
       required String message,
       String? title}) async {

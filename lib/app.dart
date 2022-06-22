@@ -9,7 +9,7 @@ import 'package:mod_do_an/config/constants.dart';
 import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
-import 'package:mod_do_an/ui/auth/register.screem.dart';
+import 'package:mod_do_an/ui/auth/register.screen.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/dashboard_student_screen.dart';
 

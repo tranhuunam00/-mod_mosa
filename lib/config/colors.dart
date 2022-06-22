@@ -16,7 +16,6 @@ class AppColors {
   static const Color gPrimaryColor = Color(0xFFF3F4F6);
   static const Color bgPrimaryColor = Color(0xFFF6F6F6);
 
-
   static const Color hintTextPrimaryColor = Color(0xFF9CA3AF);
 
   static const Color grey700 = Color(0xFF374151);
@@ -73,4 +72,6 @@ class AppColors {
   static const Color sortByContainerColor = Color(0xff383838);
   static const Color venuesBorderSideColor = Color(0xFF939393);
   static const Color venuesSecondBorderSideColor = Color(0xFFA9A9A9);
+
+  static const Color errorBackgroundColor = Color.fromARGB(255, 232, 9, 9);
 }

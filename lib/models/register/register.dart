@@ -1,17 +1,15 @@
 class Register {
   final String firstName;
   final String lastName;
-  String? gender;
-  String? dob;
-  String? nationality;
+  final String gender;
+  final String dob;
   final String email;
   final String phone;
   final String password;
 
   Register({
-    this.gender,
-    this.dob,
-    this.nationality,
+    required this.gender,
+    required this.dob,
     required this.phone,
     required this.email,
     required this.password,
@@ -27,6 +25,5 @@ class Register {
         'dob': dob,
         'gender': gender,
         'password': password,
-        'nationality': nationality,
       };
 }

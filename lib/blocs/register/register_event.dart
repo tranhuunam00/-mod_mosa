@@ -11,8 +11,8 @@ abstract class RegisterEvent extends Equatable {
 
 class CreateStudentInitialEvent extends RegisterEvent {}
 
-class CreateStudentEvent extends RegisterEvent {
+class CreateUserEvent extends RegisterEvent {
   final Register register;
 
-  const CreateStudentEvent({required this.register});
+  const CreateUserEvent({required this.register});
 }

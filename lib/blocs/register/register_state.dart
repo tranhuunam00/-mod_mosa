@@ -8,16 +8,14 @@ abstract class RegisterState extends Equatable {
   List<Object?> get props => [];
 }
 
-class CreateStudentInitialState extends RegisterState {}
+class CreateUserInitialState extends RegisterState {}
 
-class CreateStudentLoadingState extends RegisterState {}
+class CreateUserLoadingState extends RegisterState {}
 
-class CreateStudentSuccess extends RegisterState {}
+class CreateUserSuccess extends RegisterState {}
 
-class CreateStudentFail extends RegisterState {
+class CreateUserFail extends RegisterState {
   final String message;
 
-  const CreateStudentFail({required this.message});
+  const CreateUserFail({required this.message});
 }
-
-

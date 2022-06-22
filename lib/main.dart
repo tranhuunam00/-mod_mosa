@@ -14,7 +14,6 @@ import 'package:mod_do_an/blocs/profile/profile_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
 import 'package:mod_do_an/repositories/authentication_repository.dart';
 import 'package:mod_do_an/repositories/profile_repository.dart';
-import 'package:mod_do_an/repositories/register_repository.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -46,7 +45,7 @@ void main() {
                 LoginBloc(authenticationRepository: authenticationRepository)),
         BlocProvider(
           create: (context) => RegisterBloc(
-            registerRepository: RegisterRepository(),
+            authenticationRepository: authenticationRepository,
           ),
         ),
         BlocProvider(
