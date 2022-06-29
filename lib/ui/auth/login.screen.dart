@@ -46,7 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
               msg: HttpResponse.SUCCESS,
             );
             if (state.role == "CUSTOMER") {
-              Navigator.pushNamed(context, Constants.dashBoardCustomer);
+              Navigator.pushReplacementNamed(
+                  context, Constants.dashBoardCustomer);
             }
           }
           if (state is LoginFailState) {

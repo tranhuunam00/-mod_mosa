@@ -75,7 +75,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     color: AppColors.kPrimaryColor,
                   ),
                   onPressed: () => {
-                        Navigator.pushNamed(context, Constants.login),
+                        Navigator.pushReplacementNamed(
+                            context, Constants.login),
                       }),
             ),
             Padding(
@@ -95,7 +96,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   InkWell(
                     onTap: () {
                       print("hihi");
-                      Navigator.pushNamed(context, Constants.register);
+                      Navigator.pushReplacementNamed(
+                          context, Constants.register);
                     },
                     child: TextNormal(
                       textAlign: TextAlign.left,

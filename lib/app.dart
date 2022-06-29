@@ -11,6 +11,7 @@ import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
+import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/dashboard_student_screen.dart';
 
 class DoAnApp extends StatelessWidget {
@@ -50,6 +51,7 @@ class DoAnApp extends StatelessWidget {
                           const ForgotScreen(),
                       Constants.myProfileSreen: (context) =>
                           const MyProfileScreen(),
+                      Constants.quizScreen: (context) => const QuizScreen(),
                     },
                   ),
                 )));

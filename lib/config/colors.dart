@@ -74,4 +74,7 @@ class AppColors {
   static const Color venuesSecondBorderSideColor = Color(0xFFA9A9A9);
 
   static const Color errorBackgroundColor = Color.fromARGB(255, 232, 9, 9);
+
+  static const Color yesColor = Color(0xff84cc16);
+  static const Color noColor = Color(0xffdc2626);
 }

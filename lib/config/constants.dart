@@ -22,6 +22,7 @@ class Constants {
   static const String forgotPassword = 'forgot_password';
   static const String dashBoardCustomer = 'dashboard_customer';
   static const String myProfileSreen = 'my_profile';
+  static const String quizScreen = 'quiz';
 
   //
   static Future<Map<String, String>> requestHeadersToken() async {

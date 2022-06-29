@@ -8,6 +8,8 @@ abstract class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
+class Loading extends ProfileState {}
+
 class ProfileInitialState extends ProfileState {}
 
 class ProfileLoadingState extends ProfileState {}
@@ -42,4 +44,13 @@ class UpdatePasswordErrorState extends ProfileState {
   final String message;
 
   const UpdatePasswordErrorState({required this.message});
+}
+
+// stop bang
+class CreateStopBangSuccessState extends ProfileState {}
+
+class CreateStopBangErrorState extends ProfileState {
+  final String message;
+
+  const CreateStopBangErrorState({required this.message});
 }
