@@ -15,6 +15,8 @@ class AppColors {
   static const Color iPrimaryColor = Color(0xFF0A82A8);
   static const Color gPrimaryColor = Color(0xFFF3F4F6);
   static const Color bgPrimaryColor = Color(0xFFF6F6F6);
+  static const Color a = Color(0xFFF6F6F6);
+
 
   static const Color hintTextPrimaryColor = Color(0xFF9CA3AF);
 
