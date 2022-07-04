@@ -1,35 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mod_do_an/component/text/text_bold.dart';
 import 'package:mod_do_an/config/colors.dart';
+import 'package:mod_do_an/config/images.dart';
+import 'package:mod_do_an/models/user/stopBang.dart';
+import 'package:mod_do_an/ui/components/background.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 
 class CartQuiz extends StatelessWidget {
-  final Widget child;
   final bool? value;
+  final StopBangQuestionModel stopbang;
 
-  const CartQuiz({Key? key, required this.child, this.value}) : super(key: key);
+  const CartQuiz({Key? key, this.value, required this.stopbang})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
+        height: 400.h,
         alignment: Alignment.center,
         child: Card(
-          color: AppColors.darkTextPrimaryColor,
+          color: AppColors.grey300,
           elevation: 0.3,
           shape: RoundedRectangleBorder(
             side: BorderSide(
               color: Theme.of(context).colorScheme.outline,
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
-          child: const SizedBox(
-            height: 200,
-            child: Center(child: Text('Outlined Card')),
+          child: Background(
+            urlBackground: stopbang.urlImg,
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 40.0),
+                  child: TextBold(title: stopbang.title),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    height: 200,
+                    child: Center(
+                        child: Text(
+                      stopbang.content,
+                      style: TextStyle(letterSpacing: 0.4, height: 2.h),
+                    )),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
       Spacer(),
+      Center(
+        child: Text("Yes"),
+      ),
       Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,17 +64,16 @@ class CartQuiz extends StatelessWidget {
             InkwellStyle(
                 label: "YES",
                 onTap: () {},
-                color: (value == null || value == true)
+                color: (value == true)
                     ? AppColors.yesColor
-                    : AppColors.gPrimaryColor,
+                    : AppColors.yesColorOpa,
                 width: (value == true) ? 200 : 140,
                 icon: (value == true) ? Icons.accessible : null),
             InkwellStyle(
                 label: "NO",
                 onTap: () {},
-                color: (value == null || value == false)
-                    ? AppColors.noColor
-                    : AppColors.gPrimaryColor,
+                color:
+                    (value == false) ? AppColors.noColor : AppColors.noColorOpa,
                 width: (value == false) ? 200 : 140,
                 icon: (value == false) ? Icons.accessible : null),
           ],

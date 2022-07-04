@@ -4,7 +4,9 @@ import 'package:mod_do_an/config/images.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
-  const Background({Key? key, required this.child}) : super(key: key);
+  final String urlBackground;
+  const Background({Key? key, required this.child, required this.urlBackground})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class Background extends StatelessWidget {
         width: size.width,
         height: size.height,
         child: Image.asset(
-          "assets/images/backgroundDefault.jpg",
+          urlBackground,
           color: Color.fromRGBO(255, 255, 255, 0.3),
           colorBlendMode: BlendMode.softLight,
           fit: BoxFit.cover,

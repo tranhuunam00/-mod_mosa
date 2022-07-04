@@ -56,6 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (state is ProfileLoadedState) {
             profileUser = state.profileUser;
             return Background(
+              urlBackground: AppImages.backgroundDefault,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

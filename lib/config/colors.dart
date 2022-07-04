@@ -17,7 +17,6 @@ class AppColors {
   static const Color bgPrimaryColor = Color(0xFFF6F6F6);
   static const Color a = Color(0xFFF6F6F6);
 
-
   static const Color hintTextPrimaryColor = Color(0xFF9CA3AF);
 
   static const Color grey700 = Color(0xFF374151);
@@ -78,5 +77,10 @@ class AppColors {
   static const Color errorBackgroundColor = Color.fromARGB(255, 232, 9, 9);
 
   static const Color yesColor = Color(0xff84cc16);
+
+  static const Color yesColorOpa = Color.fromARGB(255, 201, 225, 167);
+
+  static const Color noColorOpa = Color.fromARGB(255, 232, 159, 159);
+
   static const Color noColor = Color(0xffdc2626);
 }

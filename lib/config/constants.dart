@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/onboarding.dart';
 import 'package:mod_do_an/models/user/stopBang.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
@@ -56,25 +57,34 @@ class Constants {
   static List<StopBangQuestionModel> listStopBang = [
     StopBangQuestionModel(
         title: "Ngáy",
+        urlImg: AppImages.ngu_ngay_Img,
         content:
             "Ông/bà có ngáy to không? (ngáy to đến mức nghe được từ bên ngoài dù đã đóng kín cửa phòng hay đến mức người ngủ bên cạnh cũng phải phàn nàn vì tiếng ngáy trong đêm)?"),
     StopBangQuestionModel(
         title: "Mệt mỏi",
+        urlImg: AppImages.met_moi_Img,
         content:
             "Ông/bà có thường cảm thấy mệt mỏi ,uể oải hay buồn ngủ vào ban ngày không( như là ngủ gật trong khi lái xe hay khi đang nói chuyện với người khác)?"),
     StopBangQuestionModel(
         title: "Quan sát",
+        urlImg: AppImages.quan_sat_ngay_Img,
         content:
             "Đã từng có ai nhìn thấy ông/bà ngưng thở hay nghẹt thở/ thở hổn hển trong lúc ngủ chưa?"),
     StopBangQuestionModel(
         title: "Huyết áp",
+        urlImg: AppImages.huyet_ap_thap_Img,
         content:
             "Ông/bà có bị tăng huyết áp hay điều trị tăng huyết áp không?"),
     StopBangQuestionModel(
-        title: "Chiều cao", content: "Chiều cao của ông/bà là?"),
+        urlImg: AppImages.chieu_cao_Img,
+        title: "Chiều cao",
+        content: "Chiều cao của ông/bà là?"),
     StopBangQuestionModel(
-        title: "Cân nặng", content: "Cân nặng của ông/bà là?"),
+        urlImg: AppImages.can_nang_Img,
+        title: "Cân nặng",
+        content: "Cân nặng của ông/bà là?"),
     StopBangQuestionModel(
+        urlImg: AppImages.do_vong_co_Img,
         title: "Kích thước vòng cổ lớn",
         content:
             "Đo xung quanh chỗ lồi nhất của sụn giáp - Kích thước vòng cổ có lớn hơn 40 cm không?")
