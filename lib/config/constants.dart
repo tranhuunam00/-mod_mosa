@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mod_do_an/models/onboarding.dart';
+import 'package:mod_do_an/models/user/stopBang.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 
 @immutable
@@ -50,5 +51,32 @@ class Constants {
         image: 'assets/images/imgOnboarding3.png',
         description:
             "Nhắn tin cho gia sư và nhận thông báo về bài học của bạn"),
+  ];
+
+  static List<StopBangQuestionModel> listStopBang = [
+    StopBangQuestionModel(
+        title: "Ngáy",
+        content:
+            "Ông/bà có ngáy to không? (ngáy to đến mức nghe được từ bên ngoài dù đã đóng kín cửa phòng hay đến mức người ngủ bên cạnh cũng phải phàn nàn vì tiếng ngáy trong đêm)?"),
+    StopBangQuestionModel(
+        title: "Mệt mỏi",
+        content:
+            "Ông/bà có thường cảm thấy mệt mỏi ,uể oải hay buồn ngủ vào ban ngày không( như là ngủ gật trong khi lái xe hay khi đang nói chuyện với người khác)?"),
+    StopBangQuestionModel(
+        title: "Quan sát",
+        content:
+            "Đã từng có ai nhìn thấy ông/bà ngưng thở hay nghẹt thở/ thở hổn hển trong lúc ngủ chưa?"),
+    StopBangQuestionModel(
+        title: "Huyết áp",
+        content:
+            "Ông/bà có bị tăng huyết áp hay điều trị tăng huyết áp không?"),
+    StopBangQuestionModel(
+        title: "Chiều cao", content: "Chiều cao của ông/bà là?"),
+    StopBangQuestionModel(
+        title: "Cân nặng", content: "Cân nặng của ông/bà là?"),
+    StopBangQuestionModel(
+        title: "Kích thước vòng cổ lớn",
+        content:
+            "Đo xung quanh chỗ lồi nhất của sụn giáp - Kích thước vòng cổ có lớn hơn 40 cm không?")
   ];
 }

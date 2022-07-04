@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mod_do_an/config/constants.dart';
 import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/ui/components/cart/cart_quiz.dart';
 
@@ -12,13 +13,22 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   final PageController controllerPage = PageController();
+  int _page = 0;
 
   @override
   Widget build(BuildContext context) {
-    int _page = 0;
-    List<int> a = [1, 2, 3, 4, 5];
-    List<Widget> list = [];
+    List<Widget> circleHead = [];
 
+    Constants.listStopBang.forEach((item) {
+      int i = Constants.listStopBang.indexOf(item);
+      print(i);
+      print(_page);
+      return circleHead.add(
+        CircleAvatar(
+          radius: i == _page ? 15.w : 5.w,
+        ),
+      );
+    });
     return Scaffold(
         appBar: AppBar(
           title: Text('Stop_Bang'),
@@ -37,20 +47,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      radius: 5.w,
-                    ),
-                    CircleAvatar(
-                      radius: 5.w,
-                    ),
-                    CircleAvatar(
-                      radius: 15.w,
-                    ),
-                    CircleAvatar(
-                      radius: 5.w,
-                    )
-                  ],
+                  children: circleHead,
                 ),
               )),
             ),
@@ -59,7 +56,9 @@ class _QuizScreenState extends State<QuizScreen> {
               child: PageView(
                 controller: controllerPage,
                 onPageChanged: (page) {
-                  print(page);
+                  setState(() {
+                    _page = page;
+                  });
                 },
                 children: const <Widget>[
                   CartQuiz(
