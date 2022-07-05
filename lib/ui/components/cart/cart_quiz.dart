@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mod_do_an/component/input_field/text_input_label.dart';
 import 'package:mod_do_an/component/text/text_bold.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/config/images.dart';
@@ -10,13 +11,16 @@ import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 class CartQuiz extends StatelessWidget {
   final bool? value;
   final StopBangQuestionModel stopbang;
+  final Function onChange;
 
-  const CartQuiz({Key? key, this.value, required this.stopbang})
+  const CartQuiz(
+      {Key? key, this.value, required this.stopbang, required this.onChange})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    TextEditingController controller = new TextEditingController();
+    return ListView(children: [
       Container(
         height: 400.h,
         alignment: Alignment.center,
@@ -40,11 +44,16 @@ class CartQuiz extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SizedBox(
-                    height: 200,
+                    height: 300,
                     child: Center(
                         child: Text(
                       stopbang.content,
-                      style: TextStyle(letterSpacing: 0.4, height: 2.h),
+                      style: TextStyle(
+                          backgroundColor: Colors.white,
+                          letterSpacing: 0.4,
+                          height: 2.h,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w400),
                     )),
                   ),
                 ),
@@ -54,30 +63,47 @@ class CartQuiz extends StatelessWidget {
         ),
       ),
       Spacer(),
-      Center(
-        child: Text("Yes"),
-      ),
       Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            InkwellStyle(
-                label: "YES",
-                onTap: () {},
-                color: (value == true)
-                    ? AppColors.yesColor
-                    : AppColors.yesColorOpa,
-                width: (value == true) ? 200 : 140,
-                icon: (value == true) ? Icons.accessible : null),
-            InkwellStyle(
-                label: "NO",
-                onTap: () {},
-                color:
-                    (value == false) ? AppColors.noColor : AppColors.noColorOpa,
-                width: (value == false) ? 200 : 140,
-                icon: (value == false) ? Icons.accessible : null),
-          ],
-        ),
+        child: stopbang.title != "Cân nặng"
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkwellStyle(
+                      label: "YES",
+                      onTap: () {
+                        onChange(stopbang, true);
+                      },
+                      color: (value == true)
+                          ? AppColors.yesColor
+                          : AppColors.yesColorOpa,
+                      width: (value == true) ? 200 : 140,
+                      icon: (value == true) ? Icons.accessible : null),
+                  InkwellStyle(
+                      label: "NO",
+                      onTap: () {
+                        onChange(stopbang, false);
+                      },
+                      color: (value == false)
+                          ? AppColors.noColor
+                          : AppColors.noColorOpa,
+                      width: (value == false) ? 200 : 140,
+                      icon: (value == false) ? Icons.accessible : null),
+                ],
+              )
+            : Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: SizedBox(
+                    child: TextInputLabel(
+                      controller: controller,
+                      labelText: "Cân nặng",
+                      colorBorderSide: Colors.black,
+                      hintText: "Nhập ...",
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ),
+              ),
       ),
       Spacer(),
       Spacer(),

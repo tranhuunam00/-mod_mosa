@@ -153,12 +153,12 @@ class _TextInputLabelState extends State<TextInputLabel> {
             isDense: true,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(17.r),
-                borderSide:
-                    const BorderSide(width: 1, color: Colors.transparent)),
+                borderSide: BorderSide(width: 2, color: Colors.amber)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(17.r),
-                borderSide:
-                    const BorderSide(width: 1, color: Colors.transparent)),
+                borderSide: BorderSide(
+                    width: 1,
+                    color: widget.colorBorderSide ?? Colors.transparent)),
             fillColor: AppColors.kPrimaryColor,
           ),
         ),

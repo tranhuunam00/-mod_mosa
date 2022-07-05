@@ -19,7 +19,7 @@ class Background extends StatelessWidget {
         child: Image.asset(
           urlBackground,
           color: Color.fromRGBO(255, 255, 255, 0.3),
-          colorBlendMode: BlendMode.softLight,
+          colorBlendMode: BlendMode.hardLight,
           fit: BoxFit.cover,
         ),
       ),
