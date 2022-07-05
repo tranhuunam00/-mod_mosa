@@ -20,8 +20,9 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   final PageController controllerPage = PageController();
+
   int _page = 0;
-  List<bool?> valueAnswer = [null, null, null, null, null, null, null];
+  List<String> valueAnswer = ["", "", "", "", "", "", ""];
   @override
   Widget build(BuildContext context) {
     List<Widget> circleHead = [];
@@ -36,21 +37,15 @@ class _QuizScreenState extends State<QuizScreen> {
 
     Constants.listStopBang.forEach((item) {
       int i = Constants.listStopBang.indexOf(item);
-      Color backGroundColor = Colors.white;
-      if (valueAnswer[i] == true) backGroundColor = AppColors.yesColor;
-      if (valueAnswer[i] == false) backGroundColor = AppColors.noColor;
+      Color backGroundColor = Color.fromARGB(255, 171, 210, 228);
+      if ((valueAnswer[i] == "true" || valueAnswer[i] != "false") &&
+          valueAnswer[i] != "") backGroundColor = AppColors.yesColor;
+      if (valueAnswer[i] == "false") backGroundColor = AppColors.noColor;
 
-      circleHead.add(
-        CircleAvatar(
-          backgroundColor: Colors.black,
-          radius: i == _page ? 16.w : 6.w,
-          child: CircleAvatar(
-            backgroundColor: backGroundColor,
-            radius: i == _page ? 15.w : 5.w,
-            child: Text(i == _page ? (i + 1).toString() : ""),
-          ),
-        ),
-      );
+      // add chấm tròn trên đầu
+      circleHead.add(circle(i, _page, backGroundColor));
+
+      // add children page view
       cartQuiz.add(CartQuiz(
         stopbang: item,
         value: valueAnswer[i],
@@ -58,23 +53,16 @@ class _QuizScreenState extends State<QuizScreen> {
       ));
     });
 
-    cartQuiz.add(Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TableStopBang(
-            valueAnswer: valueAnswer,
-          ),
-        ),
-        InkwellStyle(
-            label: "Submit",
-            onTap: () {
-              ToastService.showToast(
-                  msg: "Please confirm data to be submitted",
-                  backgroundColor: AppColors.errorBackgroundColor);
-            })
-      ],
-    ));
+    // add thêm trang tổng hợp
+    cartQuiz.add(
+      TableStopBang(
+        valueAnswer: valueAnswer,
+      ),
+    );
+
+    // add  vòng tròn tổng hợp
+
+    circleHead.add(circle(circleHead.length + 1, _page, AppColors.yesColor));
 
     return Scaffold(
         appBar: AppBar(
@@ -111,5 +99,28 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
           ],
         ));
+  }
+
+  Widget circle(int i, int _page, Color backGroundColor) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          controllerPage.jumpToPage(i);
+        });
+      },
+      child: SizedBox(
+        height: 30.w,
+        width: 30.w,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: i == _page || i == 8 ? 16.w : 6.w,
+          child: CircleAvatar(
+            backgroundColor: backGroundColor,
+            radius: i == _page || i == 8 ? 15.w : 5.w,
+            child: Text(i == _page ? (i + 1).toString() : ""),
+          ),
+        ),
+      ),
+    );
   }
 }

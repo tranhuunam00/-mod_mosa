@@ -27,6 +27,7 @@ class TextInputLabel extends StatefulWidget {
   String? prefixText;
   Icon? prefixIcon;
   Color? suffixIconColor;
+  final String? initialValue;
 
   bool label;
 
@@ -53,6 +54,7 @@ class TextInputLabel extends StatefulWidget {
       this.readOnly = false,
       this.subLabelText = '',
       this.label = false,
+      this.initialValue = "",
       this.prefixIcon})
       : super(key: key);
 
@@ -95,9 +97,10 @@ class _TextInputLabelState extends State<TextInputLabel> {
           height: 10.h,
         ),
         TextFormField(
+          initialValue: widget.initialValue,
           readOnly: widget.readOnly,
           keyboardType: widget.keyboardType ?? TextInputType.text,
-          controller: widget.controller,
+          controller: widget.initialValue != null ? null : widget.controller,
           autofocus: false,
           validator: widget.validator,
           keyboardAppearance: Brightness.dark,
