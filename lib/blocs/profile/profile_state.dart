@@ -45,12 +45,3 @@ class UpdatePasswordErrorState extends ProfileState {
 
   const UpdatePasswordErrorState({required this.message});
 }
-
-// stop bang
-class CreateStopBangSuccessState extends ProfileState {}
-
-class CreateStopBangErrorState extends ProfileState {
-  final String message;
-
-  const CreateStopBangErrorState({required this.message});
-}

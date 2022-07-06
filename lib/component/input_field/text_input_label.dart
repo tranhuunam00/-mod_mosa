@@ -54,7 +54,7 @@ class TextInputLabel extends StatefulWidget {
       this.readOnly = false,
       this.subLabelText = '',
       this.label = false,
-      this.initialValue = "",
+      this.initialValue = null,
       this.prefixIcon})
       : super(key: key);
 

@@ -212,7 +212,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         color: Colors.redAccent),
                     ButtonSetting(
                         onTap: () async {
-                          await SecureStorage().deleteToken();
                           Navigator.of(context).pushNamed(
                             Constants.quizScreen,
                           );

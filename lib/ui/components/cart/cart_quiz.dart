@@ -13,11 +13,13 @@ class CartQuiz extends StatelessWidget {
   final String value;
   final StopBangQuestionModel stopbang;
   final Function onChange;
+  final Function onChangePage;
 
   const CartQuiz(
       {Key? key,
       required this.value,
       required this.stopbang,
+      required this.onChangePage,
       required this.onChange})
       : super(key: key);
 
@@ -77,6 +79,7 @@ class CartQuiz extends StatelessWidget {
                         label: "YES",
                         onTap: () {
                           onChange(stopbang, "true");
+                          onChangePage(stopbang);
                         },
                         color: (value == "true")
                             ? AppColors.yesColor
@@ -87,6 +90,7 @@ class CartQuiz extends StatelessWidget {
                         label: "NO",
                         onTap: () {
                           onChange(stopbang, "false");
+                          onChangePage(stopbang);
                         },
                         color: (value == "false")
                             ? AppColors.noColor
@@ -95,24 +99,37 @@ class CartQuiz extends StatelessWidget {
                         icon: (value == "false") ? Icons.accessible : null),
                   ],
                 )
-              : Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: SizedBox(
-                      child: TextInputLabel(
-                        controller: controller,
-                        initialValue: value,
-                        labelText: "Cân nặng",
-                        colorBorderSide: Colors.black,
-                        hintText: "Đơn vị cm ...",
-                        keyboardType: TextInputType.number,
-                        onChanged: (text) {
-                          print(text);
-                          onChange(stopbang, text.toString());
-                        },
+              : Column(
+                  children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: SizedBox(
+                          child: TextInputLabel(
+                            controller: controller,
+                            initialValue: value,
+                            labelText: "Cân nặng",
+                            colorBorderSide: Colors.black,
+                            hintText: stopbang.title == "Cân nặng"
+                                ? "Đơn vị kg"
+                                : "Đơn vị cm",
+                            keyboardType: TextInputType.number,
+                            onChanged: (text) {
+                              print(text);
+                              onChange(stopbang, text.toString());
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Center(
+                      child: InkwellStyle(
+                          label: "Next",
+                          onTap: () {
+                            onChangePage(stopbang);
+                          }),
+                    )
+                  ],
                 ),
         ),
       ]),
