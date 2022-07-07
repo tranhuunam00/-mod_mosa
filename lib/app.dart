@@ -36,7 +36,7 @@ class DoAnApp extends StatelessWidget {
                           print(state);
                           return const DashboardCustomerScreen();
                         } else {
-                          return const DashboardCustomerScreen();
+                          return const OnboardingScreen();
                         }
                       },
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/config/colors.dart';
+import 'package:mod_do_an/ui/customer/feature_screen.dart';
 import 'package:mod_do_an/ui/customer/settings_screen.dart';
 
 class DashboardCustomerScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _DashboardCustomerScreenState extends State<DashboardCustomerScreen> {
   @override
   void initState() {
     super.initState();
-    pages = [const Scaffold(), const Scaffold(), const SettingsScreen()];
+    pages = [const Scaffold(), const FeatureScreen(), const SettingsScreen()];
   }
 
   @override
