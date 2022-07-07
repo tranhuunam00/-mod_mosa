@@ -33,7 +33,6 @@ class DoAnApp extends StatelessWidget {
                     home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                         if (state is AuthenticationAuthenticatedState) {
-                          print(state);
                           return const DashboardCustomerScreen();
                         } else {
                           return const OnboardingScreen();

@@ -1,12 +1,14 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
-  final _storage = FlutterSecureStorage();
+  final _storage = new FlutterSecureStorage();
 
   static const _tokenKey = 'TOKEN';
 
   Future<void> saveToken({required String token}) async {
-    await _storage.write(key: _tokenKey, value:"Bearer " + token);
+    print("Đã lưu token");
+    print(token);
+    await _storage.write(key: _tokenKey, value: "Bearer " + token);
   }
 
   Future<String?> getToken() async {

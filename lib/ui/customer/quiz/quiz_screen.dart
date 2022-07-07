@@ -29,10 +29,15 @@ class _QuizScreenState extends State<QuizScreen> {
     List<Widget> cartQuiz = [];
 
     // function handle change value choose
-    void onChange(stopbang, value) {
+    void onChange(StopBangQuestionModel stopbang, String value) {
       int idx = Constants.listStopBang.indexOf(stopbang);
       valueAnswer[idx] = value;
       setState(() {});
+    }
+
+    void onChangePage(StopBangQuestionModel stopbang) {
+      int idx = Constants.listStopBang.indexOf(stopbang);
+      controllerPage.jumpToPage(idx + 1);
     }
 
     Constants.listStopBang.forEach((item) {
@@ -50,6 +55,7 @@ class _QuizScreenState extends State<QuizScreen> {
         stopbang: item,
         value: valueAnswer[i],
         onChange: onChange,
+        onChangePage: onChangePage,
       ));
     });
 

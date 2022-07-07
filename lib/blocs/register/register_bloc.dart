@@ -22,7 +22,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> _mapCreateRegisterToState(
       CreateUserEvent event) async* {
     yield CreateUserLoadingState();
-    print(event.register.phone);
     try {
       final res = await authenticationRepository.creatUser(event.register);
       if (res.statusCode == HttpStatus.created) {

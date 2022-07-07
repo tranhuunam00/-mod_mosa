@@ -26,8 +26,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: LocaleKeys.email,
                           validator: (str) => Validator.validateEmail(str),
                           onChanged: (a) {
+                            print(_emailController.text);
                             setState(() {});
                           },
                         ),
@@ -195,6 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _validate() {
+    print(_passwordController.text);
+    print(_emailController.text.trim());
+    print(RegExp(Validator.REGEX_EMAIL).hasMatch(_emailController.text.trim()));
     if (RegExp(Validator.REGEX_EMAIL).hasMatch(_emailController.text.trim()) &&
         _passwordController.text.trim().isNotEmpty) {
       return true;

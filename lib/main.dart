@@ -8,11 +8,13 @@ import 'package:mod_do_an/app.dart';
 import 'package:flutter/material.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
+import 'package:mod_do_an/blocs/custommer/customer_bloc.dart';
 import 'package:mod_do_an/blocs/forgot/forgot_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
 import 'package:mod_do_an/blocs/profile/profile_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
 import 'package:mod_do_an/repositories/authentication_repository.dart';
+import 'package:mod_do_an/repositories/customer_repository.dart';
 import 'package:mod_do_an/repositories/profile_repository.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -57,6 +59,10 @@ void main() {
           create: (context) => ProfileBloc(
             profileRepository: ProfileRepository(),
           ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CustomerBloc(customerRepository: CustomerRepository()),
         ),
       ], child: const DoAnApp()),
     );

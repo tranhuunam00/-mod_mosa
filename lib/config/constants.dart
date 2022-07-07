@@ -29,9 +29,11 @@ class Constants {
   //
   static Future<Map<String, String>> requestHeadersToken() async {
     var token = await SecureStorage().getToken();
+    print(token);
+
     Map<String, String> _requestHeaders = {
       'Content-type': 'application/json',
-      'Authorization': token!
+      'Authorization': token ?? ""
     };
     return _requestHeaders;
   }
