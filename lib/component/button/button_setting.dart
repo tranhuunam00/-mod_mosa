@@ -33,11 +33,11 @@ class _ButtonSettingState extends State<ButtonSetting> {
             children: [
               widget.widget,
               SizedBox(
-                width: 10.w,
+                width: 13.w,
               ),
               TextBold(
                 title: widget.title,
-                size: 13.sp,
+                size: 16.sp,
                 colors: widget.color,
               )
             ],

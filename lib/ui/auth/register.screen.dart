@@ -24,8 +24,8 @@ import 'package:mod_do_an/utils/picker_helper.dart';
 import 'package:mod_do_an/utils/validator.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
-
+  const RegisterScreen({Key? key, this.otherUser}) : super(key: key);
+  final String? otherUser;
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -267,19 +267,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                      child: TextInputLabel(
-                        label: true,
-                        controller: _emailController,
-                        labelText: LocaleKeys.email.tr(),
-                        hintText: LocaleKeys.email.tr(),
-                        validator: (str) => Validator.validateEmail(str),
-                        onChanged: (a) {
-                          setState(() {});
-                        },
-                      ),
-                    ),
+                    widget.otherUser != null
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            child: TextInputLabel(
+                              label: true,
+                              controller: _emailController,
+                              labelText: LocaleKeys.email.tr(),
+                              hintText: LocaleKeys.email.tr(),
+                              validator: (str) => Validator.validateEmail(str),
+                              onChanged: (a) {
+                                setState(() {});
+                              },
+                            ),
+                          )
+                        : Container(),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.h),
                       child: TextInputLabel(
@@ -298,67 +300,76 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                      child: TextInputPasswordLabel(
-                        label: true,
-                        controller: _passwordController,
-                        labelText: LocaleKeys.password.tr(),
-                        hintText: LocaleKeys.password.tr(),
-                        validator: (str) => Validator.validatePassWord(str),
-                        obscureText: _obscureText,
-                        onChanged: (a) {
-                          setState(() {});
-                        },
-                        suffix: Padding(
-                          padding: EdgeInsets.only(right: 15.w),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                              Icons.remove_red_eye,
-                              color: !_obscureText ? Colors.indigoAccent : null,
+                    widget.otherUser != null
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            child: TextInputPasswordLabel(
+                              label: true,
+                              controller: _passwordController,
+                              labelText: LocaleKeys.password.tr(),
+                              hintText: LocaleKeys.password.tr(),
+                              validator: (str) =>
+                                  Validator.validatePassWord(str),
+                              obscureText: _obscureText,
+                              onChanged: (a) {
+                                setState(() {});
+                              },
+                              suffix: Padding(
+                                padding: EdgeInsets.only(right: 15.w),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.remove_red_eye,
+                                    color: !_obscureText
+                                        ? Colors.indigoAccent
+                                        : null,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                      child: TextInputPasswordLabel(
-                        label: true,
-                        controller: _rePasswordController,
-                        labelText: LocaleKeys.re_password.tr(),
-                        hintText: LocaleKeys.re_password.tr(),
-                        obscureText: _obscureText,
-                        onChanged: (a) {
-                          setState(() {});
-                        },
-                        validator: (str) => Validator.validateRePassWord(
-                            str, _passwordController.text),
-                        suffix: Padding(
-                          padding: EdgeInsets.only(right: 15.w),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                              Icons.remove_red_eye,
-                              color: !_obscureText ? Colors.indigoAccent : null,
+                          )
+                        : Container(),
+                    widget.otherUser != null
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            child: TextInputPasswordLabel(
+                              label: true,
+                              controller: _rePasswordController,
+                              labelText: LocaleKeys.re_password.tr(),
+                              hintText: LocaleKeys.re_password.tr(),
+                              obscureText: _obscureText,
+                              onChanged: (a) {
+                                setState(() {});
+                              },
+                              validator: (str) => Validator.validateRePassWord(
+                                  str, _passwordController.text),
+                              suffix: Padding(
+                                padding: EdgeInsets.only(right: 15.w),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.remove_red_eye,
+                                    color: !_obscureText
+                                        ? Colors.indigoAccent
+                                        : null,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          )
+                        : Container(),
                     SizedBox(
                       height: 25.h,
                     ),
