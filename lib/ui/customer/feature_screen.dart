@@ -19,28 +19,29 @@ class _FeatureScreenState extends State<FeatureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Tính năng'),
-          flexibleSpace: Image(
-            image: AssetImage(AppImages.backgroundImageAppbar),
-            fit: BoxFit.cover,
-          ),
-          backgroundColor: Colors.transparent,
-        ),
         body: Background(
-          urlBackground: AppImages.backgroundDefault,
-          child: GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 2,
-            children: <Widget>[
-              CardFeature(),
-              CardFeature(),
-              CardFeature(),
-              CardFeature(),            ],
+      urlBackground: AppImages.backgroundDefault,
+      child: GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(50),
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        crossAxisCount: 2,
+        children: <Widget>[
+          CardFeature(
+            onPress: () {},
           ),
-        ));
+          CardFeature(
+            onPress: () {},
+          ),
+          CardFeature(
+            onPress: () {},
+          ),
+          CardFeature(
+            onPress: () {},
+          ),
+        ],
+      ),
+    ));
   }
 }

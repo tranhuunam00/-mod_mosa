@@ -1,5 +1,3 @@
-import 'package:mod_do_an/ui/components/background.dart';
-
 class AppImages {
   static const backgroundDefault = "assets/images/backgroundDefault.jpg";
 
@@ -20,4 +18,10 @@ class AppImages {
   static const huyet_ap_thap_Img = "assets/images/huyet-ap-thap.jpg";
 
   static const do_vong_co_Img = "assets/images/do_vong_co.jpg";
+
+  static const am_thanh_Img = "assets/icons/am_thanh.png";
+
+  static const accelerometer_Img = "assets/icons/accelerometer.png";
+
+  static const nhiet_do_Img = "assets/icons/nhiet_do.png";
 }

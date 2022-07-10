@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/ui/customer/feature_screen.dart';
@@ -16,7 +19,6 @@ class DashboardCustomerScreen extends StatefulWidget {
 class _DashboardCustomerScreenState extends State<DashboardCustomerScreen> {
   int currentIndex = 0;
   late List<Widget> pages;
-
   @override
   void initState() {
     super.initState();

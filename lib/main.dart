@@ -13,9 +13,11 @@ import 'package:mod_do_an/blocs/forgot/forgot_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
 import 'package:mod_do_an/blocs/profile/profile_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
+import 'package:mod_do_an/provider/bluetooth.provider.dart';
 import 'package:mod_do_an/repositories/authentication_repository.dart';
 import 'package:mod_do_an/repositories/customer_repository.dart';
 import 'package:mod_do_an/repositories/profile_repository.dart';
+import 'package:provider/provider.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -37,34 +39,40 @@ void main() {
   HttpOverrides.global = MyHttpOverrides();
   runZonedGuarded(() {
     runApp(
-      MultiBlocProvider(providers: [
-        BlocProvider(
-            create: (context) => AuthenticationBloc(
-                authenticationRepository: authenticationRepository)
-              ..add(AppLoadedEvent())),
-        BlocProvider(
-            create: (context) =>
-                LoginBloc(authenticationRepository: authenticationRepository)),
-        BlocProvider(
-          create: (context) => RegisterBloc(
-            authenticationRepository: authenticationRepository,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ForgotBloc(
-            authenticationRepository: authenticationRepository,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ProfileBloc(
-            profileRepository: ProfileRepository(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CustomerBloc(customerRepository: CustomerRepository()),
-        ),
-      ], child: const DoAnApp()),
+      MultiBlocProvider(
+          providers: [
+            BlocProvider(
+                create: (context) => AuthenticationBloc(
+                    authenticationRepository: authenticationRepository)
+                  ..add(AppLoadedEvent())),
+            BlocProvider(
+                create: (context) => LoginBloc(
+                    authenticationRepository: authenticationRepository)),
+            BlocProvider(
+              create: (context) => RegisterBloc(
+                authenticationRepository: authenticationRepository,
+              ),
+            ),
+            BlocProvider(
+              create: (context) => ForgotBloc(
+                authenticationRepository: authenticationRepository,
+              ),
+            ),
+            BlocProvider(
+              create: (context) => ProfileBloc(
+                profileRepository: ProfileRepository(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  CustomerBloc(customerRepository: CustomerRepository()),
+            ),
+          ],
+          child: MultiProvider(providers: [
+            ChangeNotifierProvider(create: (context) {
+              return BluetoothProvider();
+            }),
+          ], child: const DoAnApp())),
     );
   }, (error, stackTrace) {});
 }

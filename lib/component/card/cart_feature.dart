@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mod_do_an/config/constants.dart';
-import 'package:mod_do_an/config/icons.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardFeature extends StatelessWidget {
-  const CardFeature({Key? key}) : super(key: key);
+  const CardFeature({Key? key, required this.onPress}) : super(key: key);
+  final Function onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +13,9 @@ class CardFeature extends StatelessWidget {
       decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 53, 38, 37),
-              Color.fromARGB(255, 90, 164, 225),
-              Color.fromARGB(255, 223, 209, 80)
+              Color.fromARGB(255, 112, 182, 228),
+              Color.fromARGB(255, 82, 145, 175),
+              Color.fromARGB(255, 184, 179, 136)
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -34,13 +32,17 @@ class CardFeature extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, Constants.register);
+          onPress();
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ClipRRect(
-              child: Icon(FontAwesomeIcons.userPlus, size: 40.w),
+              child: Icon(
+                FontAwesomeIcons.userPlus,
+                size: 40.w,
+                color: Color.fromARGB(255, 245, 252, 187),
+              ),
             ),
             Text("Thêm người dùng")
           ],

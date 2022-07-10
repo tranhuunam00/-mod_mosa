@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/onboarding.dart';
@@ -91,4 +90,11 @@ class Constants {
         content:
             "Đo xung quanh chỗ lồi nhất của sụn giáp - Kích thước vòng cổ có lớn hơn 40 cm không?")
   ];
+
+  //
+  static String ACCLEROMETER = "ACCLEROMETER";
+
+  static String TEMPERATURE = "TEMPERATURE ";
+
+  static String SOUND = "SOUND ";
 }
