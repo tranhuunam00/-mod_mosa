@@ -163,6 +163,8 @@ class _ChatPage extends State<ChatPage> {
   }
 
   void _onDataReceived(Uint8List data) {
+    print("data");
+    print(data);
     // Allocate buffer for parsed data
     int backspacesCounter = 0;
     data.forEach((byte) {
@@ -190,6 +192,9 @@ class _ChatPage extends State<ChatPage> {
     // Create message if there is new line character
     String dataString = String.fromCharCodes(buffer);
     int index = buffer.indexOf(13);
+    print("buffer");
+    print(buffer);
+    // print(~index);
     if (~index != 0) {
       setState(() {
         messages.add(

@@ -16,6 +16,7 @@ import 'package:mod_do_an/ui/ble/ChatPage.dart';
 import 'package:mod_do_an/ui/ble/DiscoveryPage.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mod_do_an/ui/sensor/accelerometer.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -127,6 +128,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       CartSensor(
                         onPress: () {
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return AccelerometerScreen(
+                          //         server: selectedDevice!,
+                          //       );
+                          //     },
+                          //   ),
+                          // );
+                          // Navigator.pushNamed(
+                          //     context, Constants.acclerometerScreen);
                           _startChat(context, selectedDevice!);
                         },
                         img: AppImages.accelerometer_Img,

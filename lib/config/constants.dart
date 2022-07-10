@@ -24,6 +24,7 @@ class Constants {
   static const String dashBoardCustomer = 'dashboard_customer';
   static const String myProfileSreen = 'my_profile';
   static const String quizScreen = 'quiz';
+  static const String acclerometerScreen = 'acclerometerScreen';
 
   //
   static Future<Map<String, String>> requestHeadersToken() async {
