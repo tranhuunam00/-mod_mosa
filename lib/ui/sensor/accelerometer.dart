@@ -24,7 +24,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   bool isConnecting = true;
   bool get isConnected => (connection?.isConnected ?? false);
   bool isDisconnecting = false;
-
+  String _messageBuffer = '';
   List<AccelerometerChartModel> listAccX =
       List<AccelerometerChartModel>.empty(growable: true);
   List<AccelerometerChartModel> listAccY =
@@ -78,6 +78,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(listAccX.length);
     return Scaffold(
         body: Center(
             child: Container(
@@ -88,16 +89,20 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                     legend: Legend(isVisible: true),
 
                     // Initialize category axis
-                    primaryXAxis: CategoryAxis(
-                        edgeLabelPlacement: EdgeLabelPlacement.shift,
+                    primaryXAxis: DateTimeAxis(
+                        autoScrollingMode: AutoScrollingMode.end,
+                        visibleMinimum: listAccX.length > 50
+                            ? listAccX[listAccX.length - 50].time
+                            : null,
+                        // edgeLabelPlacement: EdgeLabelPlacement.shift,
                         majorGridLines: const MajorGridLines(width: 0),
                         name: "Thời gian",
                         isVisible: true,
                         title: AxisTitle(
                             text: "Thời gian (s)",
                             alignment: ChartAlignment.far)),
-                    series: <LineSeries<AccelerometerChartModel, String>>[
-                      LineSeries<AccelerometerChartModel, String>(
+                    series: <LineSeries<AccelerometerChartModel, DateTime>>[
+                      LineSeries<AccelerometerChartModel, DateTime>(
                           onRendererCreated:
                               (ChartSeriesController controller) {
                             _chartSeriesControllerX = controller;
@@ -108,8 +113,8 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                           yValueMapper: (AccelerometerChartModel accValue, _) =>
                               accValue.value,
                           xValueMapper: (AccelerometerChartModel accValue, _) =>
-                              DateFormat.Hms().format(accValue.time)),
-                      LineSeries<AccelerometerChartModel, String>(
+                              (accValue.time)),
+                      LineSeries<AccelerometerChartModel, DateTime>(
                           onRendererCreated:
                               (ChartSeriesController controller) {
                             _chartSeriesControllerY = controller;
@@ -120,8 +125,8 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                           yValueMapper: (AccelerometerChartModel accValue, _) =>
                               accValue.value,
                           xValueMapper: (AccelerometerChartModel accValue, _) =>
-                              DateFormat.Hms().format(accValue.time)),
-                      LineSeries<AccelerometerChartModel, String>(
+                              (accValue.time)),
+                      LineSeries<AccelerometerChartModel, DateTime>(
                           onRendererCreated:
                               (ChartSeriesController controller) {
                             _chartSeriesControllerZ = controller;
@@ -131,7 +136,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                           yValueMapper: (AccelerometerChartModel accValue, _) =>
                               accValue.value,
                           xValueMapper: (AccelerometerChartModel accValue, _) =>
-                              DateFormat.Hms().format(accValue.time))
+                              (accValue.time))
                     ]))));
   }
 
@@ -162,35 +167,36 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
 
     // Create message if there is new line character
     String dataString = String.fromCharCodes(buffer);
-    List<String> values = dataString.split("%");
-    if (values.length == 3 && values[0] != "" || values[2] != "-") {
-      DateTime now = DateTime.now();
+    int index = buffer.indexOf(13);
+    String valueData = "";
+    if (~index != 0 && dataString != null) {
+      valueData = backspacesCounter > 0
+          ? _messageBuffer.substring(
+              0, _messageBuffer.length - backspacesCounter)
+          : _messageBuffer + dataString.substring(0, index);
+      print(valueData);
+      List values = valueData.split("%");
 
-      double valX = double.parse(values[0]);
-      double valY = double.parse(values[1]);
-      double valZ = double.parse(values[2]);
+      setState(() {
+        DateTime nowD = DateTime.now();
 
-      listAccX.add(AccelerometerChartModel(value: valX, time: now));
-      listAccY.add(AccelerometerChartModel(value: valY, time: now));
-      listAccZ.add(AccelerometerChartModel(value: valZ, time: now));
-      if (listAccX.length > 20) {
-        listAccX.removeAt(0);
-        listAccY.removeAt(0);
-        listAccZ.removeAt(0);
-        _chartSeriesControllerX.updateDataSource(
-            addedDataIndex: listAccX.length - 1, removedDataIndex: 0);
-        _chartSeriesControllerY.updateDataSource(
-            addedDataIndex: listAccX.length - 1, removedDataIndex: 0);
-        _chartSeriesControllerZ.updateDataSource(
-            addedDataIndex: listAccX.length - 1, removedDataIndex: 0);
-      } else {
-        _chartSeriesControllerX.updateDataSource(
-            addedDataIndex: listAccX.length - 1);
-        _chartSeriesControllerY.updateDataSource(
-            addedDataIndex: listAccX.length - 1);
-        _chartSeriesControllerZ.updateDataSource(
-            addedDataIndex: listAccX.length - 1);
-      }
+        _messageBuffer = dataString.substring(index);
+        if (values.length == 3) {
+          listAccX.add(AccelerometerChartModel(
+              value: double.parse(values[0]), time: nowD));
+          listAccY.add(AccelerometerChartModel(
+              value: double.parse(values[1]), time: nowD));
+          listAccZ.add(AccelerometerChartModel(
+              value: double.parse(values[2]), time: nowD));
+          _chartSeriesControllerX.updateDataSource(
+              addedDataIndex: listAccX.length - 1);
+        }
+      });
+    } else {
+      _messageBuffer = (backspacesCounter > 0
+          ? _messageBuffer.substring(
+              0, _messageBuffer.length - backspacesCounter)
+          : _messageBuffer + dataString);
     }
   }
 }
