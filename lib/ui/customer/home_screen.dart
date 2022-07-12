@@ -128,18 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       CartSensor(
                         onPress: () {
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) {
-                          //       return AccelerometerScreen(
-                          //         server: selectedDevice!,
-                          //       );
-                          //     },
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AccelerometerScreen(
+                                  server: selectedDevice!,
+                                );
+                              },
+                            ),
+                          );
                           // Navigator.pushNamed(
                           //     context, Constants.acclerometerScreen);
-                          _startChat(context, selectedDevice!);
+                          // _startChat(context, selectedDevice!);
                         },
                         img: AppImages.accelerometer_Img,
                         lable: Constants.ACCLEROMETER,
