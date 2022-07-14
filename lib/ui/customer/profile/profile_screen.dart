@@ -370,15 +370,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               UpdateProfileEvent(
                                 imagePath: image,
                                 profileUser: ProfileUser(
-                                  dob: _dobController.text.trim(),
-                                  gender: _genderController.text.trim() == "Nam"
-                                      ? "MALE"
-                                      : "FEMALE",
-                                  firstName: _firstNameController.text.trim(),
-                                  lastName: _lastNameController.text.trim(),
-                                  email: _emailController.text.trim(),
-                                  phone: _phoneController.text.trim(),
-                                ),
+                                    dob: _dobController.text.trim(),
+                                    gender:
+                                        _genderController.text.trim() == "Nam"
+                                            ? "MALE"
+                                            : "FEMALE",
+                                    firstName: _firstNameController.text.trim(),
+                                    lastName: _lastNameController.text.trim(),
+                                    email: _emailController.text.trim(),
+                                    phone: _phoneController.text.trim(),
+                                    id: "",
+                                    customerId: "",
+                                    nationality: ""),
                               ),
                             );
                           }

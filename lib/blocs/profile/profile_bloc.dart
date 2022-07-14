@@ -30,6 +30,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       // final data = await profileRepository.getProfile();
       ProfileUser data = ProfileUser(
+          id: "",
+          customerId: "",
+          nationality: "",
+          gender: "",
           firstName: "Nam",
           lastName: "Trần",
           dob: "2022-12-12",

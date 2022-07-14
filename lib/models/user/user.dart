@@ -1,29 +1,33 @@
+import 'dart:convert';
+
 class ProfileUser {
   final String firstName;
   final String lastName;
   final String email;
   final String phone;
-  final String? avatarUrl;
-  String? id;
-  String? nationality;
-  String? gender;
-  String? dob;
+  String? avatarUrl;
+  final String id;
+  final String nationality;
+  final String gender;
+  final String dob;
+  final String customerId;
 
-  ProfileUser({
-    this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    this.avatarUrl,
-    this.dob,
-    this.gender,
-    this.nationality,
-  });
+  ProfileUser(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.phone,
+      this.avatarUrl,
+      required this.dob,
+      required this.gender,
+      required this.nationality,
+      required this.customerId});
 
   factory ProfileUser.fromJson(Map<String, dynamic> json) {
     return ProfileUser(
         id: json['_id'] ?? '',
+        customerId: json['customerId'] ?? '',
         firstName: json['firstName'] ?? '',
         lastName: json['lastName'] ?? '',
         email: json['email'] ?? '',
@@ -44,4 +48,22 @@ class ProfileUser {
         'gender': gender!,
         // 'nationality': nationality!,
       };
+
+  String toString() => {
+        '"firstName"': '"' + firstName + '"',
+        '"customerId"': '"' + customerId + '"',
+        '"id"': '"' + id + '"',
+        '"lastName"': '"' + lastName + '"',
+        '"email"': '"' + email + '"',
+        '"phone"': '"' + phone + '"',
+        '"dob"': '"' + dob! + '"',
+        '"gender"': '"' + gender! + '"',
+        '"nationality"': '"' + nationality! + '"',
+      }.toString();
+
+  String toStringJson() {
+    String res = "";
+    res = res + '"firstName"';
+    return res;
+  }
 }
