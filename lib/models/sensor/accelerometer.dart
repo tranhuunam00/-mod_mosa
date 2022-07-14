@@ -14,3 +14,9 @@ class AccelerometerChartModel {
   final DateTime time;
   AccelerometerChartModel({required this.value, required this.time});
 }
+
+class PositionCountModal {
+  final int value;
+  final String name;
+  PositionCountModal({required this.value, required this.name});
+}

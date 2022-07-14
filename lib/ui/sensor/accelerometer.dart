@@ -1,14 +1,15 @@
 import 'dart:typed_data';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:mod_do_an/helper/bleHelper.dart';
+import 'package:mod_do_an/component/card/cart_sensor.dart';
+import 'package:mod_do_an/component/styles/border.dart';
+import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/sensor/accelerometer.dart';
-import 'package:mod_do_an/models/sensor/sale.dart';
+import 'package:mod_do_an/ui/components/background.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AccelerometerScreen extends StatefulWidget {
   const AccelerometerScreen({Key? key, required this.server}) : super(key: key);
@@ -34,7 +35,12 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   late ChartSeriesController _chartSeriesControllerX;
   late ChartSeriesController _chartSeriesControllerY;
   late ChartSeriesController _chartSeriesControllerZ;
-
+  List<PositionCountModal> positions = [
+    PositionCountModal(value: 4, name: "ngửa"),
+    PositionCountModal(value: 2, name: "sấp"),
+    PositionCountModal(value: 5, name: "trái"),
+    PositionCountModal(value: 7, name: "phải"),
+  ];
   @override
   void initState() {
     super.initState();
@@ -80,13 +86,28 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   Widget build(BuildContext context) {
     print(listAccX.length);
     return Scaffold(
-        body: Center(
-            child: Container(
-                height: 400,
+        appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 135, 178, 252),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(70),
+                    bottomLeft: Radius.circular(70)))),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+                decoration: borderStyle,
+                margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                height: 350.h,
                 child: SfCartesianChart(
                     title: ChartTitle(text: 'Biểu đồ giá trị 3 trục'),
                     onZooming: ((zoomingArgs) => {print(zoomingArgs)}),
-                    legend: Legend(isVisible: true),
+                    legend: Legend(
+                        isVisible: true,
+                        alignment: ChartAlignment.center,
+                        position: LegendPosition.bottom),
 
                     // Initialize category axis
                     primaryXAxis: DateTimeAxis(
@@ -137,7 +158,73 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
                               accValue.value,
                           xValueMapper: (AccelerometerChartModel accValue, _) =>
                               (accValue.time))
-                    ]))));
+                    ])),
+            SizedBox(
+              height: 30.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  decoration: borderStyle,
+                  height: 150.h,
+                  width: 150.h,
+                  child: SfCartesianChart(
+                      title: ChartTitle(
+                          text: 'THời gian vs tư thế',
+                          textStyle: TextStyle(fontSize: 8.sp)),
+                      primaryXAxis: CategoryAxis(),
+                      series: <ChartSeries<PositionCountModal, String>>[
+                        // Renders column chart
+                        ColumnSeries<PositionCountModal, String>(
+                            dataSource: positions,
+                            xValueMapper: (PositionCountModal data, _) =>
+                                data.name,
+                            yValueMapper: (PositionCountModal data, _) =>
+                                data.value)
+                      ]),
+                ),
+                Container(
+                  decoration: borderStyle,
+                  height: 150.h,
+                  width: 150.h,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CartSensor(
+                  onPress: () {},
+                  img: AppImages.met_moi_Img,
+                  lable: "Phân tích 1",
+                  size: 50.w,
+                ),
+                CartSensor(
+                  onPress: () {},
+                  img: AppImages.met_moi_Img,
+                  lable: "Phân tích 1",
+                  size: 50.w,
+                ),
+                CartSensor(
+                  onPress: () {},
+                  img: AppImages.met_moi_Img,
+                  lable: "Phân tích 1",
+                  size: 50.w,
+                ),
+                CartSensor(
+                  onPress: () {},
+                  img: AppImages.met_moi_Img,
+                  lable: "Phân tích 1",
+                  size: 50.w,
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 
   void _onDataReceived(Uint8List data) {

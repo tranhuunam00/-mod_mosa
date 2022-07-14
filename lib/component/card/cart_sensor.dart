@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/component/text/text_bold.dart';
 
 class CartSensor extends StatelessWidget {
   const CartSensor(
-      {Key? key, required this.onPress, required this.lable, required this.img})
+      {Key? key,
+      required this.onPress,
+      required this.lable,
+      required this.img,
+      this.size})
       : super(key: key);
   final Function onPress;
   final String lable;
   final String img;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +24,12 @@ class CartSensor extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(50.w)),
+            borderRadius: BorderRadius.all(Radius.circular(size ?? 50.w)),
             child: Container(
                 alignment: Alignment.center,
                 color: Color.fromARGB(255, 213, 226, 247),
-                width: 80.w,
-                height: 80.w,
+                width: size ?? 80.w,
+                height: size ?? 80.w,
                 child: Image.asset(
                   img,
                   fit: BoxFit.cover,
@@ -36,7 +40,7 @@ class CartSensor extends StatelessWidget {
           ),
           TextBold(
             title: lable,
-            size: 13.sp,
+            size: size == null || size! > 60.w ? 13.sp : 10.sp,
           )
         ],
       ),
