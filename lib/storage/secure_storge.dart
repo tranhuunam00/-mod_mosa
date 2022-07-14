@@ -22,4 +22,10 @@ class SecureStorage {
   Future<void> deleteAll() async {
     return _storage.deleteAll();
   }
+
+  Future<void> saveCustomer({required String token}) async {
+    print("Đã lưu token");
+    print(token);
+    await _storage.write(key: _tokenKey, value: "Bearer " + token);
+  }
 }

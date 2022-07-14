@@ -26,6 +26,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
   Stream<CustomerState> _createStopbang(CreateStopBangEvent event) async* {
     yield CustomerLoadingState();
     try {
+      print(event.stopbang.customer);
       final res = await customerRepository.createStopbang(event.stopbang);
       if (res.statusCode == HttpStatus.created) {
         yield CreateStopbangSuccess();

@@ -20,3 +20,13 @@ class PositionCountModal {
   final String name;
   PositionCountModal({required this.value, required this.name});
 }
+
+class CreateAccelerometerModel {
+  final String value;
+  final String customer;
+  CreateAccelerometerModel({required this.value, required this.customer});
+  Map<String, dynamic> toJson() => {
+        'value': value,
+        'customer': customer,
+      };
+}

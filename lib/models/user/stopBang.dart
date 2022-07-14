@@ -14,10 +14,12 @@ class StopBangModel {
   final String pressure;
   final String weight;
   final String necksize;
+  final String? customer;
 
   StopBangModel(
       {required this.snoring,
       required this.tired,
+      this.customer,
       required this.observed,
       required this.height,
       required this.pressure,
@@ -32,5 +34,6 @@ class StopBangModel {
         'pressure': pressure,
         'weight': weight,
         'necksize': necksize,
+        "customer": customer
       };
 }
