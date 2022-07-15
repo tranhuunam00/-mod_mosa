@@ -13,3 +13,7 @@ class CreateStopBangEvent extends CustomerEvent {
 
   const CreateStopBangEvent({required this.stopbang});
 }
+
+class GetStopBangEvent extends CustomerEvent {
+  const GetStopBangEvent();
+}

@@ -24,4 +24,14 @@ class CustomerService {
     debugPrint(response.body);
     return response;
   }
+
+  Future<dynamic> getStopbang() async {
+    var header = await Constants.requestHeadersToken();
+    final response = await http.get(
+      Uri.parse("${Constants.baseUrl}${customerRoute}stopbang"),
+      headers: header,
+    );
+
+    return response;
+  }
 }

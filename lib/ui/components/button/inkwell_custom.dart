@@ -31,13 +31,14 @@ class InkwellStyle extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: Material(
                   borderRadius: BorderRadius.all(Radius.circular(16)),
-                  color: color ?? Colors.orange,
+                  color: color ?? Color.fromARGB(255, 143, 211, 250),
                   elevation: 4,
                   child: InkWell(
-                    focusColor: (Colors.amber),
+                    focusColor: (Color.fromARGB(255, 90, 233, 252)),
                     onTap: onTap,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
-                    overlayColor: MaterialStateProperty.all(Colors.amber),
+                    overlayColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 123, 250, 229)),
                     child: Container(
                         padding: const EdgeInsets.only(
                             top: 12, bottom: 12, right: 8, left: 8),

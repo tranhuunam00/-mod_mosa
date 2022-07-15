@@ -9,4 +9,8 @@ class CustomerRepository {
   Future<dynamic> createStopbang(StopBangModel stopbang) async {
     return await customerService.createStopbang(stopbang);
   }
+
+  Future<dynamic> getStopbang() async {
+    return await customerService.getStopbang();
+  }
 }

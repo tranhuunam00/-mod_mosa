@@ -11,6 +11,7 @@ import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
+import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
 import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
 import 'package:mod_do_an/ui/sensor/accelerometer.dart';
@@ -52,6 +53,8 @@ class DoAnApp extends StatelessWidget {
                       Constants.myProfileSreen: (context) =>
                           const MyProfileScreen(),
                       Constants.quizScreen: (context) => const QuizScreen(),
+                      Constants.stopbangAll: (context) =>
+                          const PageStopbangScreen(),
                     },
                   ),
                 )));

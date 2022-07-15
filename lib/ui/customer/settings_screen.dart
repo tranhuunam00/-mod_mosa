@@ -213,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ButtonSetting(
                         onTap: () async {
                           Navigator.of(context).pushNamed(
-                            Constants.quizScreen,
+                            Constants.stopbangAll,
                           );
                         },
                         widget: const Icon(Icons.logout_outlined,

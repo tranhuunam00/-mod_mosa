@@ -18,3 +18,11 @@ class CreateStopbangFail extends CustomerState {
 
   const CreateStopbangFail({required this.message});
 }
+
+class GetStopbangSuccess extends CustomerState {}
+
+class GetStopbangFail extends CustomerState {
+  final String message;
+
+  const GetStopbangFail({required this.message});
+}
