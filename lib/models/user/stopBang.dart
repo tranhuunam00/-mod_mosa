@@ -15,11 +15,13 @@ class StopBangModel {
   final String weight;
   final String necksize;
   final String? customer;
+  final String? createdAt;
 
   StopBangModel(
       {required this.snoring,
       required this.tired,
       this.customer,
+      this.createdAt,
       required this.observed,
       required this.height,
       required this.pressure,

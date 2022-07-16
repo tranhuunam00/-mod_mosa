@@ -6,6 +6,7 @@ import 'package:mod_do_an/blocs/custommer/customer_bloc.dart';
 import 'package:mod_do_an/blocs/custommer/customer_event.dart';
 import 'package:mod_do_an/blocs/custommer/customer_state.dart';
 import 'package:mod_do_an/blocs/profile/profile_state.dart';
+import 'package:mod_do_an/component/styles/appbar.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/config/constants.dart';
 import 'package:mod_do_an/models/user/stopBang.dart';
@@ -16,7 +17,10 @@ import 'package:mod_do_an/utils/loading_helper.dart';
 
 class TableStopBang extends StatelessWidget {
   final List<String> valueAnswer;
-  const TableStopBang({Key? key, required this.valueAnswer}) : super(key: key);
+  final bool? isDetail;
+  const TableStopBang(
+      {Key? key, required this.valueAnswer, this.isDetail = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,48 +73,53 @@ class TableStopBang extends StatelessWidget {
               backgroundColor: AppColors.errorBackgroundColor);
         }
       },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: DataTable(columns: [
-              DataColumn(
-                  label: Text('Index',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold))),
-              DataColumn(
-                  label: Text('Name',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold))),
-              DataColumn(
-                  label: Text('Value',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold))),
-            ], rows: listRow),
-          ),
-          InkwellStyle(
-              label: "Submit",
-              onTap: () {
-                if (valueAnswer.indexOf('') > -1) {
-                  print("vao");
-                  ToastService.showToast(
-                      msg: "Please confirm data to be submitted",
-                      backgroundColor: AppColors.errorBackgroundColor);
-                  return;
-                } else {
-                  StopBangModel stopbang = StopBangModel(
-                      snoring: valueAnswer[0],
-                      tired: valueAnswer[1],
-                      observed: valueAnswer[2],
-                      height: valueAnswer[4],
-                      pressure: valueAnswer[3],
-                      weight: valueAnswer[5],
-                      necksize: valueAnswer[6]);
-                  BlocProvider.of<CustomerBloc>(context)
-                      .add(CreateStopBangEvent(stopbang: stopbang));
-                }
-              })
-        ],
+      child: Scaffold(
+        appBar: isDetail! ? appBarStyle("Detail") : null,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DataTable(columns: [
+                DataColumn(
+                    label: Text('Index',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text('Name',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text('Value',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+              ], rows: listRow),
+            ),
+            !isDetail!
+                ? InkwellStyle(
+                    label: "Submit",
+                    onTap: () {
+                      if (valueAnswer.indexOf('') > -1) {
+                        print("vao");
+                        ToastService.showToast(
+                            msg: "Please confirm data to be submitted",
+                            backgroundColor: AppColors.errorBackgroundColor);
+                        return;
+                      } else {
+                        StopBangModel stopbang = StopBangModel(
+                            snoring: valueAnswer[0],
+                            tired: valueAnswer[1],
+                            observed: valueAnswer[2],
+                            height: valueAnswer[4],
+                            pressure: valueAnswer[3],
+                            weight: valueAnswer[5],
+                            necksize: valueAnswer[6]);
+                        BlocProvider.of<CustomerBloc>(context)
+                            .add(CreateStopBangEvent(stopbang: stopbang));
+                      }
+                    })
+                : Container()
+          ],
+        ),
       ),
     );
   }

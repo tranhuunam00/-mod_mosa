@@ -12,11 +12,11 @@ import 'package:mod_do_an/models/user/user.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 
 class SensorService {
-  static const String customerRoute = 'sensor/';
+  static const String sensorRoute = 'sensors/';
   Future<dynamic> createAccelerometer(CreateAccelerometerModel acc) async {
     var header = await Constants.requestHeadersToken();
     final response = await http.post(
-      Uri.parse("${Constants.baseUrl}${customerRoute}create_accelerometer"),
+      Uri.parse("${Constants.baseUrl}${sensorRoute}create_accelerometer"),
       headers: header,
       body: jsonEncode(
         acc.toJson(),

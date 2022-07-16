@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:mod_do_an/component/styles/border.dart';
 import 'package:mod_do_an/config/constants.dart';
 import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/sensor/accelerometer.dart';
+import 'package:mod_do_an/models/user/user.dart';
+import 'package:mod_do_an/repositories/sensor_repository.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
 import 'package:mod_do_an/ui/components/background.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,6 +45,8 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
     PositionCountModal(value: 5, name: "trái"),
     PositionCountModal(value: 7, name: "phải"),
   ];
+
+  SensorRepository sensorRepository = new SensorRepository();
   @override
   void initState() {
     super.initState();
@@ -84,6 +90,41 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (listAccX.length == 100) {
+      Future.sync(() async {
+        String valueData = "";
+        for (int i = 0; i < 100; i++) {
+          valueData += listAccX[i].value.toString();
+          valueData += "%";
+          valueData += listAccY[i].value.toString();
+          valueData += "%";
+          valueData += listAccZ[i].value.toString();
+          valueData += "@";
+          valueData += listAccX[i].time.toString();
+          if (i != 99) valueData += "/";
+        }
+        ProfileUser user = await SecureStorage().getUser();
+        print(user.customerId);
+        CreateAccelerometerModel acc = CreateAccelerometerModel(
+            value: valueData, customer: user.customerId);
+        final res = await sensorRepository.createAccelerometer(acc);
+        if (res.statusCode == HttpStatus.created) {
+          List<AccelerometerChartModel> newListAccX = listAccX;
+          List<AccelerometerChartModel> newListAccY = listAccY;
+          List<AccelerometerChartModel> newListAccZ = listAccZ;
+
+          newListAccX.removeRange(0, 100);
+          newListAccY.removeRange(0, 100);
+          newListAccZ.removeRange(0, 100);
+          setState(() {
+            listAccX = newListAccX;
+            listAccY = newListAccY;
+            listAccZ = newListAccZ;
+          });
+        }
+      });
+    }
+
     print(listAccX.length);
     return Scaffold(
         appBar: AppBar(

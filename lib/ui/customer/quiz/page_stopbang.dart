@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/custommer/customer_bloc.dart';
 import 'package:mod_do_an/blocs/custommer/customer_event.dart';
 import 'package:mod_do_an/blocs/custommer/customer_state.dart';
+import 'package:mod_do_an/component/styles/appbar.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/repositories/customer_repository.dart';
 import 'package:mod_do_an/services/toast.service.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 import 'package:mod_do_an/ui/components/table/table_pageStopbang.dart';
+import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/utils/loading_helper.dart';
 
 class PageStopbangScreen extends StatefulWidget {
@@ -33,13 +35,7 @@ class _PageStopbangScreenState extends State<PageStopbangScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text("Tổng hợp Stopbang"),
-            backgroundColor: Color.fromARGB(255, 135, 178, 252),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(70),
-                    bottomLeft: Radius.circular(70)))),
+        appBar: appBarStyle("Tổng hợp câu trả lời "),
         body: BlocListener<CustomerBloc, CustomerState>(
           listener: (context, state) {
             if (state is CustomerLoadingState) {
@@ -61,7 +57,12 @@ class _PageStopbangScreenState extends State<PageStopbangScreen> {
               TableStopbangAll(),
               InkwellStyle(
                 label: "Trả lời mới",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => QuizScreen()),
+                  );
+                },
                 width: 200,
               )
             ]),
