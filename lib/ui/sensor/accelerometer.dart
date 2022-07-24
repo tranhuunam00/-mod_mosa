@@ -50,29 +50,33 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
   @override
   void initState() {
     super.initState();
+    Future.sync(() async {
+      try {
+        print(widget.server.address);
+        print(widget.server.isConnected);
 
-    BluetoothConnection.toAddress(widget.server.address).then((_connection) {
-      print('Connected to the device');
-      connection = _connection;
+        BluetoothConnection _connection =
+            await BluetoothConnection.toAddress(widget.server.address);
+        setState(() {
+          isConnecting = false;
+          isDisconnecting = false;
+        });
 
-      setState(() {
-        isConnecting = false;
-        isDisconnecting = false;
-      });
+        connection = _connection;
 
-      connection!.input!.listen(_onDataReceived).onDone(() {
-        if (isDisconnecting) {
-          print('Disconnecting locally!');
-        } else {
-          print('Disconnected remotely!');
-        }
-        if (this.mounted) {
-          setState(() {});
-        }
-      });
-    }).catchError((error) {
-      print('Cannot connect, exception occured');
-      print(error);
+        connection!.input!.listen(_onDataReceived).onDone(() {
+          if (isDisconnecting) {
+            print('Disconnecting locally!');
+          } else {
+            print('Disconnected remotely!');
+          }
+          if (this.mounted) {
+            setState(() {});
+          }
+        });
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
