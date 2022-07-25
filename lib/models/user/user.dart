@@ -44,8 +44,8 @@ class ProfileUser {
         'lastName': lastName,
         'email': email,
         'phone': phone,
-        'dob': dob!,
-        'gender': gender!,
+        'dob': dob,
+        'gender': gender,
         // 'nationality': nationality!,
       };
 
@@ -56,9 +56,9 @@ class ProfileUser {
         '"lastName"': '"' + lastName + '"',
         '"email"': '"' + email + '"',
         '"phone"': '"' + phone + '"',
-        '"dob"': '"' + dob! + '"',
-        '"gender"': '"' + gender! + '"',
-        '"nationality"': '"' + nationality! + '"',
+        '"dob"': '"' + dob + '"',
+        '"gender"': '"' + gender + '"',
+        '"nationality"': '"' + nationality + '"',
       }.toString();
 
   String toStringJson() {

@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
 
                       if (device != null) {
-                        print('Discovery -> selected ' + device!.address);
+                        print('Discovery -> selected ' + device.address);
                         BluetoothModel ble =
                             BluetoothModel(bluetoothDevice: device);
                         await bluetoothProvider.setBle(ble);

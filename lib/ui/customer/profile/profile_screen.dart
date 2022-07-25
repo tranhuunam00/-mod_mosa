@@ -54,13 +54,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       _lastNameController.text = arguments.lastName;
       _emailController.text = arguments.email;
       _phoneController.text = arguments.phone;
-      _dobController.text = arguments.dob!;
-      if (arguments.gender != null) {
-        if (arguments.gender == "MALE") {
-          _genderController.text = LocaleKeys.male.tr();
-        } else {
-          _genderController.text = LocaleKeys.female.tr();
-        }
+      _dobController.text = arguments.dob;
+
+      if (arguments.gender == "MALE") {
+        _genderController.text = LocaleKeys.male.tr();
+      } else {
+        _genderController.text = LocaleKeys.female.tr();
       }
       isFetch = true;
     }

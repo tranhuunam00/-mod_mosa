@@ -36,7 +36,7 @@ class SecureStorage {
     String? userString = await _storage.read(key: _user);
 
     if (userString != null) {
-      ProfileUser user = ProfileUser.fromJson(jsonDecode(userString!));
+      ProfileUser user = ProfileUser.fromJson(jsonDecode(userString));
       return user;
     }
     return new ProfileUser(
