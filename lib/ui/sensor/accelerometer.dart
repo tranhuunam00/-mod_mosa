@@ -57,6 +57,7 @@ class _AccelerometerScreenState extends State<AccelerometerScreen> {
 
         BluetoothConnection _connection =
             await BluetoothConnection.toAddress(widget.server.address);
+
         setState(() {
           isConnecting = false;
           isDisconnecting = false;
