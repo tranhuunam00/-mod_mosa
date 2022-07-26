@@ -4,13 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:mod_do_an/component/styles/appbar.dart';
-import 'package:mod_do_an/ui/ble/sensor/device.dart';
 import 'package:mod_do_an/ui/ble/widgets/CardDeviceScan.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 
 class FindDevicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<String> listIdConnect = [];
     return Scaffold(
       appBar: appBarStyle("Find Device"),
       body: RefreshIndicator(
@@ -24,36 +24,38 @@ class FindDevicesScreen extends StatelessWidget {
                     .asyncMap((_) => FlutterBlue.instance.connectedDevices),
                 initialData: [],
                 builder: (c, snapshot) => Column(
-                  children: snapshot.data!
-                      .map((d) => Padding(
-                            padding: const EdgeInsets.only(
-                                left: 30, top: 30, bottom: 30),
-                            child: ListTile(
-                              title: Text(
-                                d.name,
-                                style: TextStyle(
-                                    fontSize: 20, fontStyle: FontStyle.italic),
-                              ),
-                              subtitle: Text(d.id.toString()),
-                              trailing: StreamBuilder<BluetoothDeviceState>(
-                                stream: d.state,
-                                initialData: BluetoothDeviceState.disconnected,
-                                builder: (c, snapshot) {
-                                  if (snapshot.data ==
-                                      BluetoothDeviceState.connected) {
-                                    return RaisedButton(
-                                      child: Text("Open"),
-                                      color: Colors.amber,
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(d),
-                                    );
-                                  }
-                                  return Text(snapshot.data.toString());
-                                },
-                              ),
-                            ),
-                          ))
-                      .toList(),
+                  children: snapshot.data!.map((d) {
+                    if (listIdConnect.indexOf(d.id.toString()) == -1) {
+                      listIdConnect.add(d.id.toString());
+                    }
+                    return Padding(
+                      padding:
+                          const EdgeInsets.only(left: 30, top: 30, bottom: 30),
+                      child: ListTile(
+                        title: Text(
+                          d.name,
+                          style: TextStyle(
+                              fontSize: 20, fontStyle: FontStyle.italic),
+                        ),
+                        subtitle: Text(d.id.toString()),
+                        trailing: StreamBuilder<BluetoothDeviceState>(
+                          stream: d.state,
+                          initialData: BluetoothDeviceState.disconnected,
+                          builder: (c, snapshot) {
+                            if (snapshot.data ==
+                                BluetoothDeviceState.connected) {
+                              return RaisedButton(
+                                child: Text("Open"),
+                                color: Colors.amber,
+                                onPressed: () => Navigator.of(context).pop(d),
+                              );
+                            }
+                            return Text(snapshot.data.toString());
+                          },
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
               Divider(
@@ -63,18 +65,17 @@ class FindDevicesScreen extends StatelessWidget {
                 stream: FlutterBlue.instance.scanResults,
                 initialData: [],
                 builder: (c, snapshot) => Column(
-                  children: snapshot.data!
-                      .map(
-                        (r) => ScanResultTile(
-                          result: r,
-                          onTap: () => Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            r.device.connect();
-                            return DeviceScreen(device: r.device);
-                          })),
-                        ),
-                      )
-                      .toList(),
+                  children: snapshot.data!.map((r) {
+                    if (listIdConnect.indexOf(r.device.id.toString()) != -1) {
+                      return Container();
+                    }
+                    return ScanResultTile(
+                        result: r,
+                        onTap: () async {
+                          await r.device.connect();
+                          return Navigator.of(context).pop(r.device);
+                        });
+                  }).toList(),
                 ),
               ),
             ],

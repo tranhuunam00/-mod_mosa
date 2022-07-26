@@ -13,8 +13,7 @@ import 'package:mod_do_an/models/bleModel.dart';
 import 'package:mod_do_an/provider/bluetooth.provider.dart';
 
 import 'package:mod_do_an/ui/ble/DiscoveryScreen.dart';
-import 'package:mod_do_an/ui/ble/sensor/device.dart';
-import 'package:mod_do_an/ui/ble/sensor/newAccelerometer.dart';
+import 'package:mod_do_an/ui/ble/sensor/Sensor.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -131,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return AccelerometerDashBoard(
+                                return SensorDashboard(
                                   device: selectedDevice!,
                                 );
                               },
