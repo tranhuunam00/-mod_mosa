@@ -50,7 +50,6 @@ class _AccelerometerDashBoardState extends State<AccelerometerDashBoard> {
     ];
     bool isService = false;
     BluetoothService? accelerometerService;
-    BluetoothCharacteristic? acclerometerCharacter;
     return Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -113,192 +112,166 @@ class _AccelerometerDashBoardState extends State<AccelerometerDashBoard> {
                       return Text("Please contact customer Service 2");
                     }
 
-                    return Container();
-                    return StreamBuilder<List<int>>(
-                        stream: acclerometerCharacter!.value,
-                        initialData: acclerometerCharacter!.lastValue,
-                        builder: (c, snapshot) {
-                          return SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                    decoration: borderStyle,
-                                    margin: new EdgeInsets.symmetric(
-                                        horizontal: 20.0),
-                                    height: 350.h,
-                                    child: SfCartesianChart(
-                                        title: ChartTitle(
-                                            text: 'Biểu đồ giá trị 3 trục'),
-                                        onZooming: ((zoomingArgs) =>
-                                            {print(zoomingArgs)}),
-                                        legend: Legend(
-                                            isVisible: true,
-                                            alignment: ChartAlignment.center,
-                                            position: LegendPosition.bottom),
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              decoration: borderStyle,
+                              margin:
+                                  new EdgeInsets.symmetric(horizontal: 20.0),
+                              height: 350.h,
+                              child: SfCartesianChart(
+                                  title: ChartTitle(
+                                      text: 'Biểu đồ giá trị 3 trục'),
+                                  onZooming: ((zoomingArgs) =>
+                                      {print(zoomingArgs)}),
+                                  legend: Legend(
+                                      isVisible: true,
+                                      alignment: ChartAlignment.center,
+                                      position: LegendPosition.bottom),
 
-                                        // Initialize category axis
-                                        primaryXAxis: DateTimeAxis(
-                                            autoScrollingMode:
-                                                AutoScrollingMode.end,
-                                            visibleMinimum: listAccX.length > 50
-                                                ? listAccX[listAccX.length - 50]
-                                                    .time
-                                                : null,
-                                            // edgeLabelPlacement: EdgeLabelPlacement.shift,
-                                            majorGridLines:
-                                                const MajorGridLines(width: 0),
-                                            name: "Thời gian",
-                                            isVisible: true,
-                                            title: AxisTitle(
-                                                text: "Thời gian (s)",
-                                                alignment: ChartAlignment.far)),
-                                        series: <
-                                            LineSeries<AccelerometerChartModel,
-                                                DateTime>>[
-                                          LineSeries<AccelerometerChartModel,
-                                                  DateTime>(
-                                              onRendererCreated:
-                                                  (ChartSeriesController
-                                                      controller) {
-                                                _chartSeriesControllerX =
-                                                    controller;
-                                              },
-                                              // Bind data source
-                                              dataSource: listAccX,
-                                              color: Colors.greenAccent,
-                                              yValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      accValue.value,
-                                              xValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      (accValue.time)),
-                                          LineSeries<AccelerometerChartModel,
-                                                  DateTime>(
-                                              onRendererCreated:
-                                                  (ChartSeriesController
-                                                      controller) {
-                                                _chartSeriesControllerY =
-                                                    controller;
-                                              },
-                                              color: Colors.amber,
-                                              // Bind data source
-                                              dataSource: listAccY,
-                                              yValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      accValue.value,
-                                              xValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      (accValue.time)),
-                                          LineSeries<AccelerometerChartModel,
-                                                  DateTime>(
-                                              onRendererCreated:
-                                                  (ChartSeriesController
-                                                      controller) {
-                                                _chartSeriesControllerZ =
-                                                    controller;
-                                              },
-                                              // Bind data source
-                                              dataSource: listAccZ,
-                                              yValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      accValue.value,
-                                              xValueMapper:
-                                                  (AccelerometerChartModel
-                                                              accValue,
-                                                          _) =>
-                                                      (accValue.time))
-                                        ])),
-                                SizedBox(
-                                  height: 30.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Container(
-                                      decoration: borderStyle,
-                                      height: 150.h,
-                                      width: 150.h,
-                                      child: SfCartesianChart(
-                                          title: ChartTitle(
-                                              text: 'THời gian vs tư thế',
-                                              textStyle:
-                                                  TextStyle(fontSize: 8.sp)),
-                                          primaryXAxis: CategoryAxis(),
-                                          series: <
-                                              ChartSeries<PositionCountModal,
-                                                  String>>[
-                                            // Renders column chart
-                                            ColumnSeries<PositionCountModal,
-                                                    String>(
-                                                dataSource: positions,
-                                                xValueMapper:
-                                                    (PositionCountModal data,
-                                                            _) =>
-                                                        data.name,
-                                                yValueMapper:
-                                                    (PositionCountModal data,
-                                                            _) =>
-                                                        data.value)
-                                          ]),
-                                    ),
-                                    Container(
-                                      decoration: borderStyle,
-                                      height: 150.h,
-                                      width: 150.h,
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 30.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CartSensor(
-                                      onPress: () {},
-                                      img: AppImages.met_moi_Img,
-                                      lable: "Phân tích 1",
-                                      size: 50.w,
-                                    ),
-                                    CartSensor(
-                                      onPress: () {},
-                                      img: AppImages.met_moi_Img,
-                                      lable: "Phân tích 1",
-                                      size: 50.w,
-                                    ),
-                                    CartSensor(
-                                      onPress: () {},
-                                      img: AppImages.met_moi_Img,
-                                      lable: "Phân tích 1",
-                                      size: 50.w,
-                                    ),
-                                    CartSensor(
-                                      onPress: () {},
-                                      img: AppImages.met_moi_Img,
-                                      lable: "Phân tích 1",
-                                      size: 50.w,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        });
+                                  // Initialize category axis
+                                  primaryXAxis: DateTimeAxis(
+                                      autoScrollingMode: AutoScrollingMode.end,
+                                      visibleMinimum: listAccX.length > 50
+                                          ? listAccX[listAccX.length - 50].time
+                                          : null,
+                                      // edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                      majorGridLines:
+                                          const MajorGridLines(width: 0),
+                                      name: "Thời gian",
+                                      isVisible: true,
+                                      title: AxisTitle(
+                                          text: "Thời gian (s)",
+                                          alignment: ChartAlignment.far)),
+                                  series: <
+                                      LineSeries<AccelerometerChartModel,
+                                          DateTime>>[
+                                    LineSeries<AccelerometerChartModel,
+                                            DateTime>(
+                                        onRendererCreated:
+                                            (ChartSeriesController controller) {
+                                          _chartSeriesControllerX = controller;
+                                        },
+                                        // Bind data source
+                                        dataSource: listAccX,
+                                        color: Colors.greenAccent,
+                                        yValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                accValue.value,
+                                        xValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                (accValue.time)),
+                                    LineSeries<AccelerometerChartModel,
+                                            DateTime>(
+                                        onRendererCreated:
+                                            (ChartSeriesController controller) {
+                                          _chartSeriesControllerY = controller;
+                                        },
+                                        color: Colors.amber,
+                                        // Bind data source
+                                        dataSource: listAccY,
+                                        yValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                accValue.value,
+                                        xValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                (accValue.time)),
+                                    LineSeries<AccelerometerChartModel,
+                                            DateTime>(
+                                        onRendererCreated:
+                                            (ChartSeriesController controller) {
+                                          _chartSeriesControllerZ = controller;
+                                        },
+                                        // Bind data source
+                                        dataSource: listAccZ,
+                                        yValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                accValue.value,
+                                        xValueMapper:
+                                            (AccelerometerChartModel accValue,
+                                                    _) =>
+                                                (accValue.time))
+                                  ])),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                decoration: borderStyle,
+                                height: 150.h,
+                                width: 150.h,
+                                child: SfCartesianChart(
+                                    title: ChartTitle(
+                                        text: 'THời gian vs tư thế',
+                                        textStyle: TextStyle(fontSize: 8.sp)),
+                                    primaryXAxis: CategoryAxis(),
+                                    series: <
+                                        ChartSeries<PositionCountModal,
+                                            String>>[
+                                      // Renders column chart
+                                      ColumnSeries<PositionCountModal, String>(
+                                          dataSource: positions,
+                                          xValueMapper:
+                                              (PositionCountModal data, _) =>
+                                                  data.name,
+                                          yValueMapper:
+                                              (PositionCountModal data, _) =>
+                                                  data.value)
+                                    ]),
+                              ),
+                              Container(
+                                decoration: borderStyle,
+                                height: 150.h,
+                                width: 150.h,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CartSensor(
+                                onPress: () {},
+                                img: AppImages.met_moi_Img,
+                                lable: "Phân tích 1",
+                                size: 50.w,
+                              ),
+                              CartSensor(
+                                onPress: () {},
+                                img: AppImages.met_moi_Img,
+                                lable: "Phân tích 1",
+                                size: 50.w,
+                              ),
+                              CartSensor(
+                                onPress: () {},
+                                img: AppImages.met_moi_Img,
+                                lable: "Phân tích 1",
+                                size: 50.w,
+                              ),
+                              CartSensor(
+                                onPress: () {},
+                                img: AppImages.met_moi_Img,
+                                lable: "Phân tích 1",
+                                size: 50.w,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
                   });
             }));
   }
