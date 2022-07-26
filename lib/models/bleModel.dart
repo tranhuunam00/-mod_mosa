@@ -1,4 +1,4 @@
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 class BluetoothModel {
   BluetoothDevice? bluetoothDevice;

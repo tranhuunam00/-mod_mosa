@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart'
+    hide BluetoothDevice;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:mod_do_an/component/card/cart_sensor.dart';
@@ -11,13 +12,13 @@ import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/bleModel.dart';
 import 'package:mod_do_an/provider/bluetooth.provider.dart';
 
-import 'package:mod_do_an/ui/ble/BackgroundCollectingTask.dart';
-import 'package:mod_do_an/ui/ble/ChatPage.dart';
-import 'package:mod_do_an/ui/ble/DiscoveryPage.dart';
+import 'package:mod_do_an/ui/ble/DiscoveryScreen.dart';
+import 'package:mod_do_an/ui/ble/sensor/device.dart';
+import 'package:mod_do_an/ui/ble/sensor/newAccelerometer.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mod_do_an/ui/sensor/accelerometer.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_blue/flutter_blue.dart' hide BluetoothState;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,8 +30,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   BluetoothState _bluetoothState = BluetoothState.UNKNOWN;
 
-  BackgroundCollectingTask? _collectingTask;
   BluetoothDevice? selectedDevice = null;
+
   @override
   void initState() {
     super.initState();
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     FlutterBluetoothSerial.instance.setPairingRequestHandler(null);
-    _collectingTask?.dispose();
+    FlutterBlue.instance.stopScan();
 
     super.dispose();
   }
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final bluetoothProvider =
         Provider.of<BluetoothProvider>(context, listen: false);
-    print(selectedDevice);
+
     selectedDevice = bluetoothProvider.BleP.bluetoothDevice;
     return Scaffold(
       body: Container(
@@ -101,13 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           await Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return DiscoveryPage();
+                            return FindDevicesScreen();
                           },
                         ),
                       );
 
                       if (device != null) {
-                        print('Discovery -> selected ' + device.address);
                         BluetoothModel ble =
                             BluetoothModel(bluetoothDevice: device);
                         await bluetoothProvider.setBle(ble);
@@ -131,15 +131,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return AccelerometerScreen(
-                                  server: selectedDevice!,
+                                return AccelerometerDashBoard(
+                                  device: selectedDevice!,
                                 );
                               },
                             ),
                           );
-                          // Navigator.pushNamed(
-                          //     context, Constants.acclerometerScreen);
-                          // _startChat(context, selectedDevice!);
                         },
                         img: AppImages.accelerometer_Img,
                         lable: Constants.ACCLEROMETER,
@@ -159,16 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 : Container()
           ],
         ),
-      ),
-    );
-  }
-
-  void _startChat(BuildContext context, BluetoothDevice server) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return ChatPage(server: server);
-        },
       ),
     );
   }

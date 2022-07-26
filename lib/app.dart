@@ -14,7 +14,6 @@ import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
 import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
-import 'package:mod_do_an/ui/sensor/accelerometer.dart';
 
 class DoAnApp extends StatelessWidget {
   const DoAnApp({Key? key}) : super(key: key);
