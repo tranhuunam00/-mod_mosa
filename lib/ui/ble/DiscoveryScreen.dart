@@ -8,9 +8,9 @@ import 'package:mod_do_an/ui/ble/widgets/CardDeviceScan.dart';
 import 'package:mod_do_an/ui/components/button/inkwell_custom.dart';
 
 class FindDevicesScreen extends StatelessWidget {
+  List<String> listIdConnect = [];
   @override
   Widget build(BuildContext context) {
-    List<String> listIdConnect = [];
     return Scaffold(
       appBar: appBarStyle("Find Device"),
       body: RefreshIndicator(
@@ -26,6 +26,8 @@ class FindDevicesScreen extends StatelessWidget {
                 builder: (c, snapshot) => Column(
                   children: snapshot.data!.map((d) {
                     if (listIdConnect.indexOf(d.id.toString()) == -1) {
+                      FlutterBlue.instance
+                          .startScan(timeout: Duration(seconds: 4));
                       listIdConnect.add(d.id.toString());
                     }
                     return Padding(
