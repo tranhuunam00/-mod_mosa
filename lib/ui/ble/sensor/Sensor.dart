@@ -85,6 +85,7 @@ class SensorDashboard extends StatelessWidget {
                     for (int i = 0;
                         i < accelerometerService!.characteristics.length;
                         i++) {
+                      print(accelerometerService!.characteristics[i].uuid);
                       if (accelerometerService!.characteristics[i].uuid
                               .toString() ==
                           Constants.ACCLEROMETER_CHARACTION) {
