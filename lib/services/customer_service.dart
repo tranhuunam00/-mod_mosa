@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/models/register/register.dart';
 import 'package:mod_do_an/models/response/base_response.dart';
 import 'package:mod_do_an/models/user/stopBang.dart';
 import 'package:mod_do_an/models/user/user.dart';
@@ -32,6 +33,19 @@ class CustomerService {
       headers: header,
     );
 
+    return response;
+  }
+
+  Future<dynamic> addUserOther(RegisterCustomerOther otherUser) async {
+    var header = await Constants.requestHeadersToken();
+    final response = await http.post(
+      Uri.parse("${Constants.baseUrl}${customerRoute}other"),
+      headers: header,
+      body: jsonEncode(
+        otherUser.toJson(),
+      ),
+    );
+    debugPrint(response.body);
     return response;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mod_do_an/models/register/register.dart';
 import 'package:mod_do_an/models/user/stopBang.dart';
 
 abstract class CustomerEvent extends Equatable {
@@ -16,4 +17,10 @@ class CreateStopBangEvent extends CustomerEvent {
 
 class GetStopBangEvent extends CustomerEvent {
   const GetStopBangEvent();
+}
+
+class AddUserOtherEvent extends CustomerEvent {
+  final RegisterCustomerOther otherUser;
+
+  const AddUserOtherEvent({required this.otherUser});
 }

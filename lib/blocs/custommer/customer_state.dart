@@ -26,3 +26,11 @@ class GetStopbangFail extends CustomerState {
 
   const GetStopbangFail({required this.message});
 }
+
+class AddUserOtherSuccess extends CustomerState {}
+
+class AddUserOtherFail extends CustomerState {
+  final String message;
+
+  const AddUserOtherFail({required this.message});
+}

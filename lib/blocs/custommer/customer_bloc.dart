@@ -26,6 +26,9 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     if (event is GetStopBangEvent) {
       yield* _getStopbang(event);
     }
+    if (event is AddUserOtherEvent) {
+      yield* _addUserOther(event);
+    }
   }
 
   // create stopbang
@@ -73,6 +76,22 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     } catch (e) {
       debugPrint("GetRegister: error -> ${e.toString()}");
       yield GetStopbangFail(message: e.toString());
+    }
+  }
+
+  Stream<CustomerState> _addUserOther(AddUserOtherEvent event) async* {
+    yield CustomerLoadingState();
+    try {
+      final res = await customerRepository.addUserOther(event.otherUser);
+      if (res.statusCode == HttpStatus.created) {
+        yield AddUserOtherSuccess();
+      } else {
+        yield AddUserOtherFail(
+            message: BaseResponse.fromJson(jsonDecode(res.body)).message);
+      }
+    } catch (e) {
+      debugPrint("CreateRegister: error -> ${e.toString()}");
+      yield AddUserOtherFail(message: e.toString());
     }
   }
 }
