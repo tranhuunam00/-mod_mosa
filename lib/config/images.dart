@@ -24,4 +24,21 @@ class AppImages {
   static const accelerometer_Img = "assets/icons/accelerometer.png";
 
   static const nhiet_do_Img = "assets/icons/nhiet_do.png";
+
+  static const box1 = "assets/images/box1.png";
+
+  static const box2 = "assets/images/box2.png";
+
+  static const box3 = "assets/images/box3.png";
+
+  static const box4 = "assets/images/box4.png";
+
+  static const help = "assets/images/help.png";
+
+  static const brand = "assets/images/brand.png";
+
+  static const img1 = "assets/images/img1.png";
+  static const img2 = "assets/images/img2.png";
+  static const img3 = "assets/images/img3.png";
+  static const img4 = "assets/images/img4.png";
 }

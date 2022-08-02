@@ -54,6 +54,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.2.36
   intl: ^0.17.0
   flutter_blue: ^0.8.0
+  ternav_icons: ^1.0.0
+  percent_indicator: ^4.2.2
   
 
 dev_dependencies:

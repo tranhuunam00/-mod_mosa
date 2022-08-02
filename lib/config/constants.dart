@@ -26,6 +26,9 @@ class Constants {
   static const String quizScreen = 'quiz';
   static const String acclerometerScreen = 'acclerometerScreen';
   static const String stopbangAll = 'stopbangAll';
+  static const String analyticScreen = 'analyticScreen';
+  static const String settingScreen = 'settingScreen';
+  static const String changeUSer = 'changeUSer';
 
   //
   static Future<Map<String, String>> requestHeadersToken() async {

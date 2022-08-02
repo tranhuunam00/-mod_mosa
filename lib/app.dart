@@ -10,10 +10,13 @@ import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
+import 'package:mod_do_an/ui/customer/changeUser.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
 import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
+import 'package:mod_do_an/ui/customer/settings_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
+import 'package:mod_do_an/ui/home/welcome_screen.dart';
 
 class DoAnApp extends StatelessWidget {
   const DoAnApp({Key? key}) : super(key: key);
@@ -34,7 +37,7 @@ class DoAnApp extends StatelessWidget {
                     home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                         if (state is AuthenticationAuthenticatedState) {
-                          return const DashboardCustomerScreen();
+                          return const AnalyticScreen();
                         } else {
                           return const OnboardingScreen();
                         }
@@ -54,6 +57,12 @@ class DoAnApp extends StatelessWidget {
                       Constants.quizScreen: (context) => const QuizScreen(),
                       Constants.stopbangAll: (context) =>
                           const PageStopbangScreen(),
+                      Constants.analyticScreen: (context) =>
+                          const AnalyticScreen(),
+                      Constants.settingScreen: (context) =>
+                          const SettingsScreen(),
+                      Constants.changeUSer: (context) =>
+                          const ChangeUserScreen(),
                     },
                   ),
                 )));

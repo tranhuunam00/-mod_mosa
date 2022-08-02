@@ -83,4 +83,10 @@ class AppColors {
   static const Color noColorOpa = Color.fromARGB(255, 232, 159, 159);
 
   static const Color noColor = Color(0xffdc2626);
+
+  static const Color kLightBlue = Color(0xffEBF6FF);
+  static const Color kDarkBlue = Color(0xff369FFF);
+  static const Color kGreen = Color(0xff8AC53E);
+  static const Color kOrange = Color(0xffFF993A);
+  static const Color kYellow = Color(0xffFFD143);
 }
