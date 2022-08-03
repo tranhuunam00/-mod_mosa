@@ -96,6 +96,7 @@ class _ChangeUserScreenState extends State<ChangeUserScreen> {
                             await SecureStorage()
                                 .saveCustomer(user: listUser[index]);
                             Navigator.pop(context);
+                            ToastService.showToast(msg: "Thành công");
                           },
                           child: CardCommon(
                             colorC: Colors.black,

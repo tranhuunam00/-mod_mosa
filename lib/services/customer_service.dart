@@ -28,8 +28,10 @@ class CustomerService {
 
   Future<dynamic> getStopbang() async {
     var header = await Constants.requestHeadersToken();
+    ProfileUser userP = await SecureStorage().getUser();
     final response = await http.get(
-      Uri.parse("${Constants.baseUrl}${customerRoute}stopbang"),
+      Uri.parse(
+          "${Constants.baseUrl}${customerRoute}stopbang/${userP.customerId}"),
       headers: header,
     );
 

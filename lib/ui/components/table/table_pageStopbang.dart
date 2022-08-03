@@ -103,21 +103,31 @@ class _TableStopbangAllState extends State<TableStopbangAll> {
         )),
       ]));
     });
-    return Column(children: <Widget>[
-      Container(
-        margin: EdgeInsets.all(20),
-        child: DataTable(columns: [
-          DataColumn(
-              label: Text('Index',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-          DataColumn(
-              label: Text('Created-At',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-          DataColumn(
-              label: Text('Detail',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-        ], rows: listRow),
-      ),
-    ]);
+    return stopbangs.length > 0
+        ? Column(children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(20),
+              child: DataTable(columns: [
+                DataColumn(
+                    label: Text('Index',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text('Created-At',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text('Detail',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+              ], rows: listRow),
+            ),
+          ])
+        : Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Center(
+              child: Text("Bạn chưa có bản ghi nào !"),
+            ),
+          );
   }
 }

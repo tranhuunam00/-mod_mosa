@@ -39,7 +39,6 @@ class _PageStopbangScreenState extends State<PageStopbangScreen> {
         body: BlocListener<CustomerBloc, CustomerState>(
           listener: (context, state) {
             if (state is CustomerLoadingState) {
-              print("loadding");
               LoadingHelper.showLoading(context);
             }
             if (state is GetStopbangSuccess) {
