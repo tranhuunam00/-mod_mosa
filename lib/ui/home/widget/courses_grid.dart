@@ -16,7 +16,7 @@ class CourseGrid extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              course[index].onTap ?? course[index].onTap(context);
+              course[index].onTap(context);
             },
             child: Container(
               decoration: BoxDecoration(

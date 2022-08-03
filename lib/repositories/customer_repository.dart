@@ -1,8 +1,6 @@
 import 'package:mod_do_an/models/register/register.dart';
 import 'package:mod_do_an/models/user/stopBang.dart';
-import 'package:mod_do_an/models/user/user.dart';
 import 'package:mod_do_an/services/customer_service.dart';
-import 'package:mod_do_an/services/profile_service.dart';
 
 class CustomerRepository {
   final CustomerService customerService = CustomerService();
@@ -17,5 +15,9 @@ class CustomerRepository {
 
   Future<dynamic> addUserOther(RegisterCustomerOther userOther) async {
     return await customerService.addUserOther(userOther);
+  }
+
+  Future<dynamic> getUserOther() async {
+    return await customerService.getUserOther();
   }
 }

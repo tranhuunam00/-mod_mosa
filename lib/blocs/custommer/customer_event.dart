@@ -24,3 +24,7 @@ class AddUserOtherEvent extends CustomerEvent {
 
   const AddUserOtherEvent({required this.otherUser});
 }
+
+class GetUserOtherEvent extends CustomerEvent {
+  const GetUserOtherEvent();
+}

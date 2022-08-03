@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mod_do_an/models/user/user.dart';
 
 abstract class CustomerState extends Equatable {
   const CustomerState();
@@ -33,4 +34,15 @@ class AddUserOtherFail extends CustomerState {
   final String message;
 
   const AddUserOtherFail({required this.message});
+}
+
+class GetUserOtherSuccess extends CustomerState {
+  final List<ProfileUser> listUser;
+  const GetUserOtherSuccess({required this.listUser});
+}
+
+class GetUserOtherFail extends CustomerState {
+  final String message;
+
+  const GetUserOtherFail({required this.message});
 }

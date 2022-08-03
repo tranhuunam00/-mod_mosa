@@ -29,6 +29,10 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     if (event is AddUserOtherEvent) {
       yield* _addUserOther(event);
     }
+
+    if (event is GetUserOtherEvent) {
+      yield* _getUserOther();
+    }
   }
 
   // create stopbang
@@ -92,6 +96,39 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     } catch (e) {
       debugPrint("CreateRegister: error -> ${e.toString()}");
       yield AddUserOtherFail(message: e.toString());
+    }
+  }
+
+  Stream<CustomerState> _getUserOther() async* {
+    yield CustomerLoadingState();
+    try {
+      final res = await customerRepository.getUserOther();
+
+      if (res.statusCode == HttpStatus.ok) {
+        BaseResponse baseResponse = BaseResponse.fromJson(jsonDecode(res.body));
+        List<ProfileUser> listProfile = [];
+        final listUserApi = baseResponse.data!['listCustomer'];
+        for (int i = 0; i < listUserApi.length; i++) {
+          ProfileUser p = new ProfileUser(
+              id: listUserApi[i]['user'],
+              firstName: listUserApi[i]['firstName'],
+              lastName: listUserApi[i]['lastName'],
+              email: "",
+              phone: listUserApi[i]['phoneNumber'],
+              dob: listUserApi[i]['dob'],
+              gender: listUserApi[i]['gender'],
+              nationality: "",
+              customerId: listUserApi[i]['_id']);
+          listProfile.add(p);
+        }
+        yield GetUserOtherSuccess(listUser: listProfile);
+      } else {
+        yield GetUserOtherFail(
+            message: BaseResponse.fromJson(jsonDecode(res.body)).message);
+      }
+    } catch (e) {
+      debugPrint("CreateRegister: error -> ${e.toString()}");
+      yield GetUserOtherFail(message: e.toString());
     }
   }
 }

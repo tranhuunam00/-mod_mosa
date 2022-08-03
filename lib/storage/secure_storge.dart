@@ -37,8 +37,10 @@ class SecureStorage {
 
     if (userString != null) {
       ProfileUser user = ProfileUser.fromJson(jsonDecode(userString));
+
       return user;
     }
+
     return new ProfileUser(
         id: "",
         firstName: "",

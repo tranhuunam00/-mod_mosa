@@ -48,4 +48,43 @@ class CustomerService {
     debugPrint(response.body);
     return response;
   }
+
+  Future<dynamic> getUserOther() async {
+    var header = await Constants.requestHeadersToken();
+    final response = await http.get(
+      Uri.parse("${Constants.baseUrl}${customerRoute}other"),
+      headers: header,
+    );
+    debugPrint(response.body);
+    return response;
+  }
+
+  Future<ProfileUser> getProfile() async {
+    var header = await Constants.requestHeadersToken();
+    ProfileUser userStore = await SecureStorage().getUser();
+    final response = await http.get(
+        Uri.parse(
+            '${Constants.baseUrl}${customerRoute}${userStore.customerId}'),
+        headers: header);
+    debugPrint(response.body);
+    if (response.statusCode == HttpStatus.ok) {
+      final body = jsonDecode(response.body)['data'];
+      ProfileUser p = new ProfileUser(
+          id: body['user']['_id'],
+          firstName: body['firstName'],
+          lastName: body['lastName'],
+          email: body['user']['email'],
+          phone: body['phoneNumber'],
+          dob: body['phoneNumber'],
+          gender: body['gender'],
+          nationality: body['nationality'] ?? "",
+          customerId: body['_id']);
+
+      await SecureStorage().saveCustomer(user: p);
+      // ProfileUser a = ProfileUser.fromJson(body);
+      return p;
+    }
+
+    throw Exception(BaseResponse.fromJson(jsonDecode(response.body)).message);
+  }
 }

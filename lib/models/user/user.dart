@@ -31,7 +31,7 @@ class ProfileUser {
         firstName: json['firstName'] ?? '',
         lastName: json['lastName'] ?? '',
         email: json['email'] ?? '',
-        phone: json['phoneNumber'] ?? '',
+        phone: json['phone'] ?? '',
         avatarUrl: json['avatarUrl'] ??
             'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
         dob: json['dob'] ?? '',

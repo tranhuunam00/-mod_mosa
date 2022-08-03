@@ -10,10 +10,13 @@ class CardCommon extends StatelessWidget {
       required this.colorC,
       required this.heading,
       this.subHeading,
+      this.backgroudC,
       this.image})
       : super(key: key);
 
   final Color colorC;
+  final Color? backgroudC;
+
   final String heading;
   final String? subHeading;
   final String? image;
@@ -23,7 +26,7 @@ class CardCommon extends StatelessWidget {
     return Container(
       // color: Colors.grey,
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 251, 219, 219),
+          color: backgroudC ?? Color.fromARGB(255, 251, 219, 219),
           borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -47,11 +50,13 @@ class CardCommon extends StatelessWidget {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   heading,
                   style: const TextStyle(
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
