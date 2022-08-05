@@ -11,71 +11,78 @@ class CardCommon extends StatelessWidget {
       required this.heading,
       this.subHeading,
       this.backgroudC,
+      required this.onPress,
       this.image})
       : super(key: key);
 
   final Color colorC;
   final Color? backgroudC;
-
   final String heading;
   final String? subHeading;
   final String? image;
+  final Function onPress;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.grey,
-      decoration: BoxDecoration(
-          color: backgroudC ?? Color.fromARGB(255, 251, 219, 219),
-          borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: colorC, borderRadius: BorderRadius.circular(10)),
-                    height: 55,
-                    width: 55,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage(image ?? AppImages.help),
-                    )),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  heading,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
+    return InkWell(
+      onTap: () {
+        onPress(context);
+      },
+      child: Container(
+        // color: Colors.grey,
+        decoration: BoxDecoration(
+            color: backgroudC ?? Color.fromARGB(255, 251, 219, 219),
+            borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: colorC,
+                          borderRadius: BorderRadius.circular(10)),
+                      height: 55,
+                      width: 55,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage(image ?? AppImages.help),
+                      )),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    heading,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  subHeading ?? "",
-                  style: const TextStyle(color: Colors.grey),
-                )
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
-                )
-              ],
-            )
-          ],
+                  Text(
+                    subHeading != null ? subHeading! : "",
+                    style: const TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.more_vert,
+                    color: Colors.grey,
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

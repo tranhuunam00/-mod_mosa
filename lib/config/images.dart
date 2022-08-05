@@ -41,4 +41,10 @@ class AppImages {
   static const img2 = "assets/images/img2.png";
   static const img3 = "assets/images/img3.png";
   static const img4 = "assets/images/img4.png";
+
+  static const welcome = "assets/images/welcome.jpg";
+  static const cskh = "assets/images/cskh.jpg";
+  static const osa = "assets/images/osa.jpg";
+  static const sleep = "assets/images/sleep.jpg";
+  static const stopbangImg = "assets/images/stopbangImg.png";
 }

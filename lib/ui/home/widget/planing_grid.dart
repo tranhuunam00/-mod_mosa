@@ -21,7 +21,12 @@ class _PlaningGridState extends State<PlaningGrid> {
             childAspectRatio: 16 / 4, crossAxisCount: 1, mainAxisSpacing: 20),
         itemBuilder: (context, index) {
           return CardCommon(
-              colorC: planing[index].color, heading: planing[index].heading);
+            colorC: planing[index].color,
+            heading: planing[index].heading,
+            subHeading: planing[index].subHeading,
+            onPress: planing[index].onPress,
+            image: planing[index].icon,
+          );
         });
   }
 }

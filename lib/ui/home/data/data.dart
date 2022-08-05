@@ -26,15 +26,16 @@ class Course {
 class Planing {
   final String heading;
   final String subHeading;
-  final Icon icon;
+  final String icon;
   final Color color;
+  final Function onPress;
 
-  Planing({
-    required this.heading,
-    required this.subHeading,
-    required this.icon,
-    required this.color,
-  });
+  Planing(
+      {required this.heading,
+      required this.subHeading,
+      required this.icon,
+      required this.color,
+      required this.onPress});
 }
 
 final List<Course> course = [
@@ -44,7 +45,7 @@ final List<Course> course = [
       },
       text: "Bắt Đầu",
       lessons: "Dung lượng pin",
-      imageUrl: AppImages.ngu_ngay_Img,
+      imageUrl: AppImages.welcome,
       percent: 60,
       backImage: AppImages.box3,
       color: AppColors.kGreen),
@@ -52,7 +53,7 @@ final List<Course> course = [
       onTap: () {},
       text: "Giấc ngủ",
       lessons: "26 bài đọc",
-      imageUrl: AppImages.quan_sat_ngay_Img,
+      imageUrl: AppImages.sleep,
       percent: 57,
       backImage: AppImages.box1,
       color: AppColors.kDarkBlue),
@@ -60,29 +61,31 @@ final List<Course> course = [
       onTap: () {},
       text: "Osa",
       lessons: "16 video và 12 bài báo",
-      imageUrl: AppImages.ngu_ngay_Img,
+      imageUrl: AppImages.osa,
       percent: 14,
-      backImage: AppImages.box3,
+      backImage: AppImages.box4,
       color: AppColors.kGreen),
 ];
 
 final List<Planing> planing = [
   Planing(
-    heading: "Khám phá Mosa",
-    subHeading: "8:00 AM - 10:00 AM",
-    color: AppColors.kLightBlue,
-    icon: const Icon(
-      Icons.menu_book_outlined,
-      color: AppColors.kDarkBlue,
-    ),
-  ),
+      heading: "Bộ câu hỏi STOP BANG ",
+      subHeading: "Phát hiện chẩn đoán lâm sàng",
+      color: AppColors.kLightBlue,
+      onPress: (context) {
+        Navigator.pushNamed(context, Constants.stopbangAll);
+      },
+      icon: AppImages.stopbangImg),
   Planing(
-    heading: "Chăm sóc khách hàng",
-    subHeading: "8:00 AM - 10:00 AM",
-    color: AppColors.kLightBlue,
-    icon: const Icon(
-      Icons.menu_book_outlined,
-      color: AppColors.kDarkBlue,
-    ),
-  ),
+      heading: "Khám phá Mosa",
+      onPress: (context) {},
+      subHeading: "8:00 AM - 10:00 AM",
+      color: AppColors.kLightBlue,
+      icon: AppImages.am_thanh_Img),
+  Planing(
+      heading: "Chăm sóc khách hàng",
+      subHeading: "8:00 AM - 10:00 AM",
+      onPress: (context) {},
+      color: AppColors.kLightBlue,
+      icon: AppImages.cskh),
 ];
