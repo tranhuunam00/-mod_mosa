@@ -49,7 +49,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _timer = new Timer.periodic(Duration(milliseconds: 1000), (Timer timer) {
+    _timer = new Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
       widget.accelerometerCharactis.read();
       // setState(() {});
     });
