@@ -46,9 +46,17 @@ class FindDevicesScreen extends StatelessWidget {
                           builder: (c, snapshot) {
                             if (snapshot.data ==
                                 BluetoothDeviceState.connected) {
-                              return RaisedButton(
-                                child: Text("Open"),
-                                color: Colors.amber,
+                              return OutlinedButton(
+                                child: Text(
+                                  "Open",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 20, 225, 68)),
+                                ),
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0)))),
                                 onPressed: () => Navigator.of(context).pop(d),
                               );
                             }
