@@ -37,7 +37,7 @@ class AnalyticScreen extends StatelessWidget {
             margin: const EdgeInsets.only(top: 5, right: 16, bottom: 5),
             child: const CircleAvatar(
               backgroundImage: NetworkImage(
-                  "https://scontent-hkt1-1.xx.fbcdn.net/v/t39.30808-6/296911900_1232846784136988_8929172463522209673_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=aZUKXMJQHmcAX8nUX5S&_nc_ht=scontent-hkt1-1.xx&oh=00_AT-ZM5rq-MuNgRDsY_Ahr8AKN-uZlbEycS6DYjS6FurlUA&oe=62EEC7B8"),
+                  "http://drive.google.com/uc?export=view&id=1C_NsCEZlpWPBgIwlXrtAe4YA4MHh76xX"),
             ),
           )
         ],
