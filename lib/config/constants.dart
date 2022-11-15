@@ -107,5 +107,5 @@ class Constants {
   static String ACCLEROMETER_SERVICE = "00001821-0000-1000-8000-00805f9b34fb";
   // character ble
   static String ACCLEROMETER_CHARACTION =
-      "00002a37-0000-1000-8000-00805f9b34fb";
+      "00002713-0000-1000-8000-00805f9b34fb";
 }

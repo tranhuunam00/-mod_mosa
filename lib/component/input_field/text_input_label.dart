@@ -82,7 +82,8 @@ class _TextInputLabelState extends State<TextInputLabel> {
                   ? widget.labelText
                   : (widget.controller.text.isEmpty ? "" : widget.labelText),
               color: widget.textColor ?? AppColors.primaryColor,
-              size: widget.size ?? 14.sp,
+              size: widget.size ?? 15.sp,
+              fontWeight: FontWeight.w600,
             ),
             const Spacer(),
             TextNormal(

@@ -8,16 +8,18 @@ class TextBold extends StatelessWidget {
   TextAlign? textAlign;
   final int? maxLine;
   TextOverflow? textOverflow;
+  FontWeight? fontWeight;
 
-  TextBold({
-    Key? key,
-    required this.title,
-    this.size,
-    this.colors,
-    this.textAlign,
-    this.maxLine,
-    this.textOverflow,
-  }) : super(key: key);
+  TextBold(
+      {Key? key,
+      required this.title,
+      this.size,
+      this.colors,
+      this.textAlign,
+      this.maxLine,
+      this.textOverflow,
+      this.fontWeight})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class TextBold extends StatelessWidget {
       maxLines: maxLine ?? 1,
       style: TextStyle(
         color: colors ?? Colors.black,
-        fontWeight: FontWeight.w600,
+        fontWeight: fontWeight ?? FontWeight.w600,
         fontStyle: FontStyle.normal,
         fontFamily: 'Montserrat',
         height: 1.3.h,
