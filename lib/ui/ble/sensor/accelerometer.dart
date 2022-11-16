@@ -1,9 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:mod_do_an/component/card/cart_sensor.dart';
 import 'package:mod_do_an/component/styles/border.dart';

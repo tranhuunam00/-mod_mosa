@@ -10,6 +10,7 @@ import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
+import 'package:mod_do_an/ui/background_service/bgUi.dart';
 import 'package:mod_do_an/ui/customer/changeUser.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
@@ -17,6 +18,7 @@ import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/customer/settings_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
 import 'package:mod_do_an/ui/home/welcome_screen.dart';
+import 'app_navigator.dart';
 
 class DoAnApp extends StatelessWidget {
   const DoAnApp({Key? key}) : super(key: key);
@@ -34,6 +36,7 @@ class DoAnApp extends StatelessWidget {
                     theme: ThemeData(
                       primarySwatch: Colors.blue,
                     ),
+                    navigatorKey: Appnavigator.navigatorKey,
                     home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                         if (state is AuthenticationAuthenticatedState) {
@@ -63,6 +66,9 @@ class DoAnApp extends StatelessWidget {
                           const SettingsScreen(),
                       Constants.changeUSer: (context) =>
                           const ChangeUserScreen(),
+                      Constants.myBg: (context) => const MyBackGround(
+                            a: 1,
+                          )
                     },
                   ),
                 )));

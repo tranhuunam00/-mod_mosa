@@ -50,7 +50,9 @@ final List<Course> course = [
       backImage: AppImages.box3,
       color: AppColors.kGreen),
   Course(
-      onTap: () {},
+      onTap: (context) {
+        Navigator.pushNamed(context, Constants.myBg);
+      },
       text: "Giấc ngủ",
       lessons: "26 bài đọc",
       imageUrl: AppImages.sleep,

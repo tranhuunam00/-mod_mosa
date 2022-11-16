@@ -29,6 +29,7 @@ class Constants {
   static const String analyticScreen = 'analyticScreen';
   static const String settingScreen = 'settingScreen';
   static const String changeUSer = 'changeUSer';
+  static const String myBg = 'myBg';
 
   //
   static Future<Map<String, String>> requestHeadersToken() async {

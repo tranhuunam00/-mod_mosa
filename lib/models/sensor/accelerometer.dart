@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class AccelerometerModel {
   final double x;
   final double y;
