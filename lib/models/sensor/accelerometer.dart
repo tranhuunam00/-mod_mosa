@@ -14,9 +14,11 @@ class AccelerometerChartModel {
 }
 
 class PositionCountModal {
-  final int value;
+  int value;
   final String name;
-  PositionCountModal({required this.value, required this.name});
+  final int code;
+  PositionCountModal(
+      {required this.value, required this.name, required this.code});
 }
 
 class CreateAccelerometerModel {

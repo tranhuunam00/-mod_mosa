@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 class BleHelper {
@@ -27,4 +28,21 @@ class BleHelper {
     }
     String dataString = String.fromCharCodes(buffer);
   }
+
+  static Function getPositionSleep = (double x, double y, double z) {
+    if ((-6 < y && y < 6)) {
+      if (-2 < x && x < 2) {
+        if (z > 0) {
+          return 1; // ngửa
+        }
+        if (z < 0) {
+          return 4; //sấp
+        }
+      }
+      if (x > 3) return 2; //trái
+      if (x < -3) return 3; //phải
+
+    }
+    return 6; // không phải nằm
+  };
 }

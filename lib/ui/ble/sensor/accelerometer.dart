@@ -6,6 +6,7 @@ import 'package:mod_do_an/component/card/cart_sensor.dart';
 import 'package:mod_do_an/component/styles/border.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mod_do_an/config/images.dart';
+import 'package:mod_do_an/helper/bleHelper.dart';
 import 'package:mod_do_an/models/sensor/accelerometer.dart';
 import 'package:mod_do_an/models/user/user.dart';
 import 'package:mod_do_an/repositories/sensor_repository.dart';
@@ -35,12 +36,16 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
   late ChartSeriesController _chartSeriesControllerY;
   late ChartSeriesController _chartSeriesControllerZ;
   List<PositionCountModal> positions = [
-    PositionCountModal(value: 4, name: "ngửa"),
-    PositionCountModal(value: 2, name: "sấp"),
-    PositionCountModal(value: 5, name: "trái"),
-    PositionCountModal(value: 7, name: "phải"),
+    PositionCountModal(value: 10, name: "ngửa", code: 1),
+    PositionCountModal(value: 20, name: "trái", code: 2),
+    PositionCountModal(value: 30, name: "phải", code: 3),
+    PositionCountModal(value: 50, name: "sấp", code: 4),
+    PositionCountModal(value: 60, name: "chưa rõ", code: 5),
+    PositionCountModal(value: 70, name: "không nằm", code: 6),
   ];
   late Timer _timer;
+  int countPosition = 0;
+  List<int> addPosition = [0, 0, 0, 0, 0, 0];
   bool isCallApi = false;
   @override
   void initState() {
@@ -79,8 +84,6 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
         stream: widget.accelerometerCharactis.value,
         initialData: widget.accelerometerCharactis.lastValue,
         builder: (c, snapshot) {
-          print(snapshot.data);
-          print(listAccX.length);
           DateTime nowD = DateTime.now();
           if (snapshot.data != null && snapshot.data!.length > 0) {
             AccelerometerChartModel newDataX = AccelerometerChartModel(
@@ -101,11 +104,26 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
             listAccX.add(newDataX);
             listAccY.add(newDataY);
             listAccZ.add(newDataZ);
-            if (listAccX.length > 100 && !isCallApi) {
+
+            int positionCode = BleHelper.getPositionSleep(
+              newDataX.value,
+              newDataX.value,
+              newDataX.value,
+            );
+            countPosition++;
+            addPosition[positionCode - 1]++;
+
+            if (countPosition == 20) {
+              positions[positionCode - 1].value +=
+                  addPosition[positionCode - 1];
+              countPosition = 0;
+            }
+
+            if (listAccX.length > 1000 && !isCallApi) {
               isCallApi = true;
               Future.sync(() async {
                 String valueData = "";
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 1000; i++) {
                   valueData += listAccX[i].value.toString();
                   valueData += "%";
                   valueData += listAccY[i].value.toString();
@@ -113,7 +131,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                   valueData += listAccZ[i].value.toString();
                   valueData += "@";
                   valueData += listAccX[i].time.toString();
-                  if (i != 99) valueData += "/";
+                  if (i != 999) valueData += "/";
                 }
 
                 ProfileUser user = await SecureStorage().getUser();
@@ -127,9 +145,9 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                   List<AccelerometerChartModel> newListAccY = listAccY;
                   List<AccelerometerChartModel> newListAccZ = listAccZ;
 
-                  newListAccX.removeRange(0, 100);
-                  newListAccY.removeRange(0, 100);
-                  newListAccZ.removeRange(0, 100);
+                  newListAccX.removeRange(0, 1000);
+                  newListAccY.removeRange(0, 1000);
+                  newListAccZ.removeRange(0, 1000);
 
                   listAccX = newListAccX;
                   listAccY = newListAccY;
@@ -221,11 +239,11 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                   children: [
                     Container(
                       decoration: borderStyle,
-                      height: 150.h,
-                      width: 150.h,
+                      height: 160.h,
+                      width: 350.h,
                       child: SfCartesianChart(
                           title: ChartTitle(
-                              text: 'THời gian vs tư thế',
+                              text: 'Thời gian vs tư thế',
                               textStyle: TextStyle(fontSize: 8.sp)),
                           primaryXAxis: CategoryAxis(),
                           series: <ChartSeries<PositionCountModal, String>>[
@@ -238,11 +256,11 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                     data.value)
                           ]),
                     ),
-                    Container(
-                      decoration: borderStyle,
-                      height: 150.h,
-                      width: 150.h,
-                    )
+                    // Container(
+                    //   decoration: borderStyle,
+                    //   height: 150.h,
+                    //   width: 150.h,
+                    // )
                   ],
                 ),
                 SizedBox(
