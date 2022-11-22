@@ -30,8 +30,8 @@ class BleHelper {
   }
 
   static Function getPositionSleep = (double x, double y, double z) {
-    if ((-6 < y && y < 6)) {
-      if (-2 < x && x < 2) {
+    if ((-6.5 < y && y < 6.5)) {
+      if (-7.07 < x && x < 7.07) {
         if (z > 0) {
           return 1; // ngửa
         }

@@ -36,17 +36,18 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
   late ChartSeriesController _chartSeriesControllerY;
   late ChartSeriesController _chartSeriesControllerZ;
   List<PositionCountModal> positions = [
-    PositionCountModal(value: 10, name: "ngửa", code: 1),
-    PositionCountModal(value: 20, name: "trái", code: 2),
-    PositionCountModal(value: 30, name: "phải", code: 3),
-    PositionCountModal(value: 50, name: "sấp", code: 4),
-    PositionCountModal(value: 60, name: "chưa rõ", code: 5),
-    PositionCountModal(value: 70, name: "không nằm", code: 6),
+    PositionCountModal(value: 0, name: "ngửa", code: 1),
+    PositionCountModal(value: 0, name: "trái", code: 2),
+    PositionCountModal(value: 0, name: "phải", code: 3),
+    PositionCountModal(value: 0, name: "sấp", code: 4),
+    PositionCountModal(value: 0, name: "chưa rõ", code: 5),
+    PositionCountModal(value: 0, name: "không nằm", code: 6),
   ];
   late Timer _timer;
   int countPosition = 0;
   List<int> addPosition = [0, 0, 0, 0, 0, 0];
   bool isCallApi = false;
+  String typePosition = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -107,9 +108,20 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
 
             int positionCode = BleHelper.getPositionSleep(
               newDataX.value,
-              newDataX.value,
-              newDataX.value,
+              newDataY.value,
+              newDataZ.value,
             );
+
+            print("positionCode ");
+            print(positionCode);
+
+            if (positionCode == 1) typePosition = "Ngửa";
+            if (positionCode == 2) typePosition = "Nghiêng Trái";
+            if (positionCode == 3) typePosition = "Nghiêng Phải";
+            if (positionCode == 4) typePosition = "Sấp";
+            if (positionCode == 5) typePosition = "Chưa rõ";
+            if (positionCode == 6) typePosition = "Không phải tư thế nằm";
+
             countPosition++;
             addPosition[positionCode - 1]++;
 
@@ -165,8 +177,9 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                 ),
                 Container(
                     decoration: borderStyle,
-                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    margin: new EdgeInsets.symmetric(horizontal: 10.0),
                     height: 350.h,
+                    width: 350.w,
                     child: SfCartesianChart(
                         title: ChartTitle(text: 'Biểu đồ giá trị 3 trục'),
                         onZooming: ((zoomingArgs) => {print(zoomingArgs)}),
@@ -178,8 +191,8 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                         // Initialize category axis
                         primaryXAxis: DateTimeAxis(
                             autoScrollingMode: AutoScrollingMode.end,
-                            visibleMinimum: listAccX.length > 50
-                                ? listAccX[listAccX.length - 50].time
+                            visibleMinimum: listAccX.length > 120
+                                ? listAccX[listAccX.length - 120].time
                                 : null,
                             // edgeLabelPlacement: EdgeLabelPlacement.shift,
                             majorGridLines: const MajorGridLines(width: 0),
@@ -197,6 +210,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                               // Bind data source
                               dataSource: listAccX,
                               color: Colors.greenAccent,
+                              name: "X",
                               yValueMapper:
                                   (AccelerometerChartModel accValue, _) =>
                                       accValue.value,
@@ -209,6 +223,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                 _chartSeriesControllerY = controller;
                               },
                               color: Colors.amber,
+                              name: "Y",
                               // Bind data source
                               dataSource: listAccY,
                               yValueMapper:
@@ -224,6 +239,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                               },
                               // Bind data source
                               dataSource: listAccZ,
+                              name: "Z",
                               yValueMapper:
                                   (AccelerometerChartModel accValue, _) =>
                                       accValue.value,
@@ -240,7 +256,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                     Container(
                       decoration: borderStyle,
                       height: 160.h,
-                      width: 350.h,
+                      width: 350.w,
                       child: SfCartesianChart(
                           title: ChartTitle(
                               text: 'Thời gian vs tư thế',
@@ -266,35 +282,42 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CartSensor(
-                      onPress: () {},
-                      img: AppImages.met_moi_Img,
-                      lable: "Phân tích 1",
-                      size: 50.w,
-                    ),
-                    CartSensor(
-                      onPress: () {},
-                      img: AppImages.met_moi_Img,
-                      lable: "Phân tích 1",
-                      size: 50.w,
-                    ),
-                    CartSensor(
-                      onPress: () {},
-                      img: AppImages.met_moi_Img,
-                      lable: "Phân tích 1",
-                      size: 50.w,
-                    ),
-                    CartSensor(
-                      onPress: () {},
-                      img: AppImages.met_moi_Img,
-                      lable: "Phân tích 1",
-                      size: 50.w,
-                    ),
-                  ],
+                Text("Tư thế hiện tại của bạn là :"),
+                SizedBox(
+                  height: 10.h,
                 ),
+                Text(typePosition,
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     CartSensor(
+                //       onPress: () {},
+                //       img: AppImages.met_moi_Img,
+                //       lable: "Phân tích 1",
+                //       size: 50.w,
+                //     ),
+                //     CartSensor(
+                //       onPress: () {},
+                //       img: AppImages.met_moi_Img,
+                //       lable: "Phân tích 1",
+                //       size: 50.w,
+                //     ),
+                //     CartSensor(
+                //       onPress: () {},
+                //       img: AppImages.met_moi_Img,
+                //       lable: "Phân tích 1",
+                //       size: 50.w,
+                //     ),
+                //     CartSensor(
+                //       onPress: () {},
+                //       img: AppImages.met_moi_Img,
+                //       lable: "Phân tích 1",
+                //       size: 50.w,
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           );
