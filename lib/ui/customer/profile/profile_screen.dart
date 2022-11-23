@@ -21,6 +21,7 @@ import 'package:mod_do_an/models/user/user.dart';
 import 'package:mod_do_an/translations/locale_keys.g.dart';
 import 'package:mod_do_an/ui/components/bottom_sheet/bsh_pick_image.dart';
 import 'package:mod_do_an/ui/components/full_screen_image/full_screen_image.dart';
+import 'package:mod_do_an/utils/dialog_helper.dart';
 import 'package:mod_do_an/utils/loading_helper.dart';
 import 'package:mod_do_an/utils/picker_helper.dart';
 import 'package:mod_do_an/utils/validator.dart';
@@ -49,6 +50,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as ProfileUser;
+    print(arguments);
     if (!isFetch) {
       _firstNameController.text = arguments.firstName;
       _lastNameController.text = arguments.lastName;
@@ -90,20 +92,22 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             print(state);
             if (state is UpdateProfileLoadingState) {
               LoadingHelper.showLoading(context);
-            } else if (state is UpdateProfileSuccessState) {
+            }
+            if (state is UpdateProfileSuccessState) {
               LoadingHelper.hideLoading(context);
               BlocProvider.of<ProfileBloc>(context).add(GetProfileEvent());
-              // DialogHelper.showUpdateProfileSuccess(
-              //   title: LocaleKeys.profile.tr(),
-              //   context: context,
-              //   message: LocaleKeys.secsess_profile.tr(),
-              // );
-            } else if (state is UpdateProfileErrorState) {
+              DialogHelper.showUpdateProfileSuccess(
+                title: LocaleKeys.profile.tr(),
+                context: context,
+                message: LocaleKeys.secsess_profile.tr(),
+              );
+            }
+            if (state is UpdateProfileErrorState) {
               LoadingHelper.hideLoading(context);
-              // DialogHelper.showGenericErrorDialog(
-              //   context: context,
-              //   message: state.message,
-              // );
+              DialogHelper.showNotify(
+                context: context,
+                message: state.message,
+              );
               print("error: " + state.message);
             }
           },
@@ -306,7 +310,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       },
                       suffix: Padding(
                         padding: EdgeInsets.only(right: 15.w),
-                        child: const RotatedBox(
+                        child: RotatedBox(
                           quarterTurns: 2,
                           child: Icon(Icons.arrow_back_ios),
                         ),
@@ -365,6 +369,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                     onPressed: _validate()
                         ? () {
+                            print("qua");
+                            print(_phoneController.text);
                             BlocProvider.of<ProfileBloc>(context).add(
                               UpdateProfileEvent(
                                 imagePath: image,
@@ -400,7 +406,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     if (_firstNameController.text.trim().isNotEmpty &&
         _lastNameController.text.trim().isNotEmpty &&
         RegExp(Validator.REGEX_EMAIL).hasMatch(_emailController.text.trim()) &&
-        _phoneController.text.trim().length == 12 &&
         _genderController.text.trim().isNotEmpty &&
         _dobController.text.trim().isNotEmpty) {
       return true;

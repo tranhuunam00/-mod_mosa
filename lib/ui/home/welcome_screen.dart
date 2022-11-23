@@ -2,16 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mod_do_an/config/colors.dart';
+import 'package:mod_do_an/models/user/user.dart';
+import 'package:mod_do_an/repositories/profile_repository.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
 import 'package:mod_do_an/ui/home/widget/courses_grid.dart';
 import 'package:mod_do_an/ui/home/widget/planing_grid.dart';
 
 import '../../component/side_menu/side_menu.dart';
 
-class AnalyticScreen extends StatelessWidget {
+class AnalyticScreen extends StatefulWidget {
   const AnalyticScreen({Key? key}) : super(key: key);
 
   @override
+  State<AnalyticScreen> createState() => _AnalyticScreenState();
+}
+
+class _AnalyticScreenState extends State<AnalyticScreen> {
+  ProfileUser user = new ProfileUser(
+      id: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      dob: "",
+      gender: "",
+      nationality: "",
+      customerId: "");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      () async {
+        try {
+          final data = await ProfileRepository().getProfile();
+          setState(() {
+            user = data;
+          });
+        } catch (e) {}
+      }();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(user?.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -51,12 +87,12 @@ class AnalyticScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   text: "Hello ",
                   style: TextStyle(color: AppColors.kDarkBlue, fontSize: 20),
                   children: [
                     TextSpan(
-                      text: "Nam",
+                      text: user.lastName,
                       style: TextStyle(
                           color: AppColors.kDarkBlue,
                           fontWeight: FontWeight.bold),

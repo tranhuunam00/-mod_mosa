@@ -18,6 +18,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (event is GetProfileEvent) {
       yield* _mapGetProfileToState(event);
     }
+    if (event is UpdateProfileEvent) {
+      yield* _updateProfile(event);
+    }
   }
 
   Stream<ProfileState> _mapGetProfileToState(GetProfileEvent event) async* {
@@ -30,6 +33,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e) {
       debugPrint("UpdateProfile: error -> ${e.toString()}");
       yield ProfileErrorState(message: e.toString());
+    }
+  }
+
+  Stream<ProfileState> _updateProfile(UpdateProfileEvent event) async* {
+    yield UpdateProfileLoadingState();
+
+    try {
+      print(event.profileUser);
+      final userUpdate =
+          await profileRepository.updateProfile(event.profileUser);
+      print("update success");
+      yield UpdateProfileSuccessState();
+    } catch (e) {
+      debugPrint("UpdateProfile: error -> ${e.toString()}");
+      yield UpdateProfileErrorState(message: e.toString());
     }
   }
 }

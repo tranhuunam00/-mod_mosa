@@ -60,7 +60,9 @@ final List<Course> course = [
       backImage: AppImages.box1,
       color: AppColors.kDarkBlue),
   Course(
-      onTap: () {},
+      onTap: (context) {
+        Navigator.pushNamed(context, Constants.myBg);
+      },
       text: "Osa",
       lessons: "16 video và 12 bài báo",
       imageUrl: AppImages.osa,

@@ -8,4 +8,9 @@ class ProfileRepository {
     ProfileUser profileUser = await customerService.getProfile();
     return profileUser;
   }
+
+  Future<ProfileUser> updateProfile(ProfileUser user) async {
+    ProfileUser profileUser = await customerService.updateUser(user);
+    return profileUser;
+  }
 }

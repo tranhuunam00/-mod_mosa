@@ -63,7 +63,7 @@ abstract class LocaleKeys {
   static const time = "time";
   static const cancel = "cancle";
   static const registration = "registration";
-  static const secsess_profile = "secsess_profile";
+  static const secsess_profile = "success_profile";
 
 //dailog
   static const resume = "resume";

@@ -77,7 +77,7 @@ class CustomerService {
           lastName: body['lastName'],
           email: body['user']['email'],
           phone: body['phoneNumber'],
-          dob: body['phoneNumber'],
+          dob: body['dob'],
           gender: body['gender'],
           nationality: body['nationality'] ?? "",
           customerId: body['_id']);
@@ -87,6 +87,39 @@ class CustomerService {
       return p;
     }
 
+    throw Exception(BaseResponse.fromJson(jsonDecode(response.body)).message);
+  }
+
+  Future<dynamic> updateUser(ProfileUser newUser) async {
+    var header = await Constants.requestHeadersToken();
+    final response = await http.put(
+      Uri.parse("${Constants.baseUrl}users/profile"),
+      headers: header,
+      body: jsonEncode(
+        newUser.toJson(),
+      ),
+    );
+    debugPrint(response.body);
+
+    if (response.statusCode == HttpStatus.ok) {
+      ProfileUser currentProfile = await SecureStorage().getUser();
+      final body = jsonDecode(response.body)['data'];
+      print(body);
+      ProfileUser p = new ProfileUser(
+          id: currentProfile.id,
+          firstName: body['firstName'],
+          lastName: body['lastName'],
+          email: body['user']['email'],
+          phone: body['phoneNumber'],
+          dob: body['dob'],
+          gender: body['gender'],
+          nationality: body['nationality'] ?? "",
+          customerId: body['_id']);
+
+      await SecureStorage().saveCustomer(user: p);
+      // ProfileUser a = ProfileUser.fromJson(body);
+      return p;
+    }
     throw Exception(BaseResponse.fromJson(jsonDecode(response.body)).message);
   }
 }

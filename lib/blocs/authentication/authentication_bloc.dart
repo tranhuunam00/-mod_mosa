@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_event.dart';
 import 'package:mod_do_an/blocs/authentication/authentication_state.dart';
 import 'package:mod_do_an/repositories/authentication_repository.dart';
+import 'package:mod_do_an/repositories/profile_repository.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 
 class AuthenticationBloc
@@ -28,7 +29,13 @@ class AuthenticationBloc
     print("token: ");
     print(token);
     if (token != null) {
-      yield AuthenticationAuthenticatedState();
+      try {
+        final data = await ProfileRepository().getProfile();
+        await SecureStorage().saveCustomer(user: data);
+        yield AuthenticationAuthenticatedState();
+      } catch (e) {
+        yield AuthenticationNotAuthenticatedState();
+      }
     } else {
       yield AuthenticationNotAuthenticatedState();
     }
