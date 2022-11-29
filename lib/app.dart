@@ -10,7 +10,6 @@ import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
-import 'package:mod_do_an/ui/background_service/bgUi.dart';
 import 'package:mod_do_an/ui/customer/changeUser.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
@@ -66,9 +65,6 @@ class DoAnApp extends StatelessWidget {
                           const SettingsScreen(),
                       Constants.changeUSer: (context) =>
                           const ChangeUserScreen(),
-                      Constants.myBg: (context) => const MyBackGround(
-                            a: 1,
-                          )
                     },
                   ),
                 )));

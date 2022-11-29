@@ -269,7 +269,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                 xValueMapper: (PositionCountModal data, _) =>
                                     data.name,
                                 yValueMapper: (PositionCountModal data, _) =>
-                                    data.value)
+                                    (data.value / 60 / 10).round())
                           ]),
                     ),
                     // Container(
@@ -289,35 +289,6 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                 Text(typePosition,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     CartSensor(
-                //       onPress: () {},
-                //       img: AppImages.met_moi_Img,
-                //       lable: "Phân tích 1",
-                //       size: 50.w,
-                //     ),
-                //     CartSensor(
-                //       onPress: () {},
-                //       img: AppImages.met_moi_Img,
-                //       lable: "Phân tích 1",
-                //       size: 50.w,
-                //     ),
-                //     CartSensor(
-                //       onPress: () {},
-                //       img: AppImages.met_moi_Img,
-                //       lable: "Phân tích 1",
-                //       size: 50.w,
-                //     ),
-                //     CartSensor(
-                //       onPress: () {},
-                //       img: AppImages.met_moi_Img,
-                //       lable: "Phân tích 1",
-                //       size: 50.w,
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           );
