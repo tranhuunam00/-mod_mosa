@@ -6,7 +6,7 @@ import 'package:mod_do_an/storage/secure_storge.dart';
 
 @immutable
 class Constants {
-  static const String baseUrl = "https://mosa-be.herokuapp.com/api/";
+  static const String baseUrl = "http://54.159.21.80:5003/api/";
 
   static const String userRoute = "users/";
 

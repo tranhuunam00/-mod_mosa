@@ -5,6 +5,7 @@ import 'package:mod_do_an/component/button/button_material.dart';
 import 'package:mod_do_an/component/text/text_normal.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/config/constants.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -62,6 +63,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Constants.contentsOnboarding.length,
                 (index) => buildDot(index, context),
               ),
+            ),
+            Container(
+              height: 40.h,
+              margin: EdgeInsets.symmetric(horizontal: 56.w, vertical: 24.h),
+              child: ButtonMaterial(
+                  enable: true,
+                  color: AppColors.pPrimaryColor.withOpacity(0.7),
+                  child: TextNormal(
+                    size: 15.sp,
+                    fontWeight: FontWeight.w600,
+                    title: "Sử dụng không cần lưu",
+                    color: AppColors.kPrimaryColor,
+                  ),
+                  onPressed: () async {
+                    await SecureStorage().saveIsSaveData(isSaveData: "false");
+                    Navigator.pushReplacementNamed(
+                        context, Constants.dashBoardCustomer);
+                  }),
             ),
             Container(
               height: 50.h,

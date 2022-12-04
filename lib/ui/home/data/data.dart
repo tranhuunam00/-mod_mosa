@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/config/constants.dart';
 import 'package:mod_do_an/config/images.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
 
 class Course {
   final String text;
@@ -40,7 +41,8 @@ class Planing {
 
 final List<Course> course = [
   Course(
-      onTap: (context) {
+      onTap: (context) async {
+        await SecureStorage().saveIsSaveData(isSaveData: "true");
         Navigator.pushNamed(context, Constants.dashBoardCustomer);
       },
       text: "Bắt Đầu",

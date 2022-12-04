@@ -152,7 +152,11 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                     value: valueData, customer: user.customerId);
                 final res = await sensorRepository.createAccelerometer(acc);
                 isCallApi = false;
-                if (res.statusCode == HttpStatus.created) {
+                String? isSaveData = await SecureStorage().getIsSaveData();
+                print("isSaveData");
+
+                if (res.statusCode == HttpStatus.created ||
+                    isSaveData == "false") {
                   List<AccelerometerChartModel> newListAccX = listAccX;
                   List<AccelerometerChartModel> newListAccY = listAccY;
                   List<AccelerometerChartModel> newListAccZ = listAccZ;

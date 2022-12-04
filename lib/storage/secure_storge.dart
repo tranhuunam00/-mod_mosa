@@ -8,6 +8,8 @@ class SecureStorage {
 
   static const _tokenKey = 'TOKEN';
 
+  static const _isSaveData = 'IS_SAVE_DATA';
+
   static const _user = 'USER';
 
   Future<void> saveToken({required String token}) async {
@@ -18,6 +20,14 @@ class SecureStorage {
 
   Future<String?> getToken() async {
     return await _storage.read(key: _tokenKey);
+  }
+
+  Future<void> saveIsSaveData({required String isSaveData}) async {
+    await _storage.write(key: _isSaveData, value: isSaveData);
+  }
+
+  Future<String?> getIsSaveData() async {
+    return await _storage.read(key: _isSaveData);
   }
 
   Future<void> deleteToken() async {
