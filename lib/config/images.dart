@@ -47,4 +47,7 @@ class AppImages {
   static const osa = "assets/images/osa.jpg";
   static const sleep = "assets/images/sleep.jpg";
   static const stopbangImg = "assets/images/stopbangImg.png";
+  static const chatbotBackground = "assets/images/chatbotBackground.png";
+
+  static const chatbotImg = "assets/images/chatbot.jpg";
 }

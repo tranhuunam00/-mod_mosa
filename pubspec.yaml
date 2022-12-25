@@ -59,6 +59,7 @@ dependencies:
   flutter_background_service: ^2.4.5
   device_info_plus: ^8.0.0
   shared_preferences: ^2.0.15
+  socket_io_client: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -145,6 +146,6 @@ flutter:
           weight: 600
         - asset: assets/fonts/montserrat/Montserrat-Bold.ttf
           weight: 700
-    - family: elusive 
+    - family: elusive
       fonts:
         - asset: assets/fonts/MyFlutterApp.ttf

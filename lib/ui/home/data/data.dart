@@ -91,7 +91,9 @@ final List<Planing> planing = [
   Planing(
       heading: "Chăm sóc khách hàng",
       subHeading: "8:00 AM - 10:00 AM",
-      onPress: (context) {},
+      onPress: (context) {
+        Navigator.pushNamed(context, Constants.chatbot);
+      },
       color: AppColors.kLightBlue,
       icon: AppImages.cskh),
 ];

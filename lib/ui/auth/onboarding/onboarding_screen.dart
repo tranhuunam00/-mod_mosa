@@ -48,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             image: AssetImage(
                               Constants.contentsOnboarding[i].image,
                             ),
-                            height: 300.h,
+                            height: 250.h,
                           ),
                         ],
                       ),
