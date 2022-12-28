@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mod_do_an/ui/chatbot/interface/message.dart';
 
 class ReplyText extends StatelessWidget {
-  const ReplyText({Key? key}) : super(key: key);
+  const ReplyText({Key? key, required this.message}) : super(key: key);
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,8 @@ class ReplyText extends StatelessWidget {
               margin: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 10, right: 60, top: 05, bottom: 20),
-                child: Text(
-                    "reply text r32r4324444444444423432432222222222222222222222222222222222",
-                    style: TextStyle(fontSize: 16)),
+                    left: 10, right: 40, top: 10, bottom: 10),
+                child: Text(message.text, style: TextStyle(fontSize: 16)),
               ),
               // color: Color(0xffdcf8c6),),
             )));

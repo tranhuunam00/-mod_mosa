@@ -4,8 +4,23 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class InputChat extends StatelessWidget {
-  const InputChat({Key? key}) : super(key: key);
+class InputChat extends StatefulWidget {
+  const InputChat({Key? key, required this.onChange}) : super(key: key);
+
+  final Function onChange;
+
+  @override
+  State<InputChat> createState() => _InputChatState();
+}
+
+class _InputChatState extends State<InputChat> {
+  final TextEditingController _controller = TextEditingController();
+  Color colorSendBtn = Colors.grey;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +32,17 @@ class InputChat extends StatelessWidget {
             const EdgeInsets.only(left: 12.0, right: 12, top: 0, bottom: 0),
         child: Row(
           children: <Widget>[
-            new Flexible(
-              child: new TextField(
+            Flexible(
+              child: TextField(
+                onChanged: ((value) {
+                  setState(() {
+                    if (value != "")
+                      colorSendBtn = Colors.blueAccent;
+                    else
+                      colorSendBtn = Colors.grey;
+                  });
+                }),
+                controller: _controller,
                 style: TextStyle(),
                 decoration:
                     InputDecoration(hintText: "Nhấn để nhập tin nhắn..."),
@@ -28,7 +52,14 @@ class InputChat extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0, right: 28),
               child: Icon(Icons.voice_over_off),
             ),
-            Icon(Icons.send, size: 30)
+            InkWell(
+                onTap: () {
+                  if (_controller.text != "") {
+                    widget.onChange(_controller.text);
+                    _controller.text = "";
+                  }
+                },
+                child: Icon(Icons.send, size: 30, color: colorSendBtn))
           ],
         ),
       ),
