@@ -4,18 +4,32 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardFeature extends StatelessWidget {
-  const CardFeature({Key? key, required this.onPress}) : super(key: key);
+  const CardFeature(
+      {Key? key,
+      required this.onPress,
+      this.textCard = "",
+      this.iconCard = const Icon(
+        FontAwesomeIcons.userPlus,
+        size: 40,
+        color: Color.fromARGB(255, 55, 15, 199),
+      )})
+      : super(key: key);
   final Function onPress;
+  final String? textCard;
+  final Icon? iconCard;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 150.w,
+      constraints: BoxConstraints(minWidth: 120, maxWidth: 150),
       decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 112, 182, 228),
-              Color.fromARGB(255, 82, 145, 175),
-              Color.fromARGB(255, 184, 179, 136)
+              Color.fromARGB(255, 208, 248, 179),
+              Color.fromARGB(255, 255, 240, 231),
+              Color.fromARGB(255, 222, 244, 255),
+              Color.fromARGB(255, 255, 250, 209)
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -38,13 +52,13 @@ class CardFeature extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ClipRRect(
-              child: Icon(
-                FontAwesomeIcons.userPlus,
-                size: 40.w,
-                color: Color.fromARGB(255, 245, 252, 187),
-              ),
+              child: iconCard,
             ),
-            Text("Thêm người dùng")
+            Text(
+              textCard!,
+              textAlign: TextAlign.center,
+              style: TextStyle(),
+            )
           ],
         ),
       ),

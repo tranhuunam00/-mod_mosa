@@ -4,8 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class SkipContextBtn extends StatelessWidget {
-  const SkipContextBtn({Key? key}) : super(key: key);
-
+  const SkipContextBtn({Key? key, required this.ontap}) : super(key: key);
+  final Function ontap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +29,9 @@ class SkipContextBtn extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            ontap();
+          },
         ),
       ),
     );

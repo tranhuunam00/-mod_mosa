@@ -13,6 +13,7 @@ import 'package:mod_do_an/blocs/forgot/forgot_bloc.dart';
 import 'package:mod_do_an/blocs/login/login_bloc.dart';
 import 'package:mod_do_an/blocs/profile/profile_bloc.dart';
 import 'package:mod_do_an/blocs/register/register_bloc.dart';
+import 'package:mod_do_an/provider/Chatbot.provider.dart';
 import 'package:mod_do_an/provider/bluetooth.provider.dart';
 import 'package:mod_do_an/repositories/authentication_repository.dart';
 import 'package:mod_do_an/repositories/customer_repository.dart';
@@ -71,6 +72,9 @@ void main() {
           child: MultiProvider(providers: [
             ChangeNotifierProvider(create: (context) {
               return BluetoothProvider();
+            }),
+            ChangeNotifierProvider(create: (context) {
+              return ChatbotProvider();
             }),
           ], child: const DoAnApp())),
     );

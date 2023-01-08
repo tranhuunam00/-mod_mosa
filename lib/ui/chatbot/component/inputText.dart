@@ -58,6 +58,9 @@ class _InputChatState extends State<InputChat> {
                     widget.onChange(_controller.text);
                     _controller.text = "";
                   }
+                  setState(() {
+                    colorSendBtn = Colors.blueAccent;
+                  });
                 },
                 child: Icon(Icons.send, size: 30, color: colorSendBtn))
           ],

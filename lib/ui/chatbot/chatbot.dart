@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -8,13 +9,16 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mod_do_an/config/images.dart';
 import 'package:mod_do_an/models/user/user.dart';
+import 'package:mod_do_an/provider/Chatbot.provider.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
 import 'package:mod_do_an/ui/chatbot/component/backArrow.dart';
 import 'package:mod_do_an/ui/chatbot/component/inputText.dart';
 import 'package:mod_do_an/ui/chatbot/component/replyText.dart';
 import 'package:mod_do_an/ui/chatbot/component/sendText.dart';
 import 'package:mod_do_an/ui/chatbot/component/skipContext.dart';
+import 'package:mod_do_an/ui/chatbot/helper/component_for_chat.dart';
 import 'package:mod_do_an/ui/chatbot/interface/message.dart';
+import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class Chatbot extends StatefulWidget {
@@ -27,29 +31,35 @@ class Chatbot extends StatefulWidget {
 class _ChatbotState extends State<Chatbot> {
   ScrollController _scrollController = ScrollController();
   final TextEditingController _textController = TextEditingController();
-  List<MessageModel> listMessage = [];
+
+  List<MessageModel> listMessageInit = [
+    new MessageModel(type: TypeMessage.bot, text: "Xin chào bạn?"),
+    new MessageModel(type: TypeMessage.bot, text: "Bạn cần giúp đỡ gì không?"),
+  ];
+  List<MessageModel> listMessage = [
+    new MessageModel(type: TypeMessage.bot, text: "Xin chào bạn?"),
+    new MessageModel(type: TypeMessage.bot, text: "Bạn cần giúp đỡ gì không?"),
+  ];
   int x = 6;
-  late Socket socket;
+  Socket socket = io("https://82bb-27-72-62-195.ap.ngrok.io", <String, dynamic>{
+    "transports": ["websocket"],
+    "autoConnect": true,
+  });
+
+  Widget Component = Container();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    socket = io("https://e480-27-72-62-195.ap.ngrok.io", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": true,
-    });
-    socket.connect();
-    socket.onConnect((data) {
-      print("connect");
-      socket.on('returnBot', (value) {
-        var jsonValue = json.decode(value);
-
-        setState(() {
-          MessageModel newMessage = new MessageModel(
-              type: TypeMessage.bot, text: jsonValue["value"]["response"]);
-          listMessage.add(newMessage);
-        });
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final chatbotProvider =
+          Provider.of<ChatbotProvider>(context, listen: false);
+      socket.connect();
+      _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent +
+              WidgetsBinding.instance.window.viewInsets.bottom,
+          duration: Duration(milliseconds: 100),
+          curve: Curves.ease);
     });
   }
 
@@ -57,11 +67,40 @@ class _ChatbotState extends State<Chatbot> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    socket.emit("disconnect");
+    socket.emit('disconnect');
+
+    // socket.disconnect();
   }
 
   @override
   Widget build(BuildContext context) {
+    final chatbotProvider = Provider.of<ChatbotProvider>(context, listen: true);
+    listMessage = chatbotProvider.chatbotList;
+
+    Function onChangeInput = (value) {
+      MessageModel newMessage =
+          new MessageModel(type: TypeMessage.owner, text: value);
+      setState(() {
+        listMessage.add(newMessage);
+        _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent + 75,
+            duration: Duration(milliseconds: 100),
+            curve: Curves.ease);
+      });
+    };
+
+    Function sendMessage =
+        (Socket socket, String value, Function onChangeInput) async {
+      ProfileUser userP = await SecureStorage().getUser();
+      socket.emit("messageBot",
+          jsonEncode({"text": value, "context": userP.customerId}));
+      onChangeInput(value);
+    };
+
+    Function onTapComponent = (value) async {
+      await sendMessage(socket, value, onChangeInput);
+    };
+
     // check sự kiện bàn phím
     if (WidgetsBinding.instance.window.viewInsets.bottom > 0.0) {
       setState(() {
@@ -74,17 +113,8 @@ class _ChatbotState extends State<Chatbot> {
     } else {
       // Keyboard is not visible.
     }
-    Function onChangeInput = (value) {
-      MessageModel newMessage =
-          new MessageModel(type: TypeMessage.owner, text: value);
-      setState(() {
-        listMessage.add(newMessage);
-        _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent + 75,
-            duration: Duration(milliseconds: 100),
-            curve: Curves.ease);
-      });
-    };
+
+    Component = ComponentForText(listMessage, context, onTapComponent);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -109,7 +139,11 @@ class _ChatbotState extends State<Chatbot> {
                       children: [
                         BackArrow(),
                         Image.asset(AppImages.chatbotImg),
-                        SkipContextBtn()
+                        SkipContextBtn(
+                          ontap: () {
+                            chatbotProvider.clearChatbotList();
+                          },
+                        )
                       ]),
                 ),
               ),
@@ -122,8 +156,9 @@ class _ChatbotState extends State<Chatbot> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: ListView.builder(
                     controller: _scrollController,
-                    itemCount: listMessage.length,
+                    itemCount: listMessage.length + 1,
                     itemBuilder: ((context, index) {
+                      if (index == listMessage.length) return Component;
                       if (listMessage[index].type == TypeMessage.bot)
                         return ReplyText(
                           message: listMessage[index],
@@ -135,10 +170,7 @@ class _ChatbotState extends State<Chatbot> {
               )),
               InputChat(
                 onChange: (value) async {
-                  ProfileUser userP = await SecureStorage().getUser();
-                  socket.emit("messageBot",
-                      jsonEncode({"text": value, "context": userP.customerId}));
-                  onChangeInput(value);
+                  await sendMessage(socket, value, onChangeInput);
                 },
               )
             ],

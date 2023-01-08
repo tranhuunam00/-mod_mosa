@@ -29,7 +29,9 @@ class BackArrow extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
       ),
     );

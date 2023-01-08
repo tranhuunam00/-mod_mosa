@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mod_do_an/config/colors.dart';
 import 'package:mod_do_an/models/user/user.dart';
+import 'package:mod_do_an/provider/Chatbot.provider.dart';
 import 'package:mod_do_an/repositories/profile_repository.dart';
 import 'package:mod_do_an/storage/secure_storge.dart';
+import 'package:mod_do_an/ui/chatbot/interface/message.dart';
 import 'package:mod_do_an/ui/home/widget/courses_grid.dart';
 import 'package:mod_do_an/ui/home/widget/planing_grid.dart';
+import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../component/side_menu/side_menu.dart';
 
@@ -28,12 +34,29 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
       gender: "",
       nationality: "",
       customerId: "");
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final chatbotProvider =
+          Provider.of<ChatbotProvider>(context, listen: false);
+      Socket socket =
+          io("https://82bb-27-72-62-195.ap.ngrok.io", <String, dynamic>{
+        "transports": ["websocket"],
+        "autoConnect": true,
+      });
+      socket.on("returnBot", (data) {
+        var jsonValue = json.decode(data);
+        List<MessageModel> listMessage = chatbotProvider.chatbotList;
+        setState(() {
+          MessageModel newMessage = new MessageModel(
+              type: TypeMessage.bot, text: jsonValue["value"]["response"]);
+          chatbotProvider.addMessage(newMessage);
+        });
+      });
+
       () async {
         try {
           final data = await ProfileRepository().getProfile();
@@ -47,7 +70,6 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(user?.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
