@@ -41,7 +41,7 @@ class _ChatbotState extends State<Chatbot> {
     new MessageModel(type: TypeMessage.bot, text: "Bạn cần giúp đỡ gì không?"),
   ];
   int x = 6;
-  Socket socket = io("https://82bb-27-72-62-195.ap.ngrok.io", <String, dynamic>{
+  Socket socket = io("http://3.95.239.60:5003", <String, dynamic>{
     "transports": ["websocket"],
     "autoConnect": true,
   });

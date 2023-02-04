@@ -42,8 +42,7 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final chatbotProvider =
           Provider.of<ChatbotProvider>(context, listen: false);
-      Socket socket =
-          io("https://82bb-27-72-62-195.ap.ngrok.io", <String, dynamic>{
+      Socket socket = io("http://3.95.239.60:5003", <String, dynamic>{
         "transports": ["websocket"],
         "autoConnect": true,
       });
