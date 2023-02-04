@@ -91,9 +91,10 @@ class _ChatbotState extends State<Chatbot> {
 
     Function sendMessage =
         (Socket socket, String value, Function onChangeInput) async {
-      ProfileUser userP = await SecureStorage().getUser();
-      socket.emit("messageBot",
-          jsonEncode({"text": value, "context": userP.customerId}));
+      String? phoneNumber = await SecureStorage().getPhoneNumber();
+
+      socket.emit(
+          "messageBot", jsonEncode({"text": value, "context": phoneNumber}));
       onChangeInput(value);
     };
 

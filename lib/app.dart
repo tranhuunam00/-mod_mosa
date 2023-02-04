@@ -11,13 +11,14 @@ import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
 import 'package:mod_do_an/ui/chatbot/chatbot.dart';
+import 'package:mod_do_an/ui/chatbot/welcome/welcome_chatbot_screen.dart';
 import 'package:mod_do_an/ui/customer/changeUser.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
 import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/customer/settings_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
-import 'package:mod_do_an/ui/home/welcome_screen.dart';
+import 'package:mod_do_an/ui/home/home_screen.dart';
 import 'app_navigator.dart';
 
 class DoAnApp extends StatelessWidget {
@@ -40,9 +41,9 @@ class DoAnApp extends StatelessWidget {
                     home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                         if (state is AuthenticationAuthenticatedState) {
-                          return const AnalyticScreen();
+                          return const WelcomeChatbotScreen();
                         } else {
-                          return const OnboardingScreen();
+                          return const WelcomeChatbotScreen();
                         }
                       },
                     ),
@@ -60,8 +61,6 @@ class DoAnApp extends StatelessWidget {
                       Constants.quizScreen: (context) => const QuizScreen(),
                       Constants.stopbangAll: (context) =>
                           const PageStopbangScreen(),
-                      Constants.analyticScreen: (context) =>
-                          const AnalyticScreen(),
                       Constants.settingScreen: (context) =>
                           const SettingsScreen(),
                       Constants.changeUSer: (context) =>

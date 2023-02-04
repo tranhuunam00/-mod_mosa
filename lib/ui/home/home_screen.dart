@@ -17,8 +17,8 @@ import 'package:socket_io_client/socket_io_client.dart';
 import '../../component/side_menu/side_menu.dart';
 
 class AnalyticScreen extends StatefulWidget {
-  const AnalyticScreen({Key? key}) : super(key: key);
-
+  const AnalyticScreen({Key? key, required this.phoneNumber}) : super(key: key);
+  final String phoneNumber;
   @override
   State<AnalyticScreen> createState() => _AnalyticScreenState();
 }
@@ -125,24 +125,7 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
                 ),
               ),
               const SizedBox(
-                height: 10,
-              ),
-              const CourseGrid(),
-              const SizedBox(
                 height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Service",
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "View All",
-                    style: TextStyle(color: AppColors.kDarkBlue),
-                  ),
-                ],
               ),
               const SizedBox(
                 height: 15,

@@ -12,6 +12,8 @@ class SecureStorage {
 
   static const _user = 'USER';
 
+  static const _phoneNumber = "phoneNumber";
+
   Future<void> saveToken({required String token}) async {
     print("Đã lưu token");
     print(token);
@@ -61,5 +63,13 @@ class SecureStorage {
         gender: "",
         nationality: "",
         customerId: "");
+  }
+
+  Future<void> savePhoneNumber({required String phoneNumber}) async {
+    await _storage.write(key: _phoneNumber, value: phoneNumber);
+  }
+
+  Future<String?> getPhoneNumber() async {
+    return await _storage.read(key: _phoneNumber);
   }
 }

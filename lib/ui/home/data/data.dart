@@ -75,20 +75,6 @@ final List<Course> course = [
 
 final List<Planing> planing = [
   Planing(
-      heading: "Bộ câu hỏi STOP BANG ",
-      subHeading: "Phát hiện chẩn đoán lâm sàng",
-      color: AppColors.kLightBlue,
-      onPress: (context) {
-        Navigator.pushNamed(context, Constants.stopbangAll);
-      },
-      icon: AppImages.stopbangImg),
-  Planing(
-      heading: "Khám phá Mosa",
-      onPress: (context) {},
-      subHeading: "8:00 AM - 10:00 AM",
-      color: AppColors.kLightBlue,
-      icon: AppImages.am_thanh_Img),
-  Planing(
       heading: "Chăm sóc khách hàng",
       subHeading: "8:00 AM - 10:00 AM",
       onPress: (context) {
