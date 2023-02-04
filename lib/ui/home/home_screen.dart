@@ -24,16 +24,6 @@ class AnalyticScreen extends StatefulWidget {
 }
 
 class _AnalyticScreenState extends State<AnalyticScreen> {
-  ProfileUser user = new ProfileUser(
-      id: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      dob: "",
-      gender: "",
-      nationality: "",
-      customerId: "");
   @override
   void initState() {
     // TODO: implement initState
@@ -55,15 +45,6 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
           chatbotProvider.addMessage(newMessage);
         });
       });
-
-      () async {
-        try {
-          final data = await ProfileRepository().getProfile();
-          setState(() {
-            user = data;
-          });
-        } catch (e) {}
-      }();
     });
   }
 
@@ -100,38 +81,40 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
         ],
       ),
       drawer: const SideMenu(),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              RichText(
-                text: TextSpan(
-                  text: "Hello ",
-                  style: TextStyle(color: AppColors.kDarkBlue, fontSize: 20),
-                  children: [
-                    TextSpan(
-                      text: user.lastName,
-                      style: TextStyle(
-                          color: AppColors.kDarkBlue,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: ", welcome !",
-                    ),
-                  ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: "Hello ",
+                    style: TextStyle(color: AppColors.kDarkBlue, fontSize: 20),
+                    children: [
+                      TextSpan(
+                        text: widget.phoneNumber,
+                        style: TextStyle(
+                            color: AppColors.kDarkBlue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: ", welcome !",
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const PlaningGrid(),
-            ],
+                const SizedBox(
+                  height: 15,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const PlaningGrid(),
+              ],
+            ),
           ),
         ),
       ),
