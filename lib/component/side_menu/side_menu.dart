@@ -21,28 +21,9 @@ class SideMenu extends StatelessWidget {
             child: DrawerHeader(child: Image.asset(AppImages.brand)),
           ),
           DrawerListTile(
-            icon: TernavIcons.lightOutline.two_user,
-            title: "Chuyển người dùng",
-            onTap: () {
-              Navigator.pushNamed(context, Constants.changeUSer);
-            },
-          ),
-          DrawerListTile(
-            icon: TernavIcons.lightOutline.menu,
-            title: "Course",
-            onTap: () {},
-          ),
-          DrawerListTile(
-            icon: TernavIcons.lightOutline.folder,
-            title: "Resource",
-            onTap: () {},
-          ),
-          DrawerListTile(
             icon: TernavIcons.lightOutline.settings,
             title: "Settings",
-            onTap: () {
-              Navigator.pushNamed(context, Constants.settingScreen);
-            },
+            onTap: () {},
           ),
           const SizedBox(
             height: 10,

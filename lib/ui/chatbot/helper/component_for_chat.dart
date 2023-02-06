@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mod_do_an/component/card/cart_feature.dart';
 import 'package:mod_do_an/ui/chatbot/interface/message.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget LayerParent(Widget children, BuildContext context) {
   return Align(
@@ -29,12 +30,15 @@ Widget ComponentForText(
     return LayerParent(
         Column(
           children: [
-            Text(
-              "Lựa chọn của bạn",
-              style: TextStyle(fontSize: 28),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Lựa chọn của bạn (nếu có câu trả lời khác ngoài có hoặc không thì vui lòng nhập tin nhắn)",
+                style: TextStyle(fontSize: 16.w),
+              ),
             ),
             SizedBox(
-              height: 30,
+              height: 30.w,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,9 +78,12 @@ Widget ComponentForText(
     return LayerParent(
         Column(
           children: [
-            Text(
-              "Lựa chọn của bạn",
-              style: TextStyle(fontSize: 28),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Text(
+                "Lựa chọn của bạn (nếu có câu trả lời khác ngoài có hoặc không thì vui lòng nhập tin nhắn)",
+                style: TextStyle(fontSize: 16.w),
+              ),
             ),
             SizedBox(
               height: 30,

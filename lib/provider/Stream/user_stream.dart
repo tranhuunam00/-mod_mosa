@@ -7,7 +7,7 @@ class MyStream {
   BluetoothModel bluetoothS = BluetoothModel(bluetoothDevice: null);
 
   List<MessageModel> listMessageChatbot = [
-    new MessageModel(type: TypeMessage.bot, text: "Xin chào bạn?"),
+    new MessageModel(type: TypeMessage.bot, text: "Xin chào bạn"),
     new MessageModel(type: TypeMessage.bot, text: "Bạn cần giúp đỡ gì không?"),
   ];
 

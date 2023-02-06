@@ -66,10 +66,10 @@ class CardCommon extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    subHeading != null ? subHeading! : "",
-                    style: const TextStyle(color: Colors.grey),
-                  )
+                  // Text(
+                  //   subHeading != null ? subHeading! : "",
+                  //   style: const TextStyle(color: Colors.grey),
+                  // )
                 ],
               ),
               Column(
