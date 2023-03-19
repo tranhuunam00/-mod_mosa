@@ -75,8 +75,24 @@ final List<Course> course = [
 
 final List<Planing> planing = [
   Planing(
+      heading: "Theo dõi nhiệt độ",
+      subHeading: "",
+      onPress: (context) {
+        Navigator.pushNamed(context, Constants.temperature);
+      },
+      color: AppColors.cSecondaryColor,
+      icon: AppImages.met_moi_Img),
+  Planing(
+      heading: "Thiết bị theo dõi",
+      subHeading: "",
+      onPress: (context) {
+        Navigator.pushNamed(context, Constants.findDeviceBle);
+      },
+      color: Color.fromARGB(255, 139, 166, 175),
+      icon: AppImages.chieu_cao_Img),
+  Planing(
       heading: "Chăm sóc khách hàng",
-      subHeading: "8:00 AM - 10:00 AM",
+      subHeading: "",
       onPress: (context) {
         Navigator.pushNamed(context, Constants.chatbot);
       },

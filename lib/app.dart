@@ -10,6 +10,7 @@ import 'package:mod_do_an/ui/auth/forgot.screen.dart';
 import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
+import 'package:mod_do_an/ui/ble/DiscoveryScreen.dart';
 import 'package:mod_do_an/ui/chatbot/chatbot.dart';
 import 'package:mod_do_an/ui/chatbot/welcome/welcome_chatbot_screen.dart';
 import 'package:mod_do_an/ui/customer/changeUser.dart';
@@ -19,6 +20,7 @@ import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/customer/settings_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
 import 'package:mod_do_an/ui/home/home_screen.dart';
+import 'package:mod_do_an/ui/temperature/temperature.dart';
 import 'app_navigator.dart';
 
 class DoAnApp extends StatelessWidget {
@@ -66,6 +68,9 @@ class DoAnApp extends StatelessWidget {
                       Constants.changeUSer: (context) =>
                           const ChangeUserScreen(),
                       Constants.chatbot: (context) => const Chatbot(),
+                      Constants.temperature: (context) =>
+                          const TemperatureScreen(),
+                      Constants.findDeviceBle: (context) => FindDevicesScreen(),
                     },
                   ),
                 )));

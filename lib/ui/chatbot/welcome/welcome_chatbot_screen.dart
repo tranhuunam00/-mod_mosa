@@ -62,9 +62,10 @@ class WelcomeChatbotScreenState extends State<WelcomeChatbotScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "MOSA",
+                          "Theo dõi nhiệt độ",
                           style: TextStyle(
                               fontSize: 24.h, fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
                         ),
                         SizedBox(
                           height: 18.h,

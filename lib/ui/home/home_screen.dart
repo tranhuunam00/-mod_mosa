@@ -107,10 +107,7 @@ class _AnalyticScreenState extends State<AnalyticScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
-                  height: 15,
+                  height: 30,
                 ),
                 const PlaningGrid(),
               ],

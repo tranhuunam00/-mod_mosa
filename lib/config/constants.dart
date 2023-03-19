@@ -31,6 +31,8 @@ class Constants {
   static const String changeUSer = 'changeUSer';
   static const String myBg = 'myBg';
   static const String chatbot = 'chatbot';
+  static const String temperature = 'temperature';
+  static const String findDeviceBle = 'findDeviceBle';
 
   //
   static Future<Map<String, String>> requestHeadersToken() async {
