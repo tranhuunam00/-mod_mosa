@@ -41,7 +41,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   itemBuilder: (_, i) {
                     return Padding(
                       padding: EdgeInsets.only(
-                          top: 130.h, bottom: 70.h, left: 20.w, right: 20.w),
+                          top: 80.h, bottom: 70.h, left: 20.w, right: 20.w),
                       child: Column(
                         children: [
                           Image(

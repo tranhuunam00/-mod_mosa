@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:mod_do_an/component/card/cart_sensor.dart';
@@ -26,33 +27,47 @@ class AcceletometerScreen extends StatefulWidget {
 class _AcceletometerScreenState extends State<AcceletometerScreen> {
   SensorService sensorService = new SensorService();
   SensorRepository sensorRepository = new SensorRepository();
-  List<AccelerometerChartModel> listAccX =
-      List<AccelerometerChartModel>.empty(growable: true);
-  List<AccelerometerChartModel> listAccY =
-      List<AccelerometerChartModel>.empty(growable: true);
-  List<AccelerometerChartModel> listAccZ =
-      List<AccelerometerChartModel>.empty(growable: true);
+  List<Data> listAccX = List<Data>.empty(growable: true);
+
   late ChartSeriesController _chartSeriesControllerX;
-  late ChartSeriesController _chartSeriesControllerY;
-  late ChartSeriesController _chartSeriesControllerZ;
-  List<PositionCountModal> positions = [
-    PositionCountModal(value: 0, name: "ngửa", code: 1),
-    PositionCountModal(value: 0, name: "trái", code: 2),
-    PositionCountModal(value: 0, name: "phải", code: 3),
-    PositionCountModal(value: 0, name: "sấp", code: 4),
-    PositionCountModal(value: 0, name: "chưa rõ", code: 5),
-    PositionCountModal(value: 0, name: "không nằm", code: 6),
-  ];
+
   late Timer _timer;
   int countPosition = 0;
   List<int> addPosition = [0, 0, 0, 0, 0, 0];
   bool isCallApi = false;
   String typePosition = "";
+  static final ListColorByTemp = [
+    [
+      Color.fromARGB(255, 27, 103, 162),
+      Color.fromARGB(255, 132, 140, 200),
+      Color.fromARGB(255, 30, 142, 39),
+    ],
+    [
+      Color.fromARGB(255, 147, 243, 123),
+      Color.fromARGB(255, 194, 229, 161),
+      Color.fromARGB(255, 30, 142, 39),
+    ],
+    [
+      Color.fromARGB(255, 182, 156, 38),
+      Color.fromARGB(255, 196, 154, 47),
+      Color.fromARGB(255, 159, 76, 35),
+    ],
+    [
+      Color.fromARGB(255, 176, 18, 18),
+      Color.fromARGB(255, 196, 154, 47),
+      Color.fromARGB(255, 159, 76, 35),
+    ]
+  ];
+  double temp = 0;
+  double maxTemp = 0;
+  double abnormalTime = 0;
+
+  List<Color> colorsBg = ListColorByTemp[1];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _timer = new Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
+    _timer = new Timer.periodic(Duration(milliseconds: 2000), (Timer timer) {
       widget.accelerometerCharactis.read();
       // setState(() {});
     });
@@ -79,223 +94,191 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
     return double.parse(res);
   }
 
+  List<Color> checkTemp(double temp) {
+    if (temp <= 35.5) return ListColorByTemp[0];
+    if (temp >= 38 && temp <= 39) return ListColorByTemp[2];
+    if (temp > 39) return ListColorByTemp[3];
+    return ListColorByTemp[1];
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> labels = ['0', '20', '40', '60', '80', '100'];
     return StreamBuilder<List<int>>(
         stream: widget.accelerometerCharactis.value,
         initialData: widget.accelerometerCharactis.lastValue,
         builder: (c, snapshot) {
           DateTime nowD = DateTime.now();
           if (snapshot.data != null && snapshot.data!.length > 0) {
-            AccelerometerChartModel newDataX = AccelerometerChartModel(
-                value: parseData(snapshot.data![0], snapshot.data![1],
-                        snapshot.data![2]) /
-                    1000,
-                time: nowD);
-            AccelerometerChartModel newDataY = AccelerometerChartModel(
-                value: parseData(snapshot.data![3], snapshot.data![4],
-                        snapshot.data![5]) /
-                    1000,
-                time: nowD);
-            AccelerometerChartModel newDataZ = AccelerometerChartModel(
-                value: parseData(snapshot.data![6], snapshot.data![7],
-                        snapshot.data![8]) /
-                    1000,
-                time: nowD);
-            listAccX.add(newDataX);
-            listAccY.add(newDataY);
-            listAccZ.add(newDataZ);
-
-            int positionCode = BleHelper.getPositionSleep(
-              newDataX.value,
-              newDataY.value,
-              newDataZ.value,
+            Data newDataX = Data(
+              nowD,
+              parseData(
+                      snapshot.data![0], snapshot.data![1], snapshot.data![2]) /
+                  100,
             );
-
-            print("positionCode ");
-            print(positionCode);
-
-            if (positionCode == 1) typePosition = "Ngửa";
-            if (positionCode == 2) typePosition = "Nghiêng Trái";
-            if (positionCode == 3) typePosition = "Nghiêng Phải";
-            if (positionCode == 4) typePosition = "Sấp";
-            if (positionCode == 5) typePosition = "Chưa rõ";
-            if (positionCode == 6) typePosition = "Không phải tư thế nằm";
-
-            countPosition++;
-            addPosition[positionCode - 1]++;
-
-            if (countPosition == 20) {
-              positions[positionCode - 1].value +=
-                  addPosition[positionCode - 1];
-              countPosition = 0;
-            }
-
-            if (listAccX.length > 1000 && !isCallApi) {
-              isCallApi = true;
-              Future.sync(() async {
-                String valueData = "";
-                for (int i = 0; i < 1000; i++) {
-                  valueData += listAccX[i].value.toString();
-                  valueData += "%";
-                  valueData += listAccY[i].value.toString();
-                  valueData += "%";
-                  valueData += listAccZ[i].value.toString();
-                  valueData += "@";
-                  valueData += listAccX[i].time.toString();
-                  if (i != 999) valueData += "/";
-                }
-
-                ProfileUser user = await SecureStorage().getUser();
-                print(user.customerId);
-                CreateAccelerometerModel acc = CreateAccelerometerModel(
-                    value: valueData, customer: user.customerId);
-                final res = await sensorRepository.createAccelerometer(acc);
-                isCallApi = false;
-                String? isSaveData = await SecureStorage().getIsSaveData();
-                print("isSaveData");
-
-                if (res.statusCode == HttpStatus.created ||
-                    isSaveData == "false") {
-                  List<AccelerometerChartModel> newListAccX = listAccX;
-                  List<AccelerometerChartModel> newListAccY = listAccY;
-                  List<AccelerometerChartModel> newListAccZ = listAccZ;
-
-                  newListAccX.removeRange(0, 1000);
-                  newListAccY.removeRange(0, 1000);
-                  newListAccZ.removeRange(0, 1000);
-
-                  listAccX = newListAccX;
-                  listAccY = newListAccY;
-                  listAccZ = newListAccZ;
-                }
-              });
-            }
+            if (newDataX.temperature > maxTemp) maxTemp = newDataX.temperature;
+            colorsBg = checkTemp(newDataX.temperature);
+            if (temp < 35.5 || temp >= 38) abnormalTime = abnormalTime + 2;
+            temp = newDataX.temperature;
+            listAccX.add(newDataX);
           }
 
           return SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
                 Container(
-                    decoration: borderStyle,
-                    margin: new EdgeInsets.symmetric(horizontal: 10.0),
-                    height: 350.h,
-                    width: 350.w,
-                    child: SfCartesianChart(
-                        title: ChartTitle(text: 'Biểu đồ giá trị 3 trục'),
-                        onZooming: ((zoomingArgs) => {print(zoomingArgs)}),
-                        legend: Legend(
-                            isVisible: true,
-                            alignment: ChartAlignment.center,
-                            position: LegendPosition.bottom),
-
-                        // Initialize category axis
-                        primaryXAxis: DateTimeAxis(
-                            autoScrollingMode: AutoScrollingMode.end,
-                            visibleMinimum: listAccX.length > 120
-                                ? listAccX[listAccX.length - 120].time
-                                : null,
-                            // edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            majorGridLines: const MajorGridLines(width: 0),
-                            name: "Thời gian",
-                            isVisible: true,
-                            title: AxisTitle(
-                                text: "Thời gian (s)",
-                                alignment: ChartAlignment.far)),
-                        series: <LineSeries<AccelerometerChartModel, DateTime>>[
-                          LineSeries<AccelerometerChartModel, DateTime>(
-                              onRendererCreated:
-                                  (ChartSeriesController controller) {
-                                _chartSeriesControllerX = controller;
-                              },
-                              // Bind data source
-                              dataSource: listAccX,
-                              color: Colors.greenAccent,
-                              name: "X",
-                              yValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      accValue.value,
-                              xValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      (accValue.time)),
-                          LineSeries<AccelerometerChartModel, DateTime>(
-                              onRendererCreated:
-                                  (ChartSeriesController controller) {
-                                _chartSeriesControllerY = controller;
-                              },
-                              color: Colors.amber,
-                              name: "Y",
-                              // Bind data source
-                              dataSource: listAccY,
-                              yValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      accValue.value,
-                              xValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      (accValue.time)),
-                          LineSeries<AccelerometerChartModel, DateTime>(
-                              onRendererCreated:
-                                  (ChartSeriesController controller) {
-                                _chartSeriesControllerZ = controller;
-                              },
-                              // Bind data source
-                              dataSource: listAccZ,
-                              name: "Z",
-                              yValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      accValue.value,
-                              xValueMapper:
-                                  (AccelerometerChartModel accValue, _) =>
-                                      (accValue.time))
-                        ])),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      decoration: borderStyle,
-                      height: 160.h,
-                      width: 350.w,
-                      child: SfCartesianChart(
-                          title: ChartTitle(
-                              text: 'Thời gian vs tư thế',
-                              textStyle: TextStyle(fontSize: 8.sp)),
-                          primaryXAxis: CategoryAxis(),
-                          series: <ChartSeries<PositionCountModal, String>>[
-                            // Renders column chart
-                            ColumnSeries<PositionCountModal, String>(
-                                dataSource: positions,
-                                xValueMapper: (PositionCountModal data, _) =>
-                                    data.name,
-                                yValueMapper: (PositionCountModal data, _) =>
-                                    (data.value / 60 / 10).round())
-                          ]),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: colorsBg,
                     ),
-                    // Container(
-                    //   decoration: borderStyle,
-                    //   height: 150.h,
-                    //   width: 150.h,
-                    // )
-                  ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            temp.toString() + "°C",
+                            style: TextStyle(fontSize: 60.w),
+                          ),
+                          SizedBox(
+                            height: 50.w,
+                          ),
+                          Container(
+                            child: SfCartesianChart(
+                              backgroundColor: Colors.white,
+                              plotAreaBackgroundColor: Colors.white,
+                              primaryXAxis: DateTimeAxis(
+                                edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                intervalType: DateTimeIntervalType.seconds,
+                                dateFormat: DateFormat.Hm(),
+                                majorGridLines: MajorGridLines(
+                                  color: Colors.grey[200],
+                                ),
+                              ),
+                              primaryYAxis: NumericAxis(
+                                minimum: 00,
+                                maximum: 100,
+                                interval: 1,
+                                axisLine: AxisLine(
+                                  color: Colors.grey[200],
+                                ),
+                                majorTickLines: MajorTickLines(
+                                  color: Colors.grey[200],
+                                ),
+                                minorTickLines: MinorTickLines(
+                                  color: Colors.grey[200],
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              series: <ChartSeries>[
+                                LineSeries<Data, DateTime>(
+                                  dataSource: listAccX,
+                                  xValueMapper: (Data data, _) => data.time,
+                                  yValueMapper: (Data data, _) =>
+                                      data.temperature,
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50.w,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "0",
+                                style: TextStyle(fontSize: 20.w),
+                              ),
+                              Expanded(
+                                child: SliderTheme(
+                                  data: SliderThemeData(
+                                    trackHeight: 16.w,
+                                    showValueIndicator:
+                                        ShowValueIndicator.always,
+                                    // Thiết lập chiều rộng của slider
+                                  ),
+                                  child: Slider(
+                                    value: 30,
+                                    onChanged: (newValue) {},
+                                    activeColor: Colors.blue,
+                                    inactiveColor: Colors.grey,
+                                    min: 0,
+                                    label:
+                                        'Value: ${30}', // Hiển thị giá trị bên cạnh thanh trượt
+                                    divisions: 5,
+                                    max: 100,
+                                    semanticFormatterCallback: (double value) {
+                                      return labels[(value ~/ 20)];
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "100 phút ",
+                                style: TextStyle(fontSize: 20.w),
+                              ),
+                            ],
+                          ),
+                          Table(
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              border: TableBorder
+                                  .all(), // Allows to add a border decoration around your table
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Container(
+                                      height: 60.h,
+                                      color: Color.fromARGB(255, 157, 213, 241),
+                                      child: Text(
+                                        'Max 1h',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20.h),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 60.h,
+                                      color: Color.fromARGB(255, 157, 213, 241),
+                                      child: Text(
+                                        'Abnormal time',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20.h),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(children: [
+                                  Text(
+                                    maxTemp.toString(),
+                                    style: TextStyle(fontSize: 20.h),
+                                  ),
+                                  Text(
+                                    abnormalTime.toString(),
+                                    style: TextStyle(fontSize: 20.h),
+                                  ),
+                                ]),
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Text("Tư thế hiện tại của bạn là :"),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(typePosition,
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
               ],
             ),
           );
         });
   }
+}
+
+class Data {
+  final DateTime time;
+  final double temperature;
+
+  Data(this.time, this.temperature);
 }
