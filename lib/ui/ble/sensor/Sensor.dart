@@ -23,10 +23,12 @@ class SensorDashboard extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 88, 227, 215),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(70),
-                  bottomLeft: Radius.circular(70))),
+            bottomRight: Radius.circular(70),
+            //bottomLeft: Radius.circular(70)
+          )),
           title: Text(device.name),
           actions: <Widget>[
             StreamBuilder<BluetoothDeviceState>(

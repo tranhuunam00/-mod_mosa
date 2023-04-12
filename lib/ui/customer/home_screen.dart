@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         print('Discovery -> no device selected');
                       }
                     },
-                    child: Text("chọn bluetooth")),
+                    child: Text("Thiết lập kết nối bluetooth với thiết bị")),
               ),
             ),
             selectedDevice != null
@@ -137,10 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         },
-                        img: AppImages.accelerometer_Img,
-                        lable: Constants.ACCLEROMETER,
+                        img: AppImages.nhiet_do_Img,
+                        lable: Constants.TEMPERATURE,
                       ),
-                      CartSensor(
+                      /* CartSensor(
                         onPress: () {},
                         img: AppImages.nhiet_do_Img,
                         lable: Constants.TEMPERATURE,
@@ -150,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         img: AppImages.am_thanh_Img,
                         lable: Constants.SOUND,
                       ),
+                   */
                     ],
                   )
                 : Container()

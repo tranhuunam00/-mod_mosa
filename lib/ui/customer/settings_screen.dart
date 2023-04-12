@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
         builder: (context, state) {
           return Background(
-            urlBackground: AppImages.backgroundDefault,
+            urlBackground: AppImages.backgroundBlue,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ButtonSetting(
                       widget: Icon(Icons.favorite_border,
                           color: AppColors.jPrimaryColor.withOpacity(0.7)),
-                      title: LocaleKeys.profile,
+                      title: "Tài khoản",
                       onTap: () {
                         Navigator.pushNamed(
                           context,
@@ -191,7 +191,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ButtonSetting(
                       widget: Icon(Icons.contact_support_rounded,
                           color: AppColors.jPrimaryColor.withOpacity(0.7)),
-                      title: LocaleKeys.support,
+                      title: "Hỗ trợ",
                       color: AppColors.primaryColor),
                   ButtonSetting(
                       onTap: () {
@@ -203,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                       widget: Icon(Icons.chat_outlined,
                           color: AppColors.jPrimaryColor.withOpacity(0.7)),
-                      title: LocaleKeys.language,
+                      title: "Ngôn ngữ",
                       color: AppColors.primaryColor),
                   Container(
                     decoration: BoxDecoration(
@@ -214,6 +214,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ButtonSetting(
                       onTap: () async {
+                        Navigator.of(context)
+                          ..pushNamed(
+                            Constants.settingTemScreen,
+                          );
+                      },
+                      widget: const Icon(Icons.settings_applications,
+                          color: Colors.white),
+                      title: "Cài đặt khác",
+                      color: Colors.white),
+                  ButtonSetting(
+                      onTap: () async {
                         await SecureStorage().deleteToken();
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           Constants.onboardingScreen,
@@ -222,9 +233,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                       widget: const Icon(Icons.logout_outlined,
                           color: Colors.redAccent),
-                      title: LocaleKeys.log_out,
+                      title: "Thoát",
                       color: Colors.redAccent),
-                  ButtonSetting(
+                  /*ButtonSetting(
                       onTap: () async {
                         Navigator.of(context).pushNamed(
                           Constants.stopbangAll,
@@ -233,7 +244,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       widget: const Icon(Icons.logout_outlined,
                           color: Colors.white),
                       title: "stop_bang",
-                      color: Colors.white),
+                      color: Colors.white),*/
                 ],
               ),
             ),

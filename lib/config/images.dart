@@ -1,5 +1,6 @@
 class AppImages {
   static const backgroundDefault = "assets/images/backgroundDefault.jpg";
+  static const backgroundBlue = "assets/images/backgroundBlue.png";
 
   static const avatarDefault = "assets/images/imgWelcome.png";
 

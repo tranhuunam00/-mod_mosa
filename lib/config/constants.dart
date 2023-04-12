@@ -28,6 +28,10 @@ class Constants {
   static const String stopbangAll = 'stopbangAll';
   static const String analyticScreen = 'analyticScreen';
   static const String settingScreen = 'settingScreen';
+  static const String highlowScreen = 'highlowScreen';
+  static const String highTemScreen = 'highTemScreen';
+  static const String lowTemScreen = 'lowTemScreen';
+  static const String settingTemScreen = 'settingTemScreen';
   static const String changeUSer = 'changeUSer';
   static const String myBg = 'myBg';
 
@@ -45,20 +49,17 @@ class Constants {
 
   static List<OnboardingContent> contentsOnboarding = [
     OnboardingContent(
-        title: 'Sẵn sàng để nói một cách tự tin',
-        image: 'assets/images/imgOnboarding1.jpg',
-        description:
-            "Tham gia các bài học được cá nhân hóa với chuyên gia gia sư và người bản ngữ"),
+        title: 'Thiết bị theo dõi nhiệt độ',
+        image: 'assets/images/imgOnboarding4.png',
+        description: "Theo dõi và cảnh báo thân nhiệt bất thường"),
     OnboardingContent(
-        title: 'Học với các gia sư trực tuyến tốt nhất',
-        image: 'assets/images/imgOnboarding2.png',
-        description:
-            "Xem video, hồ sơ và đánh giá của gia sư để chọn gia sư hoàn hảo"),
-    OnboardingContent(
+        title: 'Phù hợp với trẻ em',
+        image: 'assets/images/imgOnboarding5.png',
+        description: "Tạo thoải mái,dễ chịu cho trẻ"),
+    /*OnboardingContent(
         title: 'Giữ liên lạc',
         image: 'assets/images/imgOnboarding3.png',
-        description:
-            "Nhắn tin cho gia sư và nhận thông báo về bài học của bạn"),
+        description: "Nhắn tin cho chúng tôi và nhận thông báo của bạn"),*/
   ];
 
   static List<StopBangQuestionModel> listStopBang = [

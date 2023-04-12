@@ -22,7 +22,7 @@ class _DashboardCustomerScreenState extends State<DashboardCustomerScreen> {
   @override
   void initState() {
     super.initState();
-    pages = [const HomeScreen(), const FeatureScreen(), const SettingsScreen()];
+    pages = [const HomeScreen(), const SettingsScreen()];
   }
 
   @override
@@ -58,13 +58,14 @@ class _DashboardCustomerScreenState extends State<DashboardCustomerScreen> {
             //   label: 'Courses',
             //   icon: Icon(Icons.bookmark),
             // ),
-            BottomNavigationBarItem(
+            /*BottomNavigationBarItem(
               label: 'Tutors',
               icon: Icon(
                 Icons.group_rounded,
                 color: currentIndex == 1 ? AppColors.jPrimaryColor : null,
               ),
-            ),
+            ),*/
+
             // BottomNavigationBarItem(
             //   label: 'Promotion',
             //   icon: SvgPicture.asset(

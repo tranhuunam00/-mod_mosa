@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 import 'dart:typed_data';
 
 class BleHelper {
@@ -41,7 +41,6 @@ class BleHelper {
       }
       if (x > 3) return 2; //trái
       if (x < -3) return 3; //phải
-
     }
     return 6; // không phải nằm
   };

@@ -30,7 +30,6 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
   List<Data> listAccX = List<Data>.empty(growable: true);
 
   late ChartSeriesController _chartSeriesControllerX;
-
   late Timer _timer;
   int countPosition = 0;
   List<int> addPosition = [0, 0, 0, 0, 0, 0];
@@ -60,6 +59,7 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
   ];
   double temp = 0;
   double maxTemp = 0;
+  DateTime timeTemp = DateTime.now();
   double abnormalTime = 0;
 
   List<Color> colorsBg = ListColorByTemp[1];
@@ -116,7 +116,10 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                       snapshot.data![0], snapshot.data![1], snapshot.data![2]) /
                   100,
             );
-            if (newDataX.temperature > maxTemp) maxTemp = newDataX.temperature;
+            if (newDataX.temperature > maxTemp) {
+              maxTemp = newDataX.temperature;
+              timeTemp = newDataX.time;
+            }
             colorsBg = checkTemp(newDataX.temperature);
             if (temp < 35.5 || temp >= 38) abnormalTime = abnormalTime + 2;
             temp = newDataX.temperature;
@@ -160,9 +163,9 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                 ),
                               ),
                               primaryYAxis: NumericAxis(
-                                minimum: 00,
-                                maximum: 100,
-                                interval: 1,
+                                minimum: temp - 3,
+                                maximum: temp + 3,
+                                interval: 0.1,
                                 axisLine: AxisLine(
                                   color: Colors.grey[200],
                                 ),
@@ -204,13 +207,15 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                     // Thiết lập chiều rộng của slider
                                   ),
                                   child: Slider(
-                                    value: 30,
-                                    onChanged: (newValue) {},
+                                    value: 20,
+                                    onChanged: (newValue) async {
+                                      //   final value = await newValue;
+                                    },
                                     activeColor: Colors.blue,
                                     inactiveColor: Colors.grey,
                                     min: 0,
                                     label:
-                                        'Value: ${30}', // Hiển thị giá trị bên cạnh thanh trượt
+                                        'Value: ${20}', // Hiển thị giá trị bên cạnh thanh trượt
                                     divisions: 5,
                                     max: 100,
                                     semanticFormatterCallback: (double value) {
@@ -246,7 +251,16 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                       height: 60.h,
                                       color: Color.fromARGB(255, 157, 213, 241),
                                       child: Text(
-                                        'Abnormal time',
+                                        'Thời gian',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20.h),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 60.h,
+                                      color: Color.fromARGB(255, 157, 213, 241),
+                                      child: Text(
+                                        'Khoảng thời gian theo dõi',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 20.h),
                                       ),
@@ -256,6 +270,11 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                 TableRow(children: [
                                   Text(
                                     maxTemp.toString(),
+                                    style: TextStyle(fontSize: 20.h),
+                                  ),
+                                  Text(
+                                    '${timeTemp.hour}h:${timeTemp.minute}m:${timeTemp.second}s'
+                                        .toString(),
                                     style: TextStyle(fontSize: 20.h),
                                   ),
                                   Text(

@@ -11,10 +11,14 @@ import 'package:mod_do_an/ui/auth/login.screen.dart';
 import 'package:mod_do_an/ui/auth/onboarding/onboarding_screen.dart';
 import 'package:mod_do_an/ui/auth/register.screen.dart';
 import 'package:mod_do_an/ui/customer/changeUser.dart';
+import 'package:mod_do_an/ui/customer/highTem_Screen.dart';
+import 'package:mod_do_an/ui/customer/lowTemScreen.dart';
 import 'package:mod_do_an/ui/customer/profile/profile_screen.dart';
 import 'package:mod_do_an/ui/customer/quiz/page_stopbang.dart';
 import 'package:mod_do_an/ui/customer/quiz/quiz_screen.dart';
 import 'package:mod_do_an/ui/customer/settings_screen.dart';
+import 'package:mod_do_an/ui/customer/settingTem.dart';
+import 'package:mod_do_an/ui/customer/highlowTem_screen.dart';
 import 'package:mod_do_an/ui/dashboard_customer_screen.dart';
 import 'package:mod_do_an/ui/home/welcome_screen.dart';
 import 'app_navigator.dart';
@@ -65,6 +69,13 @@ class DoAnApp extends StatelessWidget {
                           const SettingsScreen(),
                       Constants.changeUSer: (context) =>
                           const ChangeUserScreen(),
+                      Constants.settingTemScreen: (context) =>
+                          const SettingTemScreen(),
+                      Constants.highlowScreen: (context) =>
+                          const highlowTemScreen(),
+                      Constants.highTemScreen: (context) =>
+                          const highTemScreen(),
+                      Constants.lowTemScreen: (context) => const lowTemScreen(),
                     },
                   ),
                 )));
