@@ -87,6 +87,8 @@ flutter:
     - assets/icons/
     - assets/documents/
     - assets/translations/
+    - assets/audio/
+
 
   fonts:
     - family: Playfair Display

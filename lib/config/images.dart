@@ -48,4 +48,6 @@ class AppImages {
   static const osa = "assets/images/osa.jpg";
   static const sleep = "assets/images/sleep.jpg";
   static const stopbangImg = "assets/images/stopbangImg.png";
+
+  static const audioNot = "assets/audio/soundNot.mp3";
 }

@@ -12,6 +12,10 @@ class SecureStorage {
 
   static const _user = 'USER';
 
+  static const _upper = 'upper';
+
+  static const _under = 'under';
+
   Future<void> saveToken({required String token}) async {
     print("Đã lưu token");
     print(token);
@@ -61,5 +65,21 @@ class SecureStorage {
         gender: "",
         nationality: "",
         customerId: "");
+  }
+
+  Future<void> saveUpperBound({required String upper}) async {
+    await _storage.write(key: _upper, value: upper);
+  }
+
+  Future<String?> getUpperBound() async {
+    return await _storage.read(key: _upper);
+  }
+
+  Future<void> saveUnderBound({required String under}) async {
+    await _storage.write(key: _under, value: under);
+  }
+
+  Future<String?> getUnderBound() async {
+    return await _storage.read(key: _under);
   }
 }

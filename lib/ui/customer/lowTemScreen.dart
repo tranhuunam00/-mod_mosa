@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mod_do_an/component/styles/appbar.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class lowTemScreen extends StatefulWidget {
   const lowTemScreen({Key? key}) : super(key: key);
@@ -55,6 +57,20 @@ class _lowTemScreenState extends State<lowTemScreen> {
               GestureDetector(
                   onTap: () async {
                     print('Selected temperature: $_temperature');
+                    await SecureStorage()
+                        .saveUnderBound(under: _temperature.toString());
+                    Fluttertoast.showToast(
+                        msg: "Đã đặt thành công cận dưới " +
+                            _temperature.toString(),
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor:
+                            Color.fromARGB(255, 6, 127, 197).withOpacity(0.3),
+                        textColor: Colors.black,
+                        fontSize: 16.0);
+                    Navigator.pop(context);
+
                     //  await _showDefaultNotification();
                   },
                   child: Padding(
@@ -101,11 +117,15 @@ class _lowTemScreenState extends State<lowTemScreen> {
         width: MediaQuery.of(context).size.width - 200,
         height: 50,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 101, 213, 185),
+          color: temperature.toString() == _temperature.toString()
+              ? Color.fromARGB(255, 6, 127, 197).withOpacity(0.3)
+              : Color.fromARGB(255, 81, 187, 161).withOpacity(0.3),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: temperature.toString() == _temperature.toString()
+                  ? Color.fromARGB(255, 6, 127, 197).withOpacity(0.3)
+                  : Color.fromARGB(255, 81, 187, 161).withOpacity(0.3),
               blurRadius: 10,
               spreadRadius: 5,
             ),

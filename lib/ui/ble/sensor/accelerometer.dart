@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mod_do_an/component/card/cart_sensor.dart';
 import 'package:mod_do_an/component/styles/border.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,6 +123,32 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
             }
             colorsBg = checkTemp(newDataX.temperature);
             if (temp < 35.5 || temp >= 38) abnormalTime = abnormalTime + 2;
+            Future.sync(() async {
+              String? upper = await SecureStorage().getUpperBound();
+              String? under = await SecureStorage().getUnderBound();
+
+              if (upper != null && newDataX.temperature > double.parse(upper)) {
+                Fluttertoast.showToast(
+                    msg: "Nhiệt độ đang cao hơn ngưỡng",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
+
+              if (under != null && newDataX.temperature < double.parse(under)) {
+                Fluttertoast.showToast(
+                    msg: "Nhiệt nhỏ hơn ngưỡng",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.blue,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              }
+            });
             temp = newDataX.temperature;
             listAccX.add(newDataX);
           }
@@ -163,8 +190,8 @@ class _AcceletometerScreenState extends State<AcceletometerScreen> {
                                 ),
                               ),
                               primaryYAxis: NumericAxis(
-                                minimum: temp - 3,
-                                maximum: temp + 3,
+                                minimum: temp - 10,
+                                maximum: temp + 10,
                                 interval: 0.1,
                                 axisLine: AxisLine(
                                   color: Colors.grey[200],

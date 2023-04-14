@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mod_do_an/component/styles/appbar.dart';
+import 'package:mod_do_an/storage/secure_storge.dart';
 
 class highTemScreen extends StatefulWidget {
   const highTemScreen({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class _highTemScreenState extends State<highTemScreen> {
                 controller: scrollController,
                 itemExtent: 60,
                 children: _buildItems(),
-                onSelectedItemChanged: (index) {
+                onSelectedItemChanged: (index) async {
                   setState(() {
                     _temperature = _minTemperature + (index * _step);
                   });
@@ -55,7 +57,19 @@ class _highTemScreenState extends State<highTemScreen> {
               GestureDetector(
                   onTap: () async {
                     print('Selected temperature: $_temperature');
-                    //  await _showDefaultNotification();
+                    await SecureStorage()
+                        .saveUpperBound(upper: _temperature.toString());
+                    Fluttertoast.showToast(
+                        msg: "Đã đặt thành công cận trên " +
+                            _temperature.toString(),
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor:
+                            Color.fromARGB(255, 197, 6, 6).withOpacity(0.3),
+                        textColor: Colors.black,
+                        fontSize: 16.0);
+                    Navigator.pop(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -101,11 +115,15 @@ class _highTemScreenState extends State<highTemScreen> {
         width: MediaQuery.of(context).size.width - 200,
         height: 50,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 101, 213, 185),
+          color: temperature.toString() == _temperature.toString()
+              ? Color.fromARGB(255, 197, 6, 6).withOpacity(0.3)
+              : Color.fromARGB(255, 81, 187, 161).withOpacity(0.3),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: temperature.toString() == _temperature.toString()
+                  ? Color.fromARGB(255, 197, 6, 6).withOpacity(0.3)
+                  : Color.fromARGB(255, 81, 187, 161).withOpacity(0.3),
               blurRadius: 10,
               spreadRadius: 5,
             ),
